@@ -1,0 +1,38 @@
+{
+  "Metadata": {
+    "title": "Keep&Store - Speicher mit Sicherheit",
+    "description": "Keep&Store ist eine zuverlässige Lösung zur sicheren Speicherung von Passwörtern, Dateien und Notizen mit der Möglichkeit, Daten zu importieren und zu exportieren. Gewährleisten Sie die Sicherheit Ihrer Informationen mit Zwei-Faktor-Authentifizierung und Zugriffseinstellungen.",
+    "keywords": "Passwortspeicherung, Import aus Excel, Export nach Excel, Dateispeicherung, Strukturierung, Archivierung, Zwei-Faktor-Authentifizierung, Dateifreigabe, Notizen, Benachrichtigungen",
+    "authorName": "Danil Petrov",
+    "authorUrl": "https://t.me/daniiilp",
+    "siteName": "Keep&Store",
+    "addressLocality": "Kaliningrad",
+    "addressCountry": "Russland",
+    "email": "cras.petrov@yandex.ru"
+  },
+  "Manifest": {
+    "name": "Keep&Store",
+    "short_name": "SM",
+    "description": "Keep&Store ist eine zuverlässige Lösung zur sicheren Speicherung von Passwörtern, Dateien und Notizen mit der Möglichkeit, Daten zu importieren und zu exportieren. Gewährleisten Sie die Sicherheit Ihrer Informationen mit Zwei-Faktor-Authentifizierung und Zugriffseinstellungen."
+  },
+  "ThemeSwitcher": {
+    "light": "Hellmodus",
+    "dark": "Dunkelmodus",
+    "system": "Wie im System"
+  },
+  "LocalSwitcher": {
+    "ru": "Русский",
+    "en": "English",
+    "de": "Deutsch",
+    "cn": "中国人",
+    "es": "Español",
+    "in": "हिंदी",
+    "title": "Language"
+  },
+  "MainPage": {
+    "a": "Aktuelles Thema:",
+    "lmode": "Hellmodus",
+    "dmode": "Dunkelmodus",
+    "smode": "Systemmodus"
+  }
+}

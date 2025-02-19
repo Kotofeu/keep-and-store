@@ -3,10 +3,21 @@ import { FC, HTMLAttributes, JSX } from 'react';
 
 import { classNames } from '@/shared/lib';
 
-import { DarkMode, LightMode, SystemMode } from './icons-assets';
 import styles from './styles.module.scss';
+import {
+  CnFlag,
+  DarkMode,
+  DeFlag,
+  InFlag,
+  LightMode,
+  RuFlag,
+  SaFlag,
+  SpMxFlag,
+  SystemMode,
+  UkUsFlag
+} from './icons-assets';
 
-export type IconType = 'lightMode' | 'darkMode' | 'systemMode';
+export type IconType = 'lightMode' | 'darkMode' | 'systemMode' | 'ru' | 'en' | 'es' | 'in' | 'sa' | 'cn' | 'de';
 
 interface IconProps extends HTMLAttributes<HTMLDivElement> {
   className?: string;
@@ -19,7 +30,16 @@ const getIcons = (color?: string) =>
     // themes icons
     ['lightMode', <LightMode color={color} />],
     ['darkMode', <DarkMode color={color} />],
-    ['systemMode', <SystemMode color={color} />]
+    ['systemMode', <SystemMode color={color} />],
+
+    // flag icons
+    ['ru', <RuFlag color={color} />],
+    ['en', <UkUsFlag color={color} />],
+    ['es', <SpMxFlag color={color} />],
+    ['in', <InFlag color={color} />],
+    ['sa', <SaFlag color={color} />],
+    ['cn', <CnFlag color={color} />],
+    ['de', <DeFlag color={color} />]
   ]);
 
 export const Icon: FC<IconProps> = ({ type, className, color, ...rest }) => {

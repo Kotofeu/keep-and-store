@@ -10,11 +10,10 @@ interface ThemeSwitcherProps {
 
 export const ThemeSwitcher: FC<ThemeSwitcherProps> = ({ className }) => {
   const [mounted, setMounted] = useState(false);
-  const { theme } = useTheme();
-
+  const { resolvedTheme } = useTheme();
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  return <ClientThemeSwitcher className={className} activeTheme={mounted ? theme : undefined} />;
+  return <ClientThemeSwitcher className={className} activeTheme={mounted ? resolvedTheme : undefined} />;
 };

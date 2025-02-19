@@ -1,0 +1,38 @@
+{
+  "Metadata": {
+    "title": "Keep&Store - 安全存储",
+    "description": "Keep&Store 是一个可靠的解决方案，用于安全存储密码、文件和笔记，并具有导入和导出数据的功能。通过双因素身份验证和访问设置确保您的信息安全。",
+    "keywords": "密码存储, 从Excel导入, 导出到Excel, 文件存储, 结构化, 归档, 双因素身份验证, 文件共享, 笔记, 通知",
+    "authorName": "丹尼尔·彼得罗夫",
+    "authorUrl": "https://t.me/daniiilp",
+    "siteName": "Keep&Store",
+    "addressLocality": "加里宁格勒",
+    "addressCountry": "俄罗斯",
+    "email": "cras.petrov@yandex.ru"
+  },
+  "Manifest": {
+    "name": "Keep&Store",
+    "short_name": "SM",
+    "description": "Keep&Store 是一个可靠的解决方案，用于安全存储密码、文件和笔记，并具有导入和导出数据的功能。通过双因素身份验证和访问设置确保您的信息安全。"
+  },
+  "ThemeSwitcher": {
+    "light": "浅色模式",
+    "dark": "深色模式",
+    "system": "跟随系统"
+  },
+  "LocalSwitcher": {
+    "ru": "Русский",
+    "en": "English",
+    "de": "Deutsch",
+    "cn": "中国人",
+    "es": "Español",
+    "in": "हिंदी",
+    "title": "Language"
+  },
+  "MainPage": {
+    "a": "当前主题：",
+    "lmode": "浅色模式",
+    "dmode": "深色模式",
+    "smode": "系统模式"
+  }
+}

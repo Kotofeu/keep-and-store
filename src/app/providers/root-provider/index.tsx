@@ -1,7 +1,7 @@
 import { getMessages } from 'next-intl/server';
-import { ThemeProvider } from 'next-themes';
 import { NextIntlClientProvider } from 'next-intl';
 import { FC, ReactNode } from 'react';
+import { ThemeProvider } from 'next-themes';
 
 import { textFont, titleFont } from '@/app/fonts';
 import { Header } from '@/widgets/header';
@@ -16,12 +16,12 @@ export const RootProvider: FC<RootProviderProps> = async ({ locale, children }) 
   return (
     <html lang={locale} suppressHydrationWarning>
       <body className={`${titleFont.variable} ${textFont.variable}`}>
-        <ThemeProvider disableTransitionOnChange>
-          <NextIntlClientProvider messages={messages}>
+        <NextIntlClientProvider messages={messages}>
+          <ThemeProvider disableTransitionOnChange enableSystem defaultTheme='system'>
             <Header />
             {children}
-          </NextIntlClientProvider>
-        </ThemeProvider>
+          </ThemeProvider>
+        </NextIntlClientProvider>
       </body>
     </html>
   );

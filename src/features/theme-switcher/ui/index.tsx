@@ -8,9 +8,8 @@ import { classNames } from '@/shared/lib';
 import styles from './styles.module.scss';
 
 const THEME_CONFIG = [
-  { key: 'light', icon: 'lightMode' },
-  { key: 'dark', icon: 'darkMode' },
-  { key: 'system', icon: 'systemMode' }
+  { key: 'light', icon: 'lightMode', className: styles.switcher__button_light },
+  { key: 'dark', icon: 'darkMode', className: styles.switcher__button_dark }
 ] as const;
 
 export const ClientThemeSwitcher: FC<{ className?: string; activeTheme?: string }> = ({ className, activeTheme }) => {
@@ -19,17 +18,15 @@ export const ClientThemeSwitcher: FC<{ className?: string; activeTheme?: string 
 
   const buttons = useMemo(
     () =>
-      THEME_CONFIG.map(({ key, icon }) => (
+      THEME_CONFIG.map(({ key, icon, className }) => (
         <IconButton
           key={key}
-          className={styles.switcher__button}
+          className={classNames(styles.switcher__button, {}, [className])}
           onClick={() => setTheme(key)}
           title={t(key)}
           icon={icon}
           isActive={activeTheme === key}
-          color='var(--icon)'
-          activeColor='var(--icon-primary)'
-          hoverColor='var(--icon-primary-hover)'
+          color='none'
         />
       )),
     [t, setTheme, activeTheme]

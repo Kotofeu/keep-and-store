@@ -22,8 +22,12 @@
   },
   "LocalSwitcher": {
     "ru": "Русский",
-    "en": "Английский",
-    "title": "Язык"
+    "en": "English",
+    "de": "Deutsch",
+    "cn": "中国人",
+    "es": "Español",
+    "in": "हिंदी",
+    "title": "Language"
   },
   "MainPage":{
     "a": "Текущая тема:",

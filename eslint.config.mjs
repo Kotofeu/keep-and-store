@@ -25,7 +25,15 @@ const eslintConfig = [
       'prefer-arrow-callback': 'error',
       'arrow-body-style': ['error', 'as-needed'],
       'arrow-spacing': ['error', { before: true, after: true }],
-      'no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+      'no-unused-vars': [
+        'error',
+        {
+          args: 'none',
+          vars: 'all',
+          ignoreRestSiblings: true,
+          argsIgnorePattern: '^_'
+        }
+      ],
       eqeqeq: ['error', 'always'],
       curly: ['error', 'all'],
       indent: ['error', 2],

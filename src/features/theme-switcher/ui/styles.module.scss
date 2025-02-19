@@ -8,3 +8,25 @@
     height: 25px;
   }
 }
+[data-theme="light"] .switcher{
+  &__button_dark svg{
+    stroke: var(--icon);
+  }
+  &__button_dark:hover svg{
+    stroke: var(--icon-primary-hover);
+  }
+  &__button_light svg{
+    stroke: var(--icon-primary);
+  }
+}
+[data-theme="dark"] .switcher{
+  &__button_light svg{
+    stroke: var(--icon);
+  }
+  &__button_light:hover svg{
+    stroke: var(--icon-primary-hover);
+  }
+  &__button_dark svg{
+    stroke: var(--icon-primary);
+  }
+}

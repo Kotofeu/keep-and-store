@@ -21,11 +21,15 @@
     "system": "As in the system"
   },
   "LocalSwitcher": {
-    "ru": "Russian",
+    "ru": "Русский",
     "en": "English",
+    "de": "Deutsch",
+    "cn": "中国人",
+    "es": "Español",
+    "in": "हिंदी",
     "title": "Language"
   },
-  "MainPage":{
+  "MainPage": {
     "a": "The current theme:",
     "lmode": "Light Mode",
     "dmode": "Dark Mode",

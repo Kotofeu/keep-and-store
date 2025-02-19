@@ -1,3 +1,4 @@
+'use client';
 import { FC, useState } from 'react';
 
 import { Icon, IconType } from '@/shared/ui/icon';
