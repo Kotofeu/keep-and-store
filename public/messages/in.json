@@ -34,5 +34,13 @@
     "lmode": "लाइट मोड",
     "dmode": "डार्क मोड",
     "smode": "सिस्टम मोड"
+  },
+  "Shared": {
+    "Select": {
+      "search": "Search..."
+    }
+  },
+  "BaseLabels": {
+    "delete": "Delete"
   }
 }

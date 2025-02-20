@@ -1,4 +1,4 @@
-.header{
+.header {
   width: 100%;
   position: fixed;
   top: 0;
@@ -6,7 +6,7 @@
   right: 0;
   background-color: var(--secondary-color);
 
-  &__wrapper{
+  &__wrapper {
     margin: 0 auto;
     padding: 0 20px;
     max-width: var(--container-width);
@@ -17,7 +17,9 @@
     justify-content: space-between;
   }
 
-  &__switchers{
+  &__switchers {
     display: flex;
+    align-items: center;
+    gap: 30px;
   }
 }

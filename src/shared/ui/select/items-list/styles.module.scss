@@ -1,0 +1,41 @@
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-height: 200px;
+  overflow: hidden auto;
+  padding: 8px 10px;
+  &__option {
+    font: inherit;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 10px;
+    width: 100%;
+    padding: 6px 10px;
+    cursor: pointer;
+    align-items: center;
+    border-radius: 4px;
+    transition: background-color 0.15s ease-in-out;
+  
+    &:hover,
+    &:focus {
+      background-color: var(--secondary-color);
+    }
+  
+    &_selected {
+      background-color: var(--secondary-color);
+      color: var(--accent-color);
+      cursor: default;
+    }
+  
+    &_multiple {
+      cursor: pointer;
+    }
+  
+    &_focused {
+      border: 1px solid var(--accent-color);
+    }
+  }
+}
+

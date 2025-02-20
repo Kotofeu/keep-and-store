@@ -1,14 +1,18 @@
+'use client';
 import { Dispatch, RefObject, SetStateAction, useEffect, useState } from 'react';
 
 export const useClickOutside = (
   wrapperRef: RefObject<HTMLElement | null> | null,
-  ignoreRef?: RefObject<HTMLElement | null> | null
-): [boolean, Dispatch<SetStateAction<boolean>>] => {
+  ignoreRef?: RefObject<HTMLElement | null> | null,
+  ignoredDataAttribute?: string
+): [boolean, Dispatch<SetStateAction<boolean>>, () => void] => {
   const [isOpen, setIsOpen] = useState(false);
-
   useEffect(() => {
     const handleOutsideClick = (e: Event) => {
-      if (ignoreRef && ignoreRef.current && ignoreRef.current.contains(e.target as HTMLElement)) {
+      if (
+        (ignoreRef && ignoreRef.current && ignoreRef.current.contains(e.target as HTMLElement)) ||
+        (e.target as HTMLElement).closest(`[${ignoredDataAttribute}]`)
+      ) {
         return;
       }
       if (wrapperRef && wrapperRef.current && !wrapperRef.current.contains(e.target as HTMLElement)) {
@@ -28,5 +32,5 @@ export const useClickOutside = (
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen]);
 
-  return [isOpen, setIsOpen];
+  return [isOpen, setIsOpen, () => setIsOpen(false)];
 };

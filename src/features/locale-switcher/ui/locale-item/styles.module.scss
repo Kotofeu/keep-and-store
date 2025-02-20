@@ -1,0 +1,15 @@
+.locale {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+
+  &__icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  &__label {
+    font-size: 20px;
+    font-weight: 500;
+  }
+}

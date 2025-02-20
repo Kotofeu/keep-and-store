@@ -34,5 +34,13 @@
     "lmode": "Modo claro",
     "dmode": "Modo oscuro",
     "smode": "Modo del sistema"
+  },
+  "Shared": {
+    "Select": {
+      "search": "Search..."
+    }
+  },
+  "BaseLabels": {
+    "delete": "Delete"
   }
 }

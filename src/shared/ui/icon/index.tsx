@@ -6,6 +6,7 @@ import { classNames } from '@/shared/lib';
 import styles from './styles.module.scss';
 import {
   CnFlag,
+  Cross,
   DarkMode,
   DeFlag,
   InFlag,
@@ -17,7 +18,18 @@ import {
   UkUsFlag
 } from './icons-assets';
 
-export type IconType = 'lightMode' | 'darkMode' | 'systemMode' | 'ru' | 'en' | 'es' | 'in' | 'sa' | 'cn' | 'de';
+export type IconType =
+  | 'cross'
+  | 'lightMode'
+  | 'darkMode'
+  | 'systemMode'
+  | 'ru'
+  | 'en'
+  | 'es'
+  | 'in'
+  | 'sa'
+  | 'cn'
+  | 'de';
 
 interface IconProps extends HTMLAttributes<HTMLDivElement> {
   className?: string;
@@ -27,6 +39,8 @@ interface IconProps extends HTMLAttributes<HTMLDivElement> {
 
 const getIcons = (color?: string) =>
   new Map<IconType, JSX.Element>([
+    // system icon
+    ['cross', <Cross color={color} />],
     // themes icons
     ['lightMode', <LightMode color={color} />],
     ['darkMode', <DarkMode color={color} />],

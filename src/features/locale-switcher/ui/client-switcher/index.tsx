@@ -3,7 +3,10 @@ import { FC, useTransition } from 'react';
 import { useParams } from 'next/navigation';
 
 import { usePathname, useRouter } from '@/shared/i18n';
-import { Option, Select } from '@/shared/ui/select';
+import { Select } from '@/shared/ui/select';
+import { Option } from '@/shared/types';
+
+import styles from './styles.module.scss';
 
 type SwitcherSelectProps = {
   value: Option;
@@ -24,9 +27,11 @@ export const ClientSelect: FC<SwitcherSelectProps> = ({ value, options }) => {
   return (
     <Select
       value={value}
+      className={styles.locale}
       options={options}
       onChange={option => onSelectChange(option as Option)}
       disabled={isPending}
+      searchable
     />
   );
 };

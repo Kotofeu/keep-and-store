@@ -4,15 +4,18 @@
   justify-content: center;
   gap: 5px;
   position: relative;
-  transition: background-color .2s ease-in-out, color .2s ease-in-out;
+  transition:
+    background-color 0.2s ease-in-out,
+    color 0.2s ease-in-out;
   border: none;
   font-family: var(--title-font);
   font-weight: 600;
-  letter-spacing: -.1px;
+  letter-spacing: -0.1px;
   font-size: 16px;
   background-color: var(--button-color);
   color: var(--text-primary-inverted);
-  &:disabled{
+
+  &:disabled {
     cursor: default;
   }
 }
@@ -67,6 +70,7 @@
   background-color: transparent;
   margin: 0;
   padding: 0;
+
   &:disabled {
     color: var(--text-primary-disabled);
   }

@@ -1,0 +1,50 @@
+.select {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  max-width: 100%;
+  min-height: 40px;
+
+   &__dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    border: 1px solid var(--border-color);
+    border-radius: 7px;
+    background-color: var(--primary-color);
+    list-style: none;
+    margin: 5px 0 0;
+    box-shadow: 0 10px 25px var(--box-shadow);
+    opacity: 0;
+    transform: scaleY(0);
+    transition:
+      opacity 0.15s,
+      transform 0.15s;
+    transform-origin: 50% 0;
+    &_show {
+      opacity: 1;
+      transform: scaleY(1);
+    }
+  }
+
+  &__searchBox {
+    width: 100%;
+    padding: 10px 10px 0;
+  }
+
+  &__search {
+    width: 100%;
+    display: block;
+    padding: 6px 10px;
+    font-size: 16px;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    outline: none;
+    transition: border 0.15s ease-in-out;
+
+    &:active,
+    &:focus {
+      border: 1px solid var(--accent-color);
+    }
+  }
+}

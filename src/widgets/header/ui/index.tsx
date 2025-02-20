@@ -9,8 +9,8 @@ export const Header: FC = () => (
   <header className={styles.header}>
     <div className={styles.header__wrapper}>
       <div className={styles.header__switchers}>
-        <ThemeSwitcher />
         <LocaleSwitcher />
+        <ThemeSwitcher />
       </div>
       <div></div>
       <nav></nav>

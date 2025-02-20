@@ -5,6 +5,23 @@ interface IconsAssetsProps {
   color?: string;
 }
 
+export const Cross: FC<IconsAssetsProps> = ({ color = 'var(--icon)' }) => (
+  <svg
+    xmlns='http://www.w3.org/2000/svg'
+    width='24'
+    height='24'
+    viewBox='0 0 24 24'
+    fill='none'
+    stroke={color}
+    strokeWidth='2'
+    strokeLinecap='round'
+    strokeLinejoin='round'
+  >
+    <path d='M23 1L1 23' />
+    <path d='M1 1L23 23' />
+  </svg>
+);
+
 export const LightMode: FC<IconsAssetsProps> = ({ color = 'var(--icon)' }) => (
   <svg
     xmlns='http://www.w3.org/2000/svg'

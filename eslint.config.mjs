@@ -39,6 +39,7 @@ const eslintConfig = [
       indent: ['error', 2],
       'no-trailing-spaces': 'error',
       'prefer-const': 'error',
+      'react/display-name': 'off',
       'object-curly-spacing': ['error', 'always'],
       'comma-dangle': [
         'error',

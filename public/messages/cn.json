@@ -34,5 +34,13 @@
     "lmode": "浅色模式",
     "dmode": "深色模式",
     "smode": "系统模式"
+  },
+  "Shared": {
+    "Select": {
+      "search": "Search..."
+    }
+  },
+  "BaseLabels": {
+    "delete": "Delete"
   }
 }

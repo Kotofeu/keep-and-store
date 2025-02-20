@@ -34,5 +34,13 @@
     "lmode": "Hellmodus",
     "dmode": "Dunkelmodus",
     "smode": "Systemmodus"
+  },
+  "Shared": {
+    "Select": {
+      "search": "Search..."
+    }
+  },
+  "BaseLabels": {
+    "delete": "Delete"
   }
 }
