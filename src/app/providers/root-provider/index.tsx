@@ -5,7 +5,6 @@ import { ThemeProvider } from 'next-themes';
 
 import { textFont, titleFont } from '@/app/fonts';
 import { Header } from '@/widgets/header';
-import { Button } from '@/shared/ui/button';
 
 interface RootProviderProps {
   locale: string;
@@ -15,13 +14,12 @@ interface RootProviderProps {
 export const RootProvider: FC<RootProviderProps> = async ({ locale, children }) => {
   const messages = await getMessages();
   return (
-    <html lang={locale} suppressHydrationWarning>
+    <html lang={locale} suppressHydrationWarning data-theme='dark'>
       <body className={`${titleFont.variable} ${textFont.variable}`}>
         <ThemeProvider disableTransitionOnChange enableSystem defaultTheme='system'>
           <NextIntlClientProvider messages={messages}>
             <Header />
             {children}
-            <Button title='sdf'>dsf</Button>
           </NextIntlClientProvider>
         </ThemeProvider>
       </body>

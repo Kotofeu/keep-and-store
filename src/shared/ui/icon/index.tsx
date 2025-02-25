@@ -26,7 +26,7 @@ export type IconType =
   | 'ru'
   | 'en'
   | 'es'
-  | 'in'
+  | 'hi'
   | 'sa'
   | 'zh'
   | 'de';
@@ -50,7 +50,7 @@ const getIcons = (color?: string) =>
     ['ru', <RuFlag color={color} />],
     ['en', <UkUsFlag color={color} />],
     ['es', <SpMxFlag color={color} />],
-    ['in', <InFlag color={color} />],
+    ['hi', <InFlag color={color} />],
     ['sa', <SaFlag color={color} />],
     ['zh', <CnFlag color={color} />],
     ['de', <DeFlag color={color} />]

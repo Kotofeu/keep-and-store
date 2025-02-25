@@ -6,7 +6,6 @@ import { Link } from '@/shared/i18n';
 import { BasePageProps } from '@/shared/types';
 import { ThemeSwitcher } from '@/features/theme-switcher';
 import { Select } from '@/shared/ui/select';
-import { Button } from '@/shared/ui/button';
 
 const HomePage: FC<BasePageProps> = ({ params }) => {
   const { locale } = use(params);
@@ -31,7 +30,6 @@ const HomePage: FC<BasePageProps> = ({ params }) => {
         multiple
         disabled
       />
-      <Button title='sdf'>dsf</Button>
       <Link href={'/about'}>ABOUT</Link>
       <Link href={'/'} locale={'ru'}>
         RU
