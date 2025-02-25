@@ -39,6 +39,9 @@ export const useSelectLogic = (
 
   const handleOptionClick = useCallback(
     (index: number) => {
+      if (disabled) {
+        return;
+      }
       if (multiple) {
         const newSelectedOptions = selectedOptions.some(o => o.value === filteredOptions[index].value)
           ? selectedOptions.filter(o => o.value !== filteredOptions[index].value)
@@ -51,16 +54,19 @@ export const useSelectLogic = (
         setIsOpen(false);
       }
     },
-    [multiple, onChange, selectedOptions, filteredOptions, setIsOpen]
+    [multiple, onChange, selectedOptions, filteredOptions, setIsOpen, disabled]
   );
 
   const handleRemoveOption = useCallback(
     (option: Option) => {
+      if (disabled) {
+        return;
+      }
       const newSelectedOptions = selectedOptions.filter(o => o.value !== option.value);
       setSelectedOptions(newSelectedOptions);
       onChange?.(newSelectedOptions);
     },
-    [onChange, selectedOptions]
+    [onChange, selectedOptions, disabled]
   );
 
   const toggleDropdown = useCallback(() => {

@@ -11,12 +11,27 @@ interface ItemsListProps {
   focusedOptionRef: Ref<HTMLLIElement> | undefined | null;
   multiple?: boolean;
   selectedOptions: Option[];
+  isOpen: boolean;
   onChangeOption: (index: number) => void;
+  selectId: string;
 }
 
 export const ItemsList = memo(
-  ({ options, focusedIndex, focusedOptionRef, multiple, selectedOptions, onChangeOption }: ItemsListProps) => (
-    <ul className={styles.list}>
+  ({
+    options,
+    focusedIndex,
+    focusedOptionRef,
+    multiple,
+    selectedOptions,
+    isOpen,
+    onChangeOption,
+    selectId
+  }: ItemsListProps) => (
+    <ul
+      className={classNames(styles.list, { [styles.list_isOpen]: isOpen })}
+      role='listbox'
+      aria-labelledby={`${selectId}-label`}
+    >
       {options.map((option, index) => {
         const isSelected = selectedOptions.some(o => o.value === option.value);
         return (
@@ -29,6 +44,10 @@ export const ItemsList = memo(
               [styles.list__option_selected]: isSelected
             })}
             onClick={() => (!isSelected || multiple ? onChangeOption(index) : undefined)}
+            role='option'
+            aria-selected={isSelected}
+            id={`${selectId}-option-${index}`}
+            aria-label={option.label}
           >
             {option.ui || option.label}
           </li>

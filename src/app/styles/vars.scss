@@ -1,8 +1,23 @@
 :root {
   --container-width: 1400px;
 
+  --z-index-default: 0;
+  --z-index-dropdown: 9;
+  --z-index-header: 10;
+  --z-index-modal: 12;
+  --z-index-max: 999;
+
+  --transition-momentary: .2s;
+  --transition-fast: .2s;
+  --transition-slow: .4s;
+}
+
+[data-theme=light] {
   --primary-color: #ffffff;
   --secondary-color: #f0f4ff;
+  
+  --primary-disable-color: #e9ecef;
+  --secondary-disable-color: #e3e4e4;
   --accent-color: #4a90e2;
 
   --text-primary: #333333;
@@ -22,6 +37,7 @@
   --icon: #333333;
   --icon-primary: #4a90e2;
   --icon-primary-hover: #357abd;
+  --icon-disable: #a0a0a0;
 
   --border-color: #d9d9d9;
   --box-shadow: rgba(0, 0, 0, 0.15);
@@ -58,10 +74,13 @@
   --error-color: #dc3545;
 }
 
-[data-theme='dark'] {
+[data-theme=dark] {
   --primary-color: #121212;
   --secondary-color: #1e1e1e;
   --accent-color: #ff6f61;
+
+  --primary-disable-color: #2a2a2a;
+  --secondary-disable-color: #333333;
 
   --text-primary: #eaeaea;
   --text-primary-hover: #ffffff;
@@ -80,7 +99,10 @@
   --icon: #ffffff;
   --icon-primary: #eb6f64;
   --icon-primary-hover: #ec5e51;
+  --icon-disable: #a0a0a0;
   --icon-primary-inverted: #121212;
+  --icon-primary-inverted-hover: #000000;
+  --icon-primary-inverted-disabled: #525252;
 
   --border-color: #333333;
   --box-shadow: rgba(0, 0, 0, 0.3);

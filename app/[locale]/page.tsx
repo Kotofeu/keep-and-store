@@ -6,6 +6,7 @@ import { Link } from '@/shared/i18n';
 import { BasePageProps } from '@/shared/types';
 import { ThemeSwitcher } from '@/features/theme-switcher';
 import { Select } from '@/shared/ui/select';
+import { Button } from '@/shared/ui/button';
 
 const HomePage: FC<BasePageProps> = ({ params }) => {
   const { locale } = use(params);
@@ -20,10 +21,17 @@ const HomePage: FC<BasePageProps> = ({ params }) => {
           { value: '2', label: 'Value 2' },
           { value: '3', label: 'Value 3' }
         ]}
-        placeholder='Плейсхолдер'
+        value={[
+          { value: '1', label: 'Value 1' },
+          { value: '2', label: 'Value 2' },
+          { value: '3', label: 'Value 3' }
+        ]}
+        placeholder='Селектор'
         searchable
         multiple
+        disabled
       />
+      <Button title='sdf'>dsf</Button>
       <Link href={'/about'}>ABOUT</Link>
       <Link href={'/'} locale={'ru'}>
         RU
@@ -31,9 +39,6 @@ const HomePage: FC<BasePageProps> = ({ params }) => {
       <Link href={'/'} locale={'en'}>
         EN
       </Link>
-      <div style={{ width: 300, overflowX: 'scroll', backgroundColor: 'var(--secondary-color)' }}>
-        <div style={{ width: 600 }}></div>
-      </div>
       <Link href={'/'} locale='ru'>
         Ru
       </Link>

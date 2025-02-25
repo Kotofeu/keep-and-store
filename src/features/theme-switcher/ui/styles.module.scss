@@ -9,7 +9,7 @@
   }
 }
 
-[data-theme='light'] .switcher {
+[data-theme=light] .switcher {
   &__button_light svg {
     stroke: var(--icon-primary);
   }
@@ -19,7 +19,7 @@
   }
 }
 
-[data-theme='dark'] .switcher {
+[data-theme=dark] .switcher {
   &__button_dark svg {
     stroke: var(--icon-primary);
   }

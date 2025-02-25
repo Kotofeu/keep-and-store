@@ -24,7 +24,7 @@
     "ru": "Русский",
     "en": "English",
     "de": "Deutsch",
-    "cn": "中国人",
+    "zh": "中国人",
     "es": "Español",
     "in": "हिंदी",
     "title": "Language"
@@ -37,10 +37,13 @@
   },
   "Shared": {
     "Select": {
-      "search": "Поиск..."
+      "search": "Поиск...",
+      "selectOption": "Выберите опцию",
+      "removeOption": "Удалить {optionLabel}"
     }
   },
   "BaseLabels": {
-    "delete": "Удалить"
+    "delete": "Удалить",
+    "selected": "Выбрано"
   }
 }

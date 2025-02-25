@@ -16,7 +16,7 @@ import {
   SpMxFlag,
   SystemMode,
   UkUsFlag
-} from './icons-assets';
+} from './assents';
 
 export type IconType =
   | 'cross'
@@ -28,7 +28,7 @@ export type IconType =
   | 'es'
   | 'in'
   | 'sa'
-  | 'cn'
+  | 'zh'
   | 'de';
 
 interface IconProps extends HTMLAttributes<HTMLDivElement> {
@@ -52,7 +52,7 @@ const getIcons = (color?: string) =>
     ['es', <SpMxFlag color={color} />],
     ['in', <InFlag color={color} />],
     ['sa', <SaFlag color={color} />],
-    ['cn', <CnFlag color={color} />],
+    ['zh', <CnFlag color={color} />],
     ['de', <DeFlag color={color} />]
   ]);
 

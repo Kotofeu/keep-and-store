@@ -1,6 +1,8 @@
 /* eslint-disable max-len */
 import { FC } from 'react';
 
+import styles from './styles.module.scss';
+
 interface IconsAssetsProps {
   color?: string;
 }
@@ -101,15 +103,7 @@ export const RuFlag: FC<IconsAssetsProps> = ({ color = 'var(--icon)' }) => (
 export const UkUsFlag: FC<IconsAssetsProps> = ({ color = 'var(--icon)' }) => (
   <svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
     <g clipPath='url(#clip0_1902_10021)'>
-      <mask
-        id='mask0_1902_10021'
-        style={{ maskType: 'alpha' }}
-        maskUnits='userSpaceOnUse'
-        x='0'
-        y='0'
-        width='24'
-        height='24'
-      >
+      <mask className={styles.mask_alpha} maskUnits='userSpaceOnUse' x='0' y='0' width='24' height='24'>
         <path d='M20.4853 3.51469L20.4853 0H0V20.4853L3.51472 20.4853L16.5 16.5L20.4853 3.51469Z' fill='#FF00FF' />
       </mask>
       <g mask='url(#mask0_1902_10021)'>
@@ -172,7 +166,7 @@ export const UkUsFlag: FC<IconsAssetsProps> = ({ color = 'var(--icon)' }) => (
       />
     </g>
     <defs>
-      <clipPath id='clip0_1902_10021'>
+      <clipPath>
         <rect width='24' height='24' fill='white' />
       </clipPath>
     </defs>
@@ -237,7 +231,7 @@ export const SpMxFlag: FC<IconsAssetsProps> = ({ color = 'var(--icon)' }) => (
       />
     </g>
     <defs>
-      <clipPath id='clip0_1904_10027'>
+      <clipPath>
         <rect width='24' height='24' fill='white' />
       </clipPath>
     </defs>

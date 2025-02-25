@@ -11,12 +11,32 @@
   background-color: var(--primary-color);
   cursor: pointer;
   flex-grow: 1;
+  transition: border-radius var(--transition-fast), background-color var(--transition-momentary);
+
+  &_disabled{
+    background-color: var(--primary-disable-color);
+    cursor: default;
+    & .value__remove{
+      cursor: default;
+    }
+    & .value__selected{
+      color: var(--text-primary-disabled);
+      &_multiple{
+        background-color: var(--secondary-disable-color);
+      }
+    }
+  }
+
+  &_isOpen{
+    border-radius: 7px 7px 0 0;
+  }
+  
   &__selected {
     font: inherit;
     display: flex;
     flex-direction: row;
     align-items: center;
-  
+    color: var(--text-primary);
     &_multiple {
       gap: 10px;
       background-color: var(--secondary-color);

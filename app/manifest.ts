@@ -145,28 +145,16 @@ const manifest = async (): Promise<MetadataRoute.Manifest> => {
       {
         src: 'images/screenshot-wide.png',
         sizes: '1280x800',
-        type: 'image/png',
-        form_factor: 'wide'
+        type: 'image/png'
       },
       {
         src: 'images/screenshot-portrait.png',
         sizes: '800x1280',
-        type: 'image/png',
-        form_factor: 'narrow'
+        type: 'image/png'
       }
     ],
     dir: 'ltr',
-    display_override: ['window-controls-overlay', 'standalone', 'minimal-ui'],
     display: 'standalone',
-    file_handlers: [
-      {
-        action: '/handle-file',
-        accept: {
-          'image/png': ['.png'],
-          'image/jpeg': ['.jpg', '.jpeg', '.gif', '.webp']
-        }
-      }
-    ],
     categories: [
       'Security',
       'Data Storage',
@@ -178,47 +166,6 @@ const manifest = async (): Promise<MetadataRoute.Manifest> => {
     ],
     description: t('description'),
     orientation: 'portrait-primary',
-    protocol_handlers: [
-      {
-        protocol: 'web+taskmanager',
-        url: '/task?url=%s'
-      },
-      {
-        protocol: 'mailto',
-        url: '/send-email?to=%s'
-      },
-      {
-        protocol: 'tel',
-        url: '/call?number=%s'
-      },
-      {
-        protocol: 'sms',
-        url: '/send-sms?to=%s'
-      },
-      {
-        protocol: 'web+notes',
-        url: '/note?content=%s'
-      },
-      {
-        protocol: 'web+calendar',
-        url: '/event?date=%s'
-      },
-      {
-        protocol: 'web+twitter',
-        url: '/share-twitter?url=%s'
-      },
-      {
-        protocol: 'web+facebook',
-        url: '/share-facebook?url=%s'
-      },
-      {
-        protocol: 'web+file',
-        url: '/open-file?file=%s'
-      }
-    ],
-    launch_handler: {
-      client_mode: ['navigate-new', 'auto']
-    },
     lang: locale
   };
 };

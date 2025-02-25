@@ -1,10 +1,17 @@
 .list {
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
   gap: 2px;
-  max-height: 200px;
-  overflow: hidden auto;
-  padding: 8px 10px;
+  height: 100%;
+  overflow: hidden hidden;
+  padding: 0 10px;
+  transition: overflow var(--transition-slow);
+  
+  &_isOpen{
+    overflow: hidden auto;
+  }
+  
   &__option {
     font: inherit;
     display: flex;
@@ -16,8 +23,9 @@
     cursor: pointer;
     align-items: center;
     border-radius: 4px;
-    transition: background-color 0.15s ease-in-out;
-  
+    transition: background-color var(--transition-momentary) ease-in-out,  border-color var(--transition-momentary) ease-in-out;
+    border: 1px solid transparent;
+
     &:hover,
     &:focus {
       background-color: var(--secondary-color);
@@ -34,7 +42,7 @@
     }
   
     &_focused {
-      border: 1px solid var(--accent-color);
+      border-color: var(--accent-color);
     }
   }
 }

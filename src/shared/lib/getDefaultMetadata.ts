@@ -10,7 +10,7 @@ export const getDefaultMetadata = async (
   const baseUrl = process.env.NEXT_PUBLIC_URL || 'https://localhost:4000';
   const t = await getTranslations({ locale, namespace: 'Metadata' });
   const alternateURLs: AlternateURLs = {
-    canonical: '/',
+    canonical: `/${locale}`,
     languages: {
       ...allLocales.reduce((acc: { [key: string]: string }, lang) => {
         acc[lang] = `/${lang}${path}`;

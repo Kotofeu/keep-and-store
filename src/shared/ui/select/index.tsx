@@ -1,1 +1,1 @@
-export { Select } from './select-client';
+export { Select, type DropdownHeight } from './select-client';

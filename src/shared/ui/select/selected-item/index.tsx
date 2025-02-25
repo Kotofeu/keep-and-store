@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { FC } from 'react';
+import { FC, memo } from 'react';
 import { useTranslations } from 'next-intl';
 
 import { classNames } from '@/shared/lib';
@@ -12,21 +12,32 @@ interface SelectedItemProps {
   multiple?: boolean;
   placeholder?: string;
   options: Option[];
+  isOpen: boolean;
   onRemoveOption: (option: Option) => void;
   toggleDropdown: () => void;
+  selectId: string;
+  disabled?: boolean;
 }
 
-export const SelectedItem: FC<SelectedItemProps> = ({
+export const SelectedItem: FC<SelectedItemProps> = memo(({
   multiple,
   options,
   placeholder,
+  isOpen,
   onRemoveOption,
-  toggleDropdown
+  toggleDropdown,
+  selectId,
+  disabled
 }) => {
-  const t = useTranslations('BaseLabels');
+  const t = useTranslations();
 
   return (
-    <div className={styles.value} onClick={toggleDropdown}>
+    <div
+      className={classNames(styles.value, { [styles.value_isOpen]: isOpen, [styles.value_disabled]: !!disabled })}
+      onClick={toggleDropdown}
+      id={`${selectId}-label`}
+      aria-label={placeholder || t('Shared.Select.selectOption')}
+    >
       {options.length > 0
         ? options.map(option => (
           <span
@@ -44,10 +55,11 @@ export const SelectedItem: FC<SelectedItemProps> = ({
                   e.stopPropagation();
                   onRemoveOption(option);
                 }}
-                title={t('delete')}
-                data-remove-button
+                title={t('BaseLabels.delete')}
+                data-ignore-element={`${selectId}`}
+                aria-label={t('Shared.Select.removeOption', { optionLabel: option.label })}
               >
-                <Icon type='cross' />
+                <Icon type='cross' color={disabled? 'var(--icon-disable)':'var(--icon)'}/>
               </button>
             )}
           </span>
@@ -55,4 +67,4 @@ export const SelectedItem: FC<SelectedItemProps> = ({
         : placeholder}
     </div>
   );
-};
+});

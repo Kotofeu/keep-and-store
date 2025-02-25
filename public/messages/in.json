@@ -24,7 +24,7 @@
     "ru": "Русский",
     "en": "English",
     "de": "Deutsch",
-    "cn": "中国人",
+    "zh": "中国人",
     "es": "Español",
     "in": "हिंदी",
     "title": "भाषा"
@@ -37,10 +37,13 @@
   },
   "Shared": {
     "Select": {
-      "search": "Search..."
+      "search": "Search...",
+      "selectOption": "Select an option",
+      "removeOption": "Remove {optionLabel}"
     }
   },
   "BaseLabels": {
-    "delete": "Delete"
+    "delete": "Delete",
+    "selected": "Selected"
   }
 }

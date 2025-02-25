@@ -8,7 +8,7 @@
     height: 100%;
     object-fit: contain;
     transition:
-      stroke 0.2s ease-in-out,
-      fill 0.2s ease-in-out;
+      stroke var(--transition-fast) ease-in-out,
+      fill var(--transition-fast) ease-in-out;
   }
 }

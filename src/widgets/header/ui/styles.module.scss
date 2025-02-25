@@ -5,7 +5,7 @@
   left: 0;
   right: 0;
   background-color: var(--secondary-color);
-
+  z-index: var(--z-index-header);
   &__wrapper {
     margin: 0 auto;
     padding: 0 20px;
