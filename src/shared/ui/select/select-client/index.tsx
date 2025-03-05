@@ -1,39 +1,34 @@
 'use client';
-import { FC, KeyboardEvent, useCallback, useEffect, useId, useRef } from 'react';
+import { useId, useRef } from 'react';
 import { useTranslations } from 'next-intl';
 
-import { useClickOutside, useKeyboardNavigation, useSelectLogic } from '@/shared/hooks';
+import { useClickOutside, useKeyboardNavigation, useSelectLogic, useVirtualList } from '@/shared/hooks';
 import { classNames } from '@/shared/lib';
-import { Option } from '@/shared/types';
 
 import styles from './styles.module.scss';
 import { SelectServer } from '../select-server';
+import { dropdownHeightMap, Option, SelectClientProps } from '../types';
 
-export type DropdownHeight = 'small' | 'medium' | 'large' | number;
+const getDropdownHeight = (height: keyof typeof dropdownHeightMap | number): number =>
+  typeof height === 'number' ? height : dropdownHeightMap[height];
 
-interface SelectClientProps {
-  className?: string;
-  options: Option[];
-  placeholder?: string;
-  value?: Option | Option[];
-  disabled?: boolean;
-  multiple?: boolean;
-  searchable?: boolean;
-  dropdownHeight?: DropdownHeight;
-  onChange?: (option: Option | Option[]) => void;
-}
-
-export const Select: FC<SelectClientProps> = ({
+export const Select = <T,>({
   className,
-  options,
   placeholder,
   value,
-  disabled,
+  options = [],
+  disabled = false,
   multiple = false,
   searchable = false,
+  required = false,
+  isLoading = false,
   dropdownHeight = 'medium',
-  onChange
-}) => {
+  itemHeight = 34,
+  gap = 2,
+  overscanCount = 10,
+  onChange,
+  loadOptions
+}: SelectClientProps<T>) => {
   const ref = useRef<HTMLDivElement>(null);
   const focusedOptionRef = useRef<HTMLLIElement | null>(null);
   const selectId = useId();
@@ -41,50 +36,61 @@ export const Select: FC<SelectClientProps> = ({
 
   const [isOpen, setIsOpen, closeDropdown] = useClickOutside(ref, null, `data-ignore-element="${selectId}"`);
 
-  const [
+  const {
     selectedOptions,
-    searchTerm,
+    searchValue,
     focusedIndex,
     filteredOptions,
-    setSearchTerm,
+    setSearchValue,
     setFocusedIndex,
     handleOptionClick,
     handleRemoveOption,
-    toggleDropdown
-  ] = useSelectLogic(options, multiple, value, isOpen, setIsOpen, disabled, onChange);
+    removeAllOptions,
+    toggleDropdown,
+    openSelectByEnter,
+    isLoading: promiseIsLoading,
+    error: loadingError
+  } = useSelectLogic<T>({
+    options,
+    multiple,
+    value,
+    isOpen,
+    focusedOptionRef,
+    setIsOpen,
+    disabled: disabled || isLoading,
+    onChange,
+    loadOptions
+  });
 
-  const [handleKeyDown] = useKeyboardNavigation<Option>(
-    !!disabled,
-    filteredOptions,
+  const handleKeyDown = useKeyboardNavigation<Option<T>>({
+    disabled: !!disabled,
+    items: filteredOptions,
     focusedIndex,
     setFocusedIndex,
-    handleOptionClick,
-    closeDropdown
-  );
+    handleEnterClick: handleOptionClick,
+    handleEscapeClick: closeDropdown
+  });
 
-  useEffect(() => {
-    if (focusedIndex !== undefined && focusedOptionRef.current) {
-      focusedOptionRef.current.scrollIntoView({
-        behavior: 'smooth',
-        block: 'nearest'
-      });
-    }
-  }, [focusedIndex]);
+  const {
+    visibleItems,
+    totalHeight: listHeight,
+    offsetY: listOffsetY,
+    containerRef: listContainerRef
+  } = useVirtualList({
+    items: filteredOptions,
+    itemHeight,
+    overscanCount,
+    containerHeight: getDropdownHeight(dropdownHeight) / 2,
+    gap
+  });
 
-  const handleEnterKey = useCallback(
-    (e: KeyboardEvent<HTMLDivElement>) => {
-      if (e.key === 'Enter' && !disabled) {
-        setIsOpen(true);
-      }
-    },
-    [setIsOpen, disabled]
-  );
+  const calcIsLoading = isLoading || promiseIsLoading;
 
   return (
     <div
       className={classNames(styles.select, {}, [className])}
       ref={ref}
-      onKeyDown={isOpen ? handleKeyDown : handleEnterKey}
+      onKeyDown={isOpen && !calcIsLoading && !loadingError ? handleKeyDown : openSelectByEnter}
       tabIndex={0}
       role='combobox'
       aria-haspopup='listbox'
@@ -95,22 +101,31 @@ export const Select: FC<SelectClientProps> = ({
     >
       <SelectServer
         className={className}
-        options={filteredOptions}
         placeholder={placeholder}
         selectedOptions={selectedOptions}
+        selectId={selectId}
+        visibleItems={visibleItems}
         searchable={searchable}
-        searchTerm={searchTerm}
         isOpen={isOpen}
-        focusedIndex={focusedIndex}
+        required={required}
         multiple={multiple}
+        disabled={disabled}
+        isLoading={calcIsLoading}
+        dropdownHeight={getDropdownHeight(dropdownHeight)}
+        gap={gap}
+        itemHeight={itemHeight}
+        listHeight={listHeight}
+        listOffsetY={listOffsetY}
+        focusedIndex={focusedIndex}
+        searchValue={searchValue}
+        loadingError={loadingError}
         focusedOptionRef={focusedOptionRef}
-        dropdownHeight={dropdownHeight}
-        onSearchChange={setSearchTerm}
-        toggleDropdown={toggleDropdown}
+        listContainerRef={listContainerRef}
+        onSearchChange={setSearchValue}
         onChangeOption={handleOptionClick}
         onRemoveOption={handleRemoveOption}
-        selectId={selectId}
-        disabled={disabled}
+        removeAllOptions={removeAllOptions}
+        toggleDropdown={toggleDropdown}
       />
     </div>
   );

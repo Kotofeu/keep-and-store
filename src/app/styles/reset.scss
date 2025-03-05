@@ -2,6 +2,9 @@
 *::before,
 *::after {
   box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  word-break: break-word;
 }
 
 ul,
@@ -36,7 +39,6 @@ body {
   overflow: hidden scroll;
   font-size: 14px;
   font-weight: 400;
-  font-family: var(--text-font);
 }
 
 ul[class],
@@ -48,7 +50,6 @@ a {
   text-decoration: none;
   font: inherit;
   color: inherit;
-  font-family: var(--title-font);
 }
 
 a:not([class]) {
@@ -75,7 +76,6 @@ select {
   font: inherit;
   line-height: inherit;
   margin: 0;
-  font-family: var(--title-font);
 }
 
 p {
@@ -89,14 +89,5 @@ h4,
 h5,
 h6 {
   font-weight: 600;
-  font-family: var(--title-font);
   line-height: 1.1em;
-}
-
-*,
-*:before,
-*:after {
-  -webkit-tap-highlight-color: transparent;
-  -webkit-touch-callout: none;
-  word-break: break-word;
 }

@@ -5,6 +5,7 @@ import { classNames } from '@/shared/lib';
 
 import styles from './styles.module.scss';
 import {
+  ArrowDown,
   CnFlag,
   Cross,
   DarkMode,
@@ -20,6 +21,7 @@ import {
 
 export type IconType =
   | 'cross'
+  | 'arrowDown'
   | 'lightMode'
   | 'darkMode'
   | 'systemMode'
@@ -41,6 +43,8 @@ const getIcons = (color?: string) =>
   new Map<IconType, JSX.Element>([
     // system icon
     ['cross', <Cross color={color} />],
+    ['arrowDown', <ArrowDown color={color} />],
+
     // themes icons
     ['lightMode', <LightMode color={color} />],
     ['darkMode', <DarkMode color={color} />],

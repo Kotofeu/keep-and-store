@@ -8,8 +8,8 @@ export type ButtonThemes = 'primary' | 'secondary' | 'clear';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   theme?: ButtonThemes;
+  children?: ReactNode;
   title: string;
-  children: ReactNode;
 }
 
 export const Button: FC<ButtonProps> = ({
@@ -25,7 +25,8 @@ export const Button: FC<ButtonProps> = ({
     className={classNames(styles.button, {}, [className, styles[theme]])}
     type={type}
     aria-label={title}
+    role='button'
   >
-    {children}
+    {children || title}
   </button>
 );

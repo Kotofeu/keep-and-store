@@ -1,73 +1,61 @@
-import { FC, Ref } from 'react';
 import { useTranslations } from 'next-intl';
 
 import { classNames } from '@/shared/lib';
-import { Option } from '@/shared/types';
 
 import styles from './styles.module.scss';
 import { SelectedItem } from '../selected-item';
 import { ItemsList } from '../items-list';
-import { DropdownHeight } from '../select-client';
+import { SelectServerProps } from '../types';
 
-interface SelectServerProps {
-  className?: string;
-  options: Option[];
-  placeholder?: string;
-  selectedOptions: Option[];
-  searchable?: boolean;
-  isOpen: boolean;
-  searchTerm?: string;
-  focusedIndex?: number;
-  multiple?: boolean;
-  focusedOptionRef: Ref<HTMLLIElement> | undefined | null;
-  dropdownHeight: DropdownHeight;
-  onChangeOption: (index: number) => void;
-  onSearchChange?: (term: string) => void;
-  toggleDropdown: () => void;
-  onRemoveOption: (option: Option) => void;
-  selectId: string;
-  disabled?: boolean;
-}
-
-export const SelectServer: FC<SelectServerProps> = ({
+export const SelectServer = <T,>({
   className,
-  options,
   placeholder,
   selectedOptions,
+  selectId,
+  visibleItems,
   searchable,
   isOpen,
-  searchTerm,
-  focusedIndex,
+  required,
   multiple,
-  focusedOptionRef,
+  disabled,
+  isLoading,
   dropdownHeight,
+  gap,
+  itemHeight,
+  listHeight,
+  listOffsetY,
+  focusedIndex,
+  searchValue,
+  loadingError,
+  focusedOptionRef,
+  listContainerRef,
   onChangeOption,
   onSearchChange,
   toggleDropdown,
   onRemoveOption,
-  selectId,
-  disabled
-}) => {
+  removeAllOptions
+}: SelectServerProps<T>) => {
   const t = useTranslations('Shared.Select');
-
   return (
     <div className={classNames(styles.select, {}, [className])}>
       <SelectedItem
         multiple={multiple}
+        required={required}
         placeholder={placeholder}
         options={selectedOptions}
         isOpen={isOpen}
         onRemoveOption={onRemoveOption}
         toggleDropdown={toggleDropdown}
+        removeAllOptions={removeAllOptions}
         selectId={selectId}
         disabled={disabled}
+        isLoading={isLoading}
       />
       <div
         className={classNames(styles.select__dropdown, {
-          [styles.select__dropdown_isOpen]: isOpen,
-          [styles[dropdownHeight]]: typeof dropdownHeight === 'string'
+          [styles.select__dropdown_isOpen]: isOpen
         })}
-        data-dropdown-height={typeof dropdownHeight === 'number' && dropdownHeight}
+        style={{ maxHeight: dropdownHeight }}
         id={`${selectId}-listbox`}
         aria-labelledby={`${selectId}-label`}
       >
@@ -77,7 +65,7 @@ export const SelectServer: FC<SelectServerProps> = ({
               id={`${selectId}-search`}
               type='text'
               placeholder={t('search')}
-              value={searchTerm}
+              value={searchValue}
               onChange={e => onSearchChange?.(e.target.value)}
               className={styles.select__search}
               aria-label={t('search')}
@@ -86,14 +74,20 @@ export const SelectServer: FC<SelectServerProps> = ({
           </div>
         )}
         <ItemsList
-          options={options}
           focusedIndex={focusedIndex}
           focusedOptionRef={focusedOptionRef}
           multiple={multiple}
           selectedOptions={selectedOptions}
-          isOpen={isOpen && !disabled}
+          isOpen={isOpen && !disabled && !isLoading}
           onChangeOption={onChangeOption}
           selectId={selectId}
+          loadingError={loadingError}
+          listHeight={listHeight}
+          listContainerRef={listContainerRef}
+          gap={gap}
+          visibleItems={visibleItems}
+          listOffsetY={listOffsetY}
+          itemHeight={itemHeight}
         />
       </div>
     </div>

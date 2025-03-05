@@ -7,7 +7,7 @@ interface IconsAssetsProps {
   color?: string;
 }
 
-export const Cross: FC<IconsAssetsProps> = ({ color = 'var(--icon)' }) => (
+export const Cross: FC<IconsAssetsProps> = ({ color = 'var(--icon-secondary)' }) => (
   <svg
     xmlns='http://www.w3.org/2000/svg'
     width='24'
@@ -24,7 +24,23 @@ export const Cross: FC<IconsAssetsProps> = ({ color = 'var(--icon)' }) => (
   </svg>
 );
 
-export const LightMode: FC<IconsAssetsProps> = ({ color = 'var(--icon)' }) => (
+export const ArrowDown: FC<IconsAssetsProps> = ({ color = 'var(--icon-secondary)' }) => (
+  <svg
+    xmlns='http://www.w3.org/2000/svg'
+    width='24'
+    height='24'
+    viewBox='0 0 24 24'
+    fill='none'
+    stroke={color}
+    strokeWidth='2'
+    strokeLinecap='round'
+    strokeLinejoin='round'
+  >
+    <path d='M12 17L22 8' />
+    <path d='M12 17L2 8' />
+  </svg>
+);
+export const LightMode: FC<IconsAssetsProps> = ({ color = 'var(--icon-secondary)' }) => (
   <svg
     xmlns='http://www.w3.org/2000/svg'
     width='24'
@@ -48,7 +64,7 @@ export const LightMode: FC<IconsAssetsProps> = ({ color = 'var(--icon)' }) => (
   </svg>
 );
 
-export const DarkMode: FC<IconsAssetsProps> = ({ color = 'var(--icon)' }) => (
+export const DarkMode: FC<IconsAssetsProps> = ({ color = 'var(--icon-secondary)' }) => (
   <svg
     xmlns='http://www.w3.org/2000/svg'
     width='24'
@@ -64,7 +80,7 @@ export const DarkMode: FC<IconsAssetsProps> = ({ color = 'var(--icon)' }) => (
   </svg>
 );
 
-export const SystemMode: FC<IconsAssetsProps> = ({ color = 'var(--icon)' }) => (
+export const SystemMode: FC<IconsAssetsProps> = ({ color = 'var(--icon-secondary)' }) => (
   <svg width='24' height='24' viewBox='0 0 24 24' fill='none' stroke={color} strokeWidth='2'>
     <circle cx='12' cy='12' r='11' />
     <text
@@ -82,7 +98,7 @@ export const SystemMode: FC<IconsAssetsProps> = ({ color = 'var(--icon)' }) => (
   </svg>
 );
 
-export const RuFlag: FC<IconsAssetsProps> = ({ color = 'var(--icon)' }) => (
+export const RuFlag: FC<IconsAssetsProps> = ({ color = 'var(--icon-secondary)' }) => (
   <svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
     <path
       d='M22.6027 17.625C23.4946 15.9472 24 14.0326 24 12C24 9.96736 23.4946 8.05277 22.6027 6.375H1.39733C0.505375 8.05277 0 9.96736 0 12C0 14.0326 0.505375 15.9472 1.39733 17.625H22.6027Z'
@@ -100,7 +116,7 @@ export const RuFlag: FC<IconsAssetsProps> = ({ color = 'var(--icon)' }) => (
   </svg>
 );
 
-export const UkUsFlag: FC<IconsAssetsProps> = ({ color = 'var(--icon)' }) => (
+export const UkUsFlag: FC<IconsAssetsProps> = ({ color = 'var(--icon-secondary)' }) => (
   <svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
     <g clipPath='url(#clip0_1902_10021)'>
       <mask className={styles.mask_alpha} maskUnits='userSpaceOnUse' x='0' y='0' width='24' height='24'>
@@ -174,7 +190,7 @@ export const UkUsFlag: FC<IconsAssetsProps> = ({ color = 'var(--icon)' }) => (
   </svg>
 );
 
-export const SpMxFlag: FC<IconsAssetsProps> = ({ color = 'var(--icon)' }) => (
+export const SpMxFlag: FC<IconsAssetsProps> = ({ color = 'var(--icon-secondary)' }) => (
   <svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
     <g clipPath='url(#clip0_1904_10027)'>
       <path
@@ -239,7 +255,7 @@ export const SpMxFlag: FC<IconsAssetsProps> = ({ color = 'var(--icon)' }) => (
   </svg>
 );
 
-export const InFlag: FC<IconsAssetsProps> = ({ color = 'var(--icon)' }) => (
+export const InFlag: FC<IconsAssetsProps> = ({ color = 'var(--icon-secondary)' }) => (
   <svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
     <path
       d='M22.3946 18C23.4156 16.235 24 14.1857 24 12C24 9.81428 23.4156 7.76504 22.3946 6L1.60539 6C0.584366 7.76504 0 9.81428 0 12C0 14.1857 0.584365 16.235 1.60539 18L22.3946 18Z'
@@ -260,7 +276,7 @@ export const InFlag: FC<IconsAssetsProps> = ({ color = 'var(--icon)' }) => (
   </svg>
 );
 
-export const SaFlag: FC<IconsAssetsProps> = ({ color = 'var(--icon)' }) => (
+export const SaFlag: FC<IconsAssetsProps> = ({ color = 'var(--icon-secondary)' }) => (
   <svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
     <circle cx='12' cy='12' r='12' fill='#496E2D' />
     <path
@@ -285,7 +301,7 @@ export const SaFlag: FC<IconsAssetsProps> = ({ color = 'var(--icon)' }) => (
   </svg>
 );
 
-export const DeFlag: FC<IconsAssetsProps> = ({ color = 'var(--icon)' }) => (
+export const DeFlag: FC<IconsAssetsProps> = ({ color = 'var(--icon-secondary)' }) => (
   <svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
     <path
       d='M22.6027 17.625C23.4946 15.9472 24 14.0326 24 12C24 9.96736 23.4946 8.05277 22.6027 6.375H1.39733C0.505375 8.05277 0 9.96736 0 12C0 14.0326 0.505375 15.9472 1.39733 17.625H22.6027Z'
@@ -303,7 +319,7 @@ export const DeFlag: FC<IconsAssetsProps> = ({ color = 'var(--icon)' }) => (
   </svg>
 );
 
-export const CnFlag: FC<IconsAssetsProps> = ({ color = 'var(--icon)' }) => (
+export const CnFlag: FC<IconsAssetsProps> = ({ color = 'var(--icon-secondary)' }) => (
   <svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
     <circle cx='12' cy='12' r='12' fill='#D80027' />
     <path

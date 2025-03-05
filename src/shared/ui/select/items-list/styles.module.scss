@@ -1,17 +1,24 @@
+.container {
+  overflow: auto;
+}
+
+.wrapper {
+  position: relative;
+  overflow: hidden;
+  padding: 0 10px;
+  transition: overflow var(--transition-slow);
+
+  &_isOpen {
+    overflow: hidden auto;
+  }
+}
+
 .list {
-  flex-grow: 1;
   display: flex;
   flex-direction: column;
   gap: 2px;
-  height: 100%;
-  overflow: hidden hidden;
-  padding: 0 10px;
-  transition: overflow var(--transition-slow);
-  
-  &_isOpen{
-    overflow: hidden auto;
-  }
-  
+  will-change: transform;
+
   &__option {
     font: inherit;
     display: flex;
@@ -23,27 +30,55 @@
     cursor: pointer;
     align-items: center;
     border-radius: 4px;
-    transition: background-color var(--transition-momentary) ease-in-out,  border-color var(--transition-momentary) ease-in-out;
+    transition:
+      background-color var(--transition-momentary) ease-in-out,
+      border-color var(--transition-momentary) ease-in-out;
     border: 1px solid transparent;
+    color: var(--field-secondary-text);
 
     &:hover,
     &:focus {
-      background-color: var(--secondary-color);
+      background-color: var(--field-secondary-background-hover);
+      color: var(--field-secondary-text-hover);
     }
-  
+
+    &_focused {
+      border-color: var(--field-secondary-border-hover);
+    }
+
     &_selected {
-      background-color: var(--secondary-color);
-      color: var(--accent-color);
+      background-color: var(--field-secondary-background-active);
+      color: var(--field-secondary-text-active);
       cursor: default;
+
+      &:hover,
+      &:focus {
+        background-color: var(--field-secondary-background-active);
+      }
+
+      &.list__option_focused {
+        border-color: var(--field-secondary-border-active);
+      }
     }
-  
+
     &_multiple {
       cursor: pointer;
     }
-  
-    &_focused {
-      border-color: var(--accent-color);
+
+    &_disable {
+      cursor: default;
+      background-color: var(--field-secondary-background-disabled);
+      color: var(--field-secondary-text-disabled);
+
+      &:hover,
+      &:focus {
+        background-color: var(--field-secondary-background-disabled);
+        color: var(--field-secondary-text-disabled);
+      }
+
+      &.list__option_focused {
+        border-color: var(--field-secondary-border-disabled);
+      }
     }
   }
 }
-

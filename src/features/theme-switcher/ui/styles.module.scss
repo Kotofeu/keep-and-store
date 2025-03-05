@@ -9,23 +9,23 @@
   }
 }
 
-[data-theme=light] .switcher {
+[data-theme='light'] .switcher {
   &__button_light svg {
     stroke: var(--icon-primary);
   }
 
   &__button_dark svg {
-    stroke: var(--icon);
+    stroke: var(--icon-secondary);
   }
 }
 
-[data-theme=dark] .switcher {
+[data-theme='dark'] .switcher {
   &__button_dark svg {
     stroke: var(--icon-primary);
   }
 
   &__button_light svg {
-    stroke: var(--icon);
+    stroke: var(--icon-secondary);
   }
 }
 

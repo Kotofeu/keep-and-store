@@ -38,12 +38,14 @@
   "Shared": {
     "Select": {
       "search": "Поиск...",
+      "selected": "Выбрано",
+      "emptyList": "Ничего не нашлось",
       "selectOption": "Выберите опцию",
-      "removeOption": "Удалить {optionLabel}"
+      "removeOption": "Удалить {optionLabel}",
+      "removeAllOption": "Удалить выбранное"
     }
   },
   "BaseLabels": {
-    "delete": "Удалить",
-    "selected": "Выбрано"
+    "delete": "Удалить"
   }
 }

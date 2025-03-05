@@ -5,31 +5,38 @@ import { setRequestLocale } from 'next-intl/server';
 import { Link } from '@/shared/i18n';
 import { BasePageProps } from '@/shared/types';
 import { ThemeSwitcher } from '@/features/theme-switcher';
-import { Select } from '@/shared/ui/select';
+import { Option, Select } from '@/shared/ui/select';
 
 const HomePage: FC<BasePageProps> = ({ params }) => {
   const { locale } = use(params);
   setRequestLocale(locale);
-
+  const loadTestOptions = async (): Promise<Option<string>[]> => {
+    'use server';
+    return new Promise(resolve => {
+      setTimeout(() => {
+        const options: Option<string>[] = Array.from({ length: 10000 }, (_, index) => ({
+          value: `${index}`,
+          label: `Option ${index}`
+        }));
+        resolve(options);
+      }, 1000);
+    });
+  };
   const t = useTranslations('MainPage');
   return (
     <main>
+      <Select loadOptions={loadTestOptions} placeholder='Селектор' searchable multiple />
       <Select
         options={[
-          { value: '1', label: 'Value 1' },
-          { value: '2', label: 'Value 2' },
-          { value: '3', label: 'Value 3' }
-        ]}
-        value={[
-          { value: '1', label: 'Value 1' },
-          { value: '2', label: 'Value 2' },
-          { value: '3', label: 'Value 3' }
+          { label: '1', value: '1', disabled: true },
+          { label: '2', value: '3' },
+          { label: '3', value: '4' }
         ]}
         placeholder='Селектор'
         searchable
         multiple
-        disabled
       />
+      <Select options={[{ label: '1', value: '1' }]} placeholder='Селектор' searchable multiple />
       <Link href={'/about'}>ABOUT</Link>
       <Link href={'/'} locale={'ru'}>
         RU

@@ -1,16 +1,25 @@
 import { KeyboardEvent, useCallback, SetStateAction } from 'react';
 
-export const useKeyboardNavigation = <T>(
-  disable: boolean,
-  items: T[],
-  focusedIndex: number,
-  setFocusedIndex: (value: SetStateAction<number>) => void,
-  handleEnterClick?: (index: number) => void,
-  handleEscapeClick?: () => void
-): [(e: KeyboardEvent<HTMLDivElement>) => void] => {
+type UseKeyboardNavigationProps<T> = {
+  disabled: boolean;
+  items: T[];
+  focusedIndex: number;
+  setFocusedIndex: (value: SetStateAction<number>) => void;
+  handleEnterClick?: (index: number) => void;
+  handleEscapeClick?: () => void;
+};
+
+export const useKeyboardNavigation = <T>({
+  disabled,
+  items,
+  focusedIndex,
+  setFocusedIndex,
+  handleEnterClick,
+  handleEscapeClick
+}: UseKeyboardNavigationProps<T>): ((e: KeyboardEvent<HTMLDivElement>) => void) => {
   const handleKeyDown = useCallback(
     (e: KeyboardEvent<HTMLDivElement>) => {
-      if (!disable) {
+      if (!disabled) {
         if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
           e.preventDefault();
           setFocusedIndex(prev => (prev < items.length - 1 ? prev + 1 : 0));
@@ -26,8 +35,8 @@ export const useKeyboardNavigation = <T>(
         }
       }
     },
-    [disable, items, focusedIndex, setFocusedIndex, handleEnterClick, handleEscapeClick]
+    [disabled, items, focusedIndex, setFocusedIndex, handleEnterClick, handleEscapeClick]
   );
 
-  return [handleKeyDown];
+  return handleKeyDown;
 };

@@ -38,12 +38,14 @@
   "Shared": {
     "Select": {
       "search": "Search...",
+      "selected": "Selected",
+      "emptyList": "Nothing was found",
       "selectOption": "Select an option",
-      "removeOption": "Remove {optionLabel}"
+      "removeOption": "Remove {optionLabel}",
+      "removeAllOption": "Remove selected"
     }
   },
   "BaseLabels": {
-    "delete": "Delete",
-    "selected": "Selected"
+    "delete": "Delete"
   }
 }

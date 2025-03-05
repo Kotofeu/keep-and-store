@@ -14,15 +14,16 @@
     top: 100%;
     left: 0;
     right: 0;
-    border: 1px solid var(--border-color);
+    border: 1px solid var(--field-primary-border);
     border-top: none;
     border-radius: 7px;
     background-color: var(--primary-color);
     list-style: none;
-    box-shadow: 0 10px 25px var(--box-shadow);
-    max-height: 0px;
+    box-shadow: 0 1px 2px var(--box-shadow);
+    max-height: 0;
     opacity: 0;
-    transition: opacity var(--transition-fast),
+    transition:
+      opacity var(--transition-fast),
       border-radius var(--transition-fast),
       max-height var(--transition-fast);
     padding: 8px 0 10px;
@@ -32,20 +33,6 @@
       pointer-events: all;
       border-radius: 0 0 7px 7px;
       opacity: 1;
-      max-height: attr(data-dropdown-height px);
-
-      &.small {
-        max-height: 150px;
-      }
-
-      &.medium {
-        max-height: 200px;
-      }
-
-      &.large {
-        max-height: 250px;
-      }
-
     }
   }
 
@@ -60,13 +47,28 @@
     padding: 6px 10px;
     font-size: 16px;
     border-radius: 6px;
-    border: 1px solid var(--border-color);
+    background-color: var(--field-primary-background);
+    border: 1px solid var(--field-primary-border);
     outline: none;
-    transition: border 0.15s ease-in-out;
+    transition:
+      border 0.15s ease-in-out,
+      color 0.15s ease-in-out;
+    color: var(--field-primary-text);
+
+    &::placeholder {
+      text-overflow: ellipsis;
+      color: var(--field-primary-placeholder);
+    }
+
+    &:hover {
+      border: 1px solid var(--field-primary-border-hover);
+      color: var(--field-primary-text-hover);
+    }
 
     &:active,
-    &:focus {
-      border: 1px solid var(--accent-color);
+    &:focus-visible {
+      border: 1px solid var(--field-primary-border-active);
+      color: var(--field-primary-text-active);
     }
   }
 }
