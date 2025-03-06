@@ -19,6 +19,7 @@ export const SelectServer = <T,>({
   multiple,
   disabled,
   isLoading,
+  maxSelectedItemsCount,
   dropdownHeight,
   gap,
   itemHeight,
@@ -39,6 +40,7 @@ export const SelectServer = <T,>({
   return (
     <div className={classNames(styles.select, {}, [className])}>
       <SelectedItem
+        maxSelectedItemsCount={maxSelectedItemsCount}
         multiple={multiple}
         required={required}
         placeholder={placeholder}
@@ -70,6 +72,7 @@ export const SelectServer = <T,>({
               className={styles.select__search}
               aria-label={t('search')}
               aria-controls={`${selectId}-listbox`}
+              tabIndex={isOpen ? undefined : -1}
             />
           </div>
         )}
@@ -82,6 +85,7 @@ export const SelectServer = <T,>({
           onChangeOption={onChangeOption}
           selectId={selectId}
           loadingError={loadingError}
+          maxSelectedItemsCount={maxSelectedItemsCount}
           listHeight={listHeight}
           listContainerRef={listContainerRef}
           gap={gap}

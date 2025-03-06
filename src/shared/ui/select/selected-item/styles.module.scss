@@ -2,12 +2,11 @@
   position: relative;
   font: inherit;
   display: flex;
-  flex-flow: row wrap;
   align-items: center;
-  gap: 5px;
+  justify-content: space-between;
+  gap: 15px;
   width: 100%;
   padding: 5px 14px;
-  padding-right: 35px;
   border: 1px solid var(--field-primary-border);
   border-radius: 7px;
   background-color: var(--field-primary-background);
@@ -18,8 +17,17 @@
     background-color var(--transition-momentary),
     background-color var(--transition-momentary);
 
-  &_isOpen {
-    border-radius: 7px 7px 0 0;
+  &__counter {
+    display: flex;
+    align-items: center;
+    cursor: default;
+    gap: 1px;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 3px 10px;
+    border-radius: 4px;
+    color: var(--field-secondary-text);
+    background-color: var(--field-secondary-background-active);
   }
 
   &__selected {
@@ -33,7 +41,7 @@
       gap: 10px;
       background-color: var(--field-secondary-background);
       padding: 3px 10px;
-      border-radius: 2px;
+      border-radius: 4px;
       cursor: default;
     }
   }
@@ -47,41 +55,11 @@
     margin-top: 2px;
 
     &_all {
-      position: absolute;
-      top: 0;
-      bottom: 0;
       width: 16px;
-      right: 38px;
     }
   }
 
-  &_disabled {
-    background-color: var(--field-primary-background-disabled);
-    border-color: var(--field-primary-border-disabled);
-    cursor: default;
-
-    & .value__remove {
-      cursor: default;
-    }
-
-    & .value__selected {
-      color: var(--field-primary-text-disabled);
-
-      &_multiple {
-        background-color: var(--field-secondary-background-disabled);
-      }
-    }
-  }
-
-  &_isExtraControls {
-    padding-right: 65px;
-  }
-
-  &_isLoading {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    right: 10px;
+  &__loader {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -108,16 +86,53 @@
     }
   }
 
+  &__options {
+    display: flex;
+    align-items: center;
+    flex-flow: row wrap;
+    flex-grow: 1;
+    gap: 5px;
+  }
+
+  &__buttons {
+    align-items: center;
+    display: flex;
+    flex-shrink: 0;
+    gap: 10px;
+  }
+
   &__arrow {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    right: 10px;
     width: 16px;
     transition: transform var(--icon-secondary);
 
     &_rotate {
       transform: scaleY(-1);
+    }
+  }
+
+  &_isOpen {
+    border-radius: 7px 7px 0 0;
+  }
+
+  &_disabled {
+    background-color: var(--field-primary-background-disabled);
+    border-color: var(--field-primary-border-disabled);
+    cursor: default;
+
+    & .value__counter {
+      background-color: var(--field-secondary-background-disabled);
+    }
+
+    & .value__selected {
+      color: var(--field-primary-text-disabled);
+
+      &_multiple {
+        background-color: var(--field-secondary-background-disabled);
+      }
+    }
+
+    & .value__remove {
+      cursor: default;
     }
   }
 }

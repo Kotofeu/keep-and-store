@@ -22,10 +22,12 @@ export const Select = <T,>({
   searchable = false,
   required = false,
   isLoading = false,
+  excludeSelected = false,
   dropdownHeight = 'medium',
   itemHeight = 34,
   gap = 2,
   overscanCount = 10,
+  maxSelectedItemsCount = 4,
   onChange,
   loadOptions
 }: SelectClientProps<T>) => {
@@ -41,23 +43,25 @@ export const Select = <T,>({
     searchValue,
     focusedIndex,
     filteredOptions,
+    isLoading: promiseIsLoading,
+    error: loadingError,
     setSearchValue,
     setFocusedIndex,
     handleOptionClick,
     handleRemoveOption,
-    removeAllOptions,
-    toggleDropdown,
     openSelectByEnter,
-    isLoading: promiseIsLoading,
-    error: loadingError
+    removeAllOptions,
+    toggleDropdown
   } = useSelectLogic<T>({
     options,
     multiple,
     value,
     isOpen,
+    maxSelectedItemsCount,
+    disabled: disabled || isLoading,
+    excludeSelected,
     focusedOptionRef,
     setIsOpen,
-    disabled: disabled || isLoading,
     onChange,
     loadOptions
   });
@@ -106,12 +110,13 @@ export const Select = <T,>({
         selectId={selectId}
         visibleItems={visibleItems}
         searchable={searchable}
-        isOpen={isOpen}
+        isOpen={isOpen && !calcIsLoading && !disabled}
         required={required}
         multiple={multiple}
         disabled={disabled}
         isLoading={calcIsLoading}
         dropdownHeight={getDropdownHeight(dropdownHeight)}
+        maxSelectedItemsCount={maxSelectedItemsCount}
         gap={gap}
         itemHeight={itemHeight}
         listHeight={listHeight}

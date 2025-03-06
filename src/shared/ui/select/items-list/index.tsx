@@ -15,6 +15,7 @@ export const ItemsList = memo(
     multiple,
     isOpen,
     focusedIndex,
+    maxSelectedItemsCount,
     gap,
     itemHeight,
     listHeight,
@@ -26,7 +27,7 @@ export const ItemsList = memo(
   }: ItemsListProps<T>) => {
     const t = useTranslations('Shared.Select');
     return (
-      <div className={styles.container} ref={listContainerRef}>
+      <div className={styles.container} ref={listContainerRef} tabIndex={-1}>
         <div className={classNames(styles.wrapper, { [styles.wrapper_isOpen]: isOpen })} style={{ height: listHeight }}>
           <ul
             className={styles.list}
@@ -37,6 +38,9 @@ export const ItemsList = memo(
             {!!visibleItems.length && !loadingError ? (
               visibleItems.map(({ item: option, index: visibleIndex }) => {
                 const isSelected = selectedOptions.some(o => o.value === option.value);
+                const isDisabled =
+                  ((maxSelectedItemsCount && selectedOptions.length >= maxSelectedItemsCount) || !!option.disabled) &&
+                  !isSelected;
                 return (
                   <li
                     key={option.value}
@@ -45,16 +49,17 @@ export const ItemsList = memo(
                       [styles.list__option_multiple]: !!multiple,
                       [styles.list__option_focused]: focusedIndex === visibleIndex,
                       [styles.list__option_selected]: isSelected,
-                      [styles.list__option_disable]: !!option.disabled
+                      [styles.list__option_disable]: isDisabled
                     })}
                     onClick={() =>
-                      (!isSelected || multiple) && !option.disabled ? onChangeOption(visibleIndex) : undefined
+                      (!isSelected || multiple) && !isDisabled ? onChangeOption(visibleIndex) : undefined
                     }
                     role='option'
                     aria-selected={isSelected}
                     id={`${selectId}-option-${visibleIndex}`}
                     aria-label={option.label}
                     style={{ height: `${itemHeight}px` }}
+                    data-ignore-element={`${selectId}`}
                   >
                     {option.ui || option.label}
                   </li>

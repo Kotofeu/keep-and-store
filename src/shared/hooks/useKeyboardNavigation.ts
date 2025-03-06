@@ -16,19 +16,23 @@ export const useKeyboardNavigation = <T>({
   setFocusedIndex,
   handleEnterClick,
   handleEscapeClick
-}: UseKeyboardNavigationProps<T>): ((e: KeyboardEvent<HTMLDivElement>) => void) => {
+}: UseKeyboardNavigationProps<T>): ((e: KeyboardEvent<HTMLElement>) => void) => {
   const handleKeyDown = useCallback(
-    (e: KeyboardEvent<HTMLDivElement>) => {
+    (e: KeyboardEvent<HTMLElement>) => {
       if (!disabled) {
-        if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+        if (e.key === 'ArrowDown' || e.key === 'ArrowRight' || e.key === 'Tab') {
           e.preventDefault();
           setFocusedIndex(prev => (prev < items.length - 1 ? prev + 1 : 0));
         } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
           e.preventDefault();
           setFocusedIndex(prev => (prev > 0 ? prev - 1 : items.length - 1));
-        } else if (e.key === 'Enter' && focusedIndex >= 0 && handleEnterClick) {
+        } else if (e.key === 'Enter' && handleEnterClick) {
           e.preventDefault();
-          handleEnterClick(focusedIndex);
+          if (focusedIndex >= 0) {
+            handleEnterClick(focusedIndex);
+          } else if (handleEscapeClick) {
+            handleEscapeClick();
+          }
         } else if (e.key === 'Escape' && handleEscapeClick) {
           e.preventDefault();
           handleEscapeClick();

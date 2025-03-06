@@ -2,20 +2,20 @@ import { Dispatch, KeyboardEvent, ReactNode, Ref, RefObject, SetStateAction } fr
 
 import { VisibleItem } from '@/shared/hooks';
 
-export interface Option<T = any> {
-  value: string;
-  label: string;
-  ui?: ReactNode;
-  groupName?: string;
-  disabled?: boolean;
-  data?: T;
-}
-
 export const dropdownHeightMap = {
   small: 150,
   medium: 200,
   large: 250
 } as const;
+
+export interface Option<T = any> {
+  value: string;
+  label: string;
+  groupName?: string;
+  disabled?: boolean;
+  ui?: ReactNode;
+  data?: T;
+}
 
 interface BaseProps {
   className?: string;
@@ -25,51 +25,49 @@ interface BaseProps {
 
 interface BaseSelectProps<T> extends BaseProps {
   placeholder?: string;
-  options?: Option<T>[];
   multiple?: boolean;
   required?: boolean;
+  options?: Option<T>[];
 }
 
 interface BaseDropdownProps {
-  dropdownHeight?: keyof typeof dropdownHeightMap | number;
   itemHeight?: number;
   gap?: number;
   overscanCount?: number;
+  maxSelectedItemsCount?: number;
+  dropdownHeight?: keyof typeof dropdownHeightMap | number;
 }
 
 interface ListItemProps<T> {
   selectId: string;
-  visibleItems: VisibleItem<Option<T>>[];
-  selectedOptions: Option<T>[];
-  isOpen: boolean;
-  focusedIndex?: number;
+  loadingError: string | null;
   listHeight: number;
   listOffsetY: number;
-  loadingError: string | null;
+  focusedIndex?: number;
+  isOpen: boolean;
+  selectedOptions: Option<T>[];
+  visibleItems: VisibleItem<Option<T>>[];
   focusedOptionRef: Ref<HTMLLIElement> | undefined | null;
   listContainerRef: RefObject<HTMLDivElement | null>;
   onChangeOption: (index: number) => void;
 }
 
-export interface ItemsListProps<T> extends ListItemProps<T>, BaseDropdownProps {
-  multiple?: boolean;
-}
-
 interface SearchableProps {
-  searchable?: boolean;
   searchValue?: string;
+  searchable?: boolean;
   onSearchChange?: (value: string) => void;
 }
 
 interface SelectActions<T> {
+  removeAllOptions?: () => void;
+  toggleDropdown?: () => void;
   onChange?: (option: Option<T> | Option<T>[] | null) => void;
   loadOptions?: () => Promise<Option<T>[]>;
   onRemoveOption?: (option: Option<T>) => void;
-  removeAllOptions?: () => void;
-  toggleDropdown?: () => void;
 }
 
 export interface SelectClientProps<T> extends BaseSelectProps<T>, BaseDropdownProps, SearchableProps, SelectActions<T> {
+  excludeSelected: boolean;
   value?: Option<T> | Option<T>[] | null;
 }
 
@@ -79,47 +77,54 @@ export interface SelectServerProps<T>
     ListItemProps<T>,
     SearchableProps,
     SelectActions<T> {
-  selectedOptions: Option<T>[];
   searchValue?: string;
   isLoading: boolean;
-  onRemoveOption: (option: Option<T>) => void;
+  selectedOptions: Option<T>[];
   removeAllOptions: () => void;
+  onRemoveOption: (option: Option<T>) => void;
   onSearchChange?: (value: string) => void;
 }
 
 export interface SelectedItemProps<T> extends BaseSelectProps<T>, SelectActions<T> {
-  options: Option<T>[];
-  onRemoveOption: (option: Option<T>) => void;
-  removeAllOptions: () => void;
-  isLoading: boolean;
   selectId: string;
+  maxSelectedItemsCount?: number;
   isOpen: boolean;
+  isLoading: boolean;
+  options: Option<T>[];
+  removeAllOptions: () => void;
+  onRemoveOption: (option: Option<T>) => void;
+}
+
+export interface ItemsListProps<T> extends ListItemProps<T>, BaseDropdownProps {
+  multiple?: boolean;
 }
 
 export interface UseSelectLogicProps<T> {
-  options: Option<T>[];
-  multiple: boolean;
-  value: Option<T> | Option<T>[] | undefined | null;
+  maxSelectedItemsCount?: number;
   isOpen: boolean;
+  disabled: boolean;
+  multiple: boolean;
+  excludeSelected: boolean;
+  value: Option<T> | Option<T>[] | undefined | null;
+  options: Option<T>[];
   focusedOptionRef: RefObject<HTMLLIElement | null>;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
-  disabled: boolean;
   onChange?: (option: Option<T> | Option<T>[] | null) => void;
   loadOptions?: () => Promise<Option<T>[]>;
 }
 
 export interface UseSelectLogicReturn<T> {
-  selectedOptions: Option<T>[];
   searchValue: string;
+  error: string | null;
   focusedIndex: number;
+  isLoading: boolean;
   filteredOptions: Option<T>[];
+  selectedOptions: Option<T>[];
   setSearchValue: Dispatch<SetStateAction<string>>;
   setFocusedIndex: Dispatch<SetStateAction<number>>;
-  handleOptionClick: (index: number) => void;
-  handleRemoveOption: (option: Option<T>) => void;
   removeAllOptions: () => void;
   toggleDropdown: () => void;
+  handleOptionClick: (index: number) => void;
+  handleRemoveOption: (option: Option<T>) => void;
   openSelectByEnter: (e: KeyboardEvent<HTMLDivElement>) => void;
-  isLoading: boolean;
-  error: string | null;
 }

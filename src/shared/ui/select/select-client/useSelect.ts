@@ -10,6 +10,8 @@ export const useSelectLogic = <T>({
   multiple,
   value,
   isOpen,
+  excludeSelected,
+  maxSelectedItemsCount,
   focusedOptionRef,
   disabled,
   setIsOpen,
@@ -28,11 +30,16 @@ export const useSelectLogic = <T>({
   const debouncedSearchValue = useDebounce(searchValue, 300);
   const [focusedIndex, setFocusedIndex] = useState(-1);
 
-  const filteredOptions = useMemo(
-    () => loadedOptions.filter(option => option.label.toLowerCase().includes(debouncedSearchValue.toLowerCase())),
-    [loadedOptions, debouncedSearchValue]
-  );
+  const filteredOptions = useMemo(() => {
+    const filtered = loadedOptions.filter(option =>
+      option.label.toLowerCase().includes(debouncedSearchValue.toLowerCase())
+    );
+    if (excludeSelected) {
+      return filtered.filter(option => !selectedOptions.some(selected => selected.value === option.value));
+    }
 
+    return filtered;
+  }, [loadedOptions, debouncedSearchValue, selectedOptions, excludeSelected]);
   useEffect(() => {
     setFocusedIndex(-1);
   }, [isOpen]);
@@ -66,24 +73,32 @@ export const useSelectLogic = <T>({
 
   const handleOptionClick = useCallback(
     (index: number) => {
-      if (disabled || !filteredOptions[index] || isLoading || error || filteredOptions[index].disabled) {
+      const option = filteredOptions[index];
+      if (disabled || !option || isLoading || error || option.disabled) {
         return;
       }
+
       if (multiple) {
-        const newSelectedOptions = selectedOptions.some(o => o.value === filteredOptions[index].value)
-          ? selectedOptions.filter(o => o.value !== filteredOptions[index].value)
-          : [...selectedOptions, filteredOptions[index]];
+        const isSelected = selectedOptions.some(o => o.value === option.value);
+        let newSelectedOptions: Option[];
+
+        if (isSelected) {
+          newSelectedOptions = selectedOptions.filter(o => o.value !== option.value);
+        } else {
+          const canAddNew = !maxSelectedItemsCount || selectedOptions.length < maxSelectedItemsCount;
+          newSelectedOptions = canAddNew ? [...selectedOptions, option] : selectedOptions;
+        }
+
         setSelectedOptions(newSelectedOptions);
         onChange?.(newSelectedOptions);
       } else {
-        setSelectedOptions([filteredOptions[index]]);
-        onChange?.(filteredOptions[index]);
+        setSelectedOptions([option]);
+        onChange?.(option);
         setIsOpen(false);
       }
     },
-    [multiple, onChange, selectedOptions, filteredOptions, setIsOpen, disabled, isLoading, error]
+    [disabled, isLoading, error, multiple, selectedOptions, maxSelectedItemsCount, onChange, filteredOptions, setIsOpen]
   );
-
   const handleRemoveOption = useCallback(
     (option: Option<T>) => {
       if (disabled || isLoading || error) {
@@ -103,9 +118,6 @@ export const useSelectLogic = <T>({
 
   const openSelectByEnter = useCallback(
     (e: KeyboardEvent<HTMLDivElement>) => {
-      if (e.key === 'Escape' && !disabled && !isLoading) {
-        setIsOpen(false);
-      }
       if (e.key === 'Enter' && !disabled && !isLoading) {
         setIsOpen(true);
       }
