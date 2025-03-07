@@ -27,7 +27,9 @@ export const SelectServer = <T,>({
   listOffsetY,
   focusedIndex,
   searchValue,
-  loadingError,
+  error,
+  warming,
+  success,
   focusedOptionRef,
   listContainerRef,
   onChangeOption,
@@ -44,6 +46,9 @@ export const SelectServer = <T,>({
         multiple={multiple}
         required={required}
         placeholder={placeholder}
+        error={error}
+        warming={warming}
+        success={success}
         options={selectedOptions}
         isOpen={isOpen}
         onRemoveOption={onRemoveOption}
@@ -84,7 +89,6 @@ export const SelectServer = <T,>({
           isOpen={isOpen && !disabled && !isLoading}
           onChangeOption={onChangeOption}
           selectId={selectId}
-          loadingError={loadingError}
           maxSelectedItemsCount={maxSelectedItemsCount}
           listHeight={listHeight}
           listContainerRef={listContainerRef}

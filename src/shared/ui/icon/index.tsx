@@ -10,18 +10,24 @@ import {
   Cross,
   DarkMode,
   DeFlag,
+  Error,
   InFlag,
   LightMode,
   RuFlag,
   SaFlag,
   SpMxFlag,
+  Success,
   SystemMode,
-  UkUsFlag
+  UkUsFlag,
+  Warning
 } from './assents';
 
 export type IconType =
   | 'cross'
   | 'arrowDown'
+  | 'error'
+  | 'success'
+  | 'warming'
   | 'lightMode'
   | 'darkMode'
   | 'systemMode'
@@ -41,9 +47,14 @@ interface IconProps extends HTMLAttributes<HTMLDivElement> {
 
 const getIcons = (color?: string) =>
   new Map<IconType, JSX.Element>([
-    // system icon
+    // system icons
     ['cross', <Cross color={color} />],
     ['arrowDown', <ArrowDown color={color} />],
+
+    // status icons
+    ['error', <Error color={color} />],
+    ['warming', <Warning color={color} />],
+    ['success', <Success color={color} />],
 
     // themes icons
     ['lightMode', <LightMode color={color} />],

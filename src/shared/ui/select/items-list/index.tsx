@@ -20,7 +20,6 @@ export const ItemsList = memo(
     itemHeight,
     listHeight,
     listOffsetY,
-    loadingError,
     focusedOptionRef,
     listContainerRef,
     onChangeOption
@@ -35,7 +34,7 @@ export const ItemsList = memo(
             role='listbox'
             aria-labelledby={`${selectId}-label`}
           >
-            {!!visibleItems.length && !loadingError ? (
+            {!!visibleItems.length ? (
               visibleItems.map(({ item: option, index: visibleIndex }) => {
                 const isSelected = selectedOptions.some(o => o.value === option.value);
                 const isDisabled =
@@ -74,7 +73,7 @@ export const ItemsList = memo(
                 aria-label={t('emptyList')}
                 style={{ height: `${itemHeight}px` }}
               >
-                {loadingError || t('emptyList')}
+                {t('emptyList')}
               </li>
             )}
           </ul>

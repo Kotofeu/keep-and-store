@@ -7,6 +7,7 @@ import { classNames } from '@/shared/lib';
 import styles from './styles.module.scss';
 import { Icon } from '../../icon';
 import { SelectedItemProps } from '../types';
+import { StatusIcons } from '../../status-icons';
 
 export const SelectedItem = memo(
   <T,>({
@@ -15,6 +16,9 @@ export const SelectedItem = memo(
     selectId,
     multiple,
     required,
+    error,
+    warming,
+    success,
     isOpen,
     disabled,
     isLoading,
@@ -36,6 +40,7 @@ export const SelectedItem = memo(
         aria-label={placeholder || t('selectOption')}
       >
         <div className={styles.value__options}>
+          <StatusIcons {...{ error, warming, success }} />
           {!!maxSelectedItemsCount && multiple && !!options.length && (
             <div className={styles.value__counter}>
               <span>{options.length}</span>

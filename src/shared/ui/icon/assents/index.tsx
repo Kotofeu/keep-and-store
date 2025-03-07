@@ -40,6 +40,47 @@ export const ArrowDown: FC<IconsAssetsProps> = ({ color = 'var(--icon-secondary)
     <path d='M12 17L2 8' />
   </svg>
 );
+
+export const Error: FC<IconsAssetsProps> = ({ color = 'var(--color-error)' }) => (
+  <svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
+    <circle cx='12' cy='12' r='12' fill={color} />
+    <path
+      fillRule='evenodd'
+      clipRule='evenodd'
+      d='M12 5C11.4477 5 11 5.44772 11 6V14C11 14.5523 11.4477 15 12 15C12.5523 15 13 14.5523 13 14V6C13 5.44772 12.5523 5 12 5ZM12 18C11.4477 18 11 18.4477 11 19C11 19.5523 11.4477 20 12 20C12.5523 20 13 19.5523 13 19C13 18.4477 12.5523 18 12 18Z'
+      fill='var(--color-white)'
+    />
+  </svg>
+);
+
+export const Success: FC<IconsAssetsProps> = ({ color = 'var(--color-success)' }) => (
+  <svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
+    <circle cx='12' cy='12' r='12' fill={color} />
+    <path
+      fillRule='evenodd'
+      clipRule='evenodd'
+      d='M17.6066 8.3934C18.0976 8.8844 18.0976 9.6756 17.6066 10.1666L11.1066 16.6666C10.6156 17.1576 9.8244 17.1576 9.3334 16.6666L6.3934 13.7266C5.9024 13.2356 5.9024 12.4444 6.3934 11.9534C6.8844 11.4624 7.6756 11.4624 8.1666 11.9534L10.224 14.0107L15.8334 8.3934C16.3244 7.9024 17.1156 7.9024 17.6066 8.3934Z'
+      fill='var(--color-white)'
+    />
+  </svg>
+);
+
+export const Warning: FC<IconsAssetsProps> = ({ color = 'var(--color-warning)' }) => (
+  <svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
+    <circle cx='12' cy='12' r='12' fill={color} />
+    <path
+      d='M12 4.75L19.25 17C19.5278 17.5 19.25 18 18.75 18H5.25C4.75 18 4.47222 17.5 4.75 17L12 4.75Z'
+      stroke='var(--color-white)'
+      strokeWidth='1.5'
+      strokeLinecap='round'
+      strokeLinejoin='round'
+      fill='var(--color-white)'
+    />
+    <circle cx='12' cy='16' r='1' strokeWidth='1' fill='var(--color-warning)' />
+    <path d='M12 9V13.5' stroke='var(--color-warning)' strokeWidth='1.5' strokeLinecap='round' strokeLinejoin='round' />
+  </svg>
+);
+
 export const LightMode: FC<IconsAssetsProps> = ({ color = 'var(--icon-secondary)' }) => (
   <svg
     xmlns='http://www.w3.org/2000/svg'
@@ -183,7 +224,7 @@ export const UkUsFlag: FC<IconsAssetsProps> = ({ color = 'var(--icon-secondary)'
     </g>
     <defs>
       <clipPath>
-        <rect width='24' height='24' fill='white' />
+        <rect width='24' height='24' fill='var(--color-white)' />
       </clipPath>
     </defs>
     <circle cx='12' cy='12' r='11.5' stroke={color} strokeWidth='1' />
@@ -248,7 +289,7 @@ export const SpMxFlag: FC<IconsAssetsProps> = ({ color = 'var(--icon-secondary)'
     </g>
     <defs>
       <clipPath>
-        <rect width='24' height='24' fill='white' />
+        <rect width='24' height='24' fill='var(--color-white)' />
       </clipPath>
     </defs>
     <circle cx='12' cy='12' r='11.5' stroke={color} strokeWidth='1' />

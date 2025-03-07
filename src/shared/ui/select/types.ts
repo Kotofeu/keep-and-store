@@ -25,6 +25,9 @@ interface BaseProps {
 
 interface BaseSelectProps<T> extends BaseProps {
   placeholder?: string;
+  error?: boolean | string | null;
+  success?: boolean | string | null;
+  warming?: boolean | string | null;
   multiple?: boolean;
   required?: boolean;
   options?: Option<T>[];
@@ -40,7 +43,6 @@ interface BaseDropdownProps {
 
 interface ListItemProps<T> {
   selectId: string;
-  loadingError: string | null;
   listHeight: number;
   listOffsetY: number;
   focusedIndex?: number;
@@ -110,7 +112,7 @@ export interface UseSelectLogicProps<T> {
   focusedOptionRef: RefObject<HTMLLIElement | null>;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   onChange?: (option: Option<T> | Option<T>[] | null) => void;
-  loadOptions?: () => Promise<Option<T>[]>;
+  loadOptions?: () => Promise<Option<T>[]> | Option<T>[];
 }
 
 export interface UseSelectLogicReturn<T> {
