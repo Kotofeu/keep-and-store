@@ -7,11 +7,6 @@
   position: relative;
   overflow: hidden;
   padding: 0 10px;
-  transition: overflow var(--transition-slow);
-
-  &_isOpen {
-    overflow: hidden auto;
-  }
 }
 
 .list {
@@ -19,67 +14,67 @@
   flex-direction: column;
   gap: 2px;
   will-change: transform;
+}
 
-  &__option {
-    font: inherit;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    gap: 10px;
-    width: 100%;
-    padding: 6px 10px;
-    cursor: pointer;
-    align-items: center;
-    border-radius: 4px;
-    transition:
-      background-color var(--transition-momentary) ease-in-out,
-      border-color var(--transition-momentary) ease-in-out;
-    border: 1px solid transparent;
-    color: var(--field-secondary-text);
+.list__option {
+  font: inherit;
+  gap: 10px;
+  width: 100%;
+  padding: 6px 10px;
+  cursor: pointer;
+  align-items: center;
+  border-radius: var(--item-border-radius);
+  transition:
+    background-color var(--transition-momentary),
+    border-color var(--transition-momentary);
+  border: 1px solid transparent;
+  color: var(--field-secondary-text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  &:hover,
+  &:focus {
+    background-color: var(--field-secondary-background-hover);
+    color: var(--field-secondary-text-hover);
+  }
+
+  &_focused {
+    border-color: var(--field-secondary-border-hover);
+  }
+
+  &_selected {
+    background-color: var(--field-secondary-background-active);
+    color: var(--field-secondary-text-active);
+    cursor: default;
 
     &:hover,
     &:focus {
-      background-color: var(--field-secondary-background-hover);
-      color: var(--field-secondary-text-hover);
-    }
-
-    &_focused {
-      border-color: var(--field-secondary-border-hover);
-    }
-
-    &_selected {
       background-color: var(--field-secondary-background-active);
-      color: var(--field-secondary-text-active);
-      cursor: default;
-
-      &:hover,
-      &:focus {
-        background-color: var(--field-secondary-background-active);
-      }
-
-      &.list__option_focused {
-        border-color: var(--field-secondary-border-active);
-      }
     }
 
-    &_multiple {
-      cursor: pointer;
+    &.list__option_focused {
+      border-color: var(--field-secondary-border-active);
     }
+  }
 
-    &_disable {
-      cursor: default;
+  &_multiple {
+    cursor: pointer;
+  }
+
+  &_disable {
+    cursor: default;
+    background-color: var(--field-secondary-background-disabled);
+    color: var(--field-secondary-text-disabled);
+
+    &:hover,
+    &:focus {
       background-color: var(--field-secondary-background-disabled);
       color: var(--field-secondary-text-disabled);
+    }
 
-      &:hover,
-      &:focus {
-        background-color: var(--field-secondary-background-disabled);
-        color: var(--field-secondary-text-disabled);
-      }
-
-      &.list__option_focused {
-        border-color: var(--field-secondary-border-disabled);
-      }
+    &.list__option_focused {
+      border-color: var(--field-secondary-border-disabled);
     }
   }
 }

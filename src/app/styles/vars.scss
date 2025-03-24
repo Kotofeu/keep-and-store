@@ -1,12 +1,13 @@
 :root {
   /* Layout and Structure */
-  --container-width: 1400px;
+  --container-width: 1420px;
 
   /* Z-Index */
   --z-index-default: 0;
   --z-index-dropdown: 9;
   --z-index-header: 10;
   --z-index-modal: 12;
+  --z-index-tooltip: 13;
   --z-index-max: 999;
 
   /* Transitions */
@@ -31,15 +32,14 @@
   --color-gray-900: #1a1a1a;
 
   /* Blue Colors */
-  --color-blue-100: #e3f2fd;
+  --color-blue-100: #e6f4ff;
   --color-blue-200: #bbdefb;
   --color-blue-300: #90caf9;
   --color-blue-400: #64b5f6;
   --color-blue-500: #42a5f5;
   --color-blue-600: #1e88e5;
   --color-blue-700: #1976d2;
-  --color-blue-800: #1565c0;
-  --color-blue-900: #0d47a1;
+  --color-blue-800: #1a237e;
 
   /* Coral Colors */
   --color-coral-100: #ffebee;
@@ -47,10 +47,10 @@
   --color-coral-300: #ef9a9a;
   --color-coral-400: #e57373;
   --color-coral-500: #ef5350;
-  --color-coral-600: #e53935;
+  --color-coral-600: #e4572e;
   --color-coral-700: #d32f2f;
   --color-coral-800: #c62828;
-  --color-coral-900: #b71c1c;
+  --color-coral-900: #310505;
 
   /* Orange Colors */
   --color-orange-500: #ffa726;
@@ -69,6 +69,9 @@
   --color-error: var(--color-red-500);
   --color-warning: var(--color-orange-500);
   --color-success: var(--color-green-500);
+
+  --field-border-radius: 7px;
+  --item-border-radius: 4px;
 }
 
 [data-theme='light'] {
@@ -98,7 +101,7 @@
   /* Title Colors */
   --title-primary: var(--color-gray-900);
   --title-primary-hover: var(--color-black);
-  --title-primary-active: var(--color-blue-800);
+  --title-primary-active: var(--color-black);
   --title-primary-disabled: var(--color-gray-700);
 
   --title-secondary: var(--color-gray-800);
@@ -160,6 +163,10 @@
   --error-color: var(--color-error);
   --warning-color: var(--color-warning);
   --success-color: var(--color-success);
+
+  /* Tooltip Colors */
+  --tooltip-background-color: var(--color-blue-800);
+  --tooltip-color: var(--color-white);
 
   /* Field Colors - Primary */
   --field-primary-border: var(--color-gray-300);
@@ -303,6 +310,10 @@
   --error-color: var(--color-error);
   --warning-color: var(--color-warning);
   --success-color: var(--color-success);
+
+  /* Tooltip Colors */
+  --tooltip-background-color: var(--color-coral-600);
+  --tooltip-color: var(--color-white);
 
   /* Field Colors - Primary */
   --field-primary-border: var(--color-gray-700);

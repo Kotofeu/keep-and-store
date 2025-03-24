@@ -1,6 +1,6 @@
 'use client';
+
 import { useId, useRef } from 'react';
-import { useTranslations } from 'next-intl';
 
 import { useClickOutside, useKeyboardNavigation, useSelectLogic, useVirtualList } from '@/shared/hooks';
 import { classNames } from '@/shared/lib';
@@ -24,7 +24,7 @@ export const Select = <T,>({
   isLoading = false,
   excludeSelected = false,
   success = null,
-  warming = 'AAAAAAAAAAAAAAAAAAAAAAA',
+  warning = null,
   error = null,
   dropdownHeight = 'medium',
   itemHeight = 34,
@@ -35,11 +35,11 @@ export const Select = <T,>({
   loadOptions
 }: SelectClientProps<T>) => {
   const ref = useRef<HTMLDivElement>(null);
+  const iconRef = useRef<HTMLDivElement>(null);
   const focusedOptionRef = useRef<HTMLLIElement | null>(null);
   const selectId = useId();
-  const t = useTranslations('Shared.Select');
 
-  const [isOpen, setIsOpen, closeDropdown] = useClickOutside(ref, null, `data-ignore-element="${selectId}"`);
+  const [isOpen, setIsOpen, closeDropdown] = useClickOutside(ref, iconRef, `data-ignore-element="${selectId}"`);
 
   const {
     selectedOptions,
@@ -61,7 +61,7 @@ export const Select = <T,>({
     value,
     isOpen,
     maxSelectedItemsCount,
-    disabled: disabled || isLoading,
+    disabled: disabled || isLoading || !!error,
     excludeSelected,
     focusedOptionRef,
     setIsOpen,
@@ -92,20 +92,10 @@ export const Select = <T,>({
   });
 
   const calcIsLoading = isLoading || promiseIsLoading;
+  const calcError = error || loadingError;
 
   return (
-    <div
-      className={classNames(styles.select, {}, [className])}
-      ref={ref}
-      onKeyDown={isOpen && !calcIsLoading && !loadingError ? handleKeyDown : openSelectByEnter}
-      tabIndex={0}
-      role='combobox'
-      aria-haspopup='listbox'
-      aria-expanded={isOpen}
-      aria-label={placeholder || t('selectOption')}
-      aria-owns={`${selectId}-listbox`}
-      aria-controls={`${selectId}-listbox`}
-    >
+    <div className={classNames(styles.select, {}, [className])}>
       <SelectServer
         className={className}
         placeholder={placeholder}
@@ -127,8 +117,9 @@ export const Select = <T,>({
         focusedIndex={focusedIndex}
         searchValue={searchValue}
         success={success}
-        warming={warming}
-        error={error ? error : loadingError}
+        warning={warning}
+        error={calcError}
+        ref={ref}
         focusedOptionRef={focusedOptionRef}
         listContainerRef={listContainerRef}
         onSearchChange={setSearchValue}
@@ -136,6 +127,8 @@ export const Select = <T,>({
         onRemoveOption={handleRemoveOption}
         removeAllOptions={removeAllOptions}
         toggleDropdown={toggleDropdown}
+        handleKeyDown={handleKeyDown}
+        openSelectByEnter={openSelectByEnter}
       />
     </div>
   );

@@ -27,7 +27,8 @@ interface BaseSelectProps<T> extends BaseProps {
   placeholder?: string;
   error?: boolean | string | null;
   success?: boolean | string | null;
-  warming?: boolean | string | null;
+  warning?: boolean | string | null;
+  isOpen?: boolean;
   multiple?: boolean;
   required?: boolean;
   options?: Option<T>[];
@@ -46,7 +47,6 @@ interface ListItemProps<T> {
   listHeight: number;
   listOffsetY: number;
   focusedIndex?: number;
-  isOpen: boolean;
   selectedOptions: Option<T>[];
   visibleItems: VisibleItem<Option<T>>[];
   focusedOptionRef: Ref<HTMLLIElement> | undefined | null;
@@ -64,12 +64,12 @@ interface SelectActions<T> {
   removeAllOptions?: () => void;
   toggleDropdown?: () => void;
   onChange?: (option: Option<T> | Option<T>[] | null) => void;
-  loadOptions?: () => Promise<Option<T>[]>;
+  loadOptions?: () => Promise<Option<T>[]> | Option<T>[];
   onRemoveOption?: (option: Option<T>) => void;
 }
 
 export interface SelectClientProps<T> extends BaseSelectProps<T>, BaseDropdownProps, SearchableProps, SelectActions<T> {
-  excludeSelected: boolean;
+  excludeSelected?: boolean;
   value?: Option<T> | Option<T>[] | null;
 }
 
@@ -82,15 +82,17 @@ export interface SelectServerProps<T>
   searchValue?: string;
   isLoading: boolean;
   selectedOptions: Option<T>[];
+  ref: RefObject<HTMLDivElement | null>;
   removeAllOptions: () => void;
   onRemoveOption: (option: Option<T>) => void;
   onSearchChange?: (value: string) => void;
+  handleKeyDown: (e: KeyboardEvent<HTMLElement>) => void;
+  openSelectByEnter: (e: KeyboardEvent<HTMLDivElement>) => void;
 }
 
 export interface SelectedItemProps<T> extends BaseSelectProps<T>, SelectActions<T> {
   selectId: string;
   maxSelectedItemsCount?: number;
-  isOpen: boolean;
   isLoading: boolean;
   options: Option<T>[];
   removeAllOptions: () => void;
@@ -99,6 +101,7 @@ export interface SelectedItemProps<T> extends BaseSelectProps<T>, SelectActions<
 
 export interface ItemsListProps<T> extends ListItemProps<T>, BaseDropdownProps {
   multiple?: boolean;
+  error?: string;
 }
 
 export interface UseSelectLogicProps<T> {

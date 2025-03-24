@@ -33,10 +33,14 @@ dd {
   font-size: inherit;
 }
 
+html {
+  overflow-x: hidden;
+}
+
 body {
   position: relative;
+  overflow: hidden auto;
   width: 100%;
-  overflow: hidden scroll;
   font-size: 14px;
   font-weight: 400;
 }

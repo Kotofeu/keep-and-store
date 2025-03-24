@@ -54,10 +54,10 @@ export const useSelectLogic = <T>({
   }, [focusedIndex, focusedOptionRef]);
 
   useEffect(() => {
-    if (!isOpen && loadOptions && (!isOptionsWasLoaded || error)) {
+    if (!isOpen && loadOptions && !isOptionsWasLoaded) {
       setIsLoading(true);
       setIsOptionsWasLoaded(true);
-      loadOptions()
+      Promise.resolve(loadOptions())
         .then(newOptions => {
           setLoadedOptions(newOptions as Option<T>[]);
         })
@@ -74,7 +74,7 @@ export const useSelectLogic = <T>({
   const handleOptionClick = useCallback(
     (index: number) => {
       const option = filteredOptions[index];
-      if (disabled || !option || isLoading || error || option.disabled) {
+      if (disabled || !option || isLoading || option.disabled) {
         return;
       }
 
@@ -97,18 +97,17 @@ export const useSelectLogic = <T>({
         setIsOpen(false);
       }
     },
-    [disabled, isLoading, error, multiple, selectedOptions, maxSelectedItemsCount, onChange, filteredOptions, setIsOpen]
+    [disabled, isLoading, multiple, selectedOptions, maxSelectedItemsCount, onChange, filteredOptions, setIsOpen]
   );
   const handleRemoveOption = useCallback(
     (option: Option<T>) => {
-      if (disabled || isLoading || error) {
-        return;
+      if (!disabled && !isLoading) {
+        const newSelectedOptions = selectedOptions.filter(o => o.value !== option.value);
+        setSelectedOptions(newSelectedOptions);
+        onChange?.(multiple ? newSelectedOptions : null);
       }
-      const newSelectedOptions = selectedOptions.filter(o => o.value !== option.value);
-      setSelectedOptions(newSelectedOptions);
-      onChange?.(multiple ? newSelectedOptions : null);
     },
-    [onChange, selectedOptions, disabled, multiple, isLoading, error]
+    [onChange, selectedOptions, disabled, multiple, isLoading]
   );
 
   const removeAllOptions = useCallback(() => {

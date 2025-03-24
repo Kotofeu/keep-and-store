@@ -1,0 +1,14 @@
+.status {
+  transition-property: scale, opacity;
+  transition-duration: var(--transition-momentary);
+
+  &_hidden {
+    scale: 0;
+    opacity: 0;
+  }
+}
+
+.tooltip {
+  height: 100%;
+  width: 100%;
+}

@@ -28,10 +28,13 @@ export const SelectServer = <T,>({
   focusedIndex,
   searchValue,
   error,
-  warming,
+  warning,
   success,
   focusedOptionRef,
   listContainerRef,
+  ref,
+  handleKeyDown,
+  openSelectByEnter,
   onChangeOption,
   onSearchChange,
   toggleDropdown,
@@ -40,14 +43,26 @@ export const SelectServer = <T,>({
 }: SelectServerProps<T>) => {
   const t = useTranslations('Shared.Select');
   return (
-    <div className={classNames(styles.select, {}, [className])}>
+    <div
+      className={classNames(styles.select, {}, [className])}
+      ref={ref}
+      onKeyDown={isOpen && !isLoading && !error ? handleKeyDown : openSelectByEnter}
+      id={`${selectId}-label`}
+      tabIndex={0}
+      role='combobox'
+      aria-haspopup='listbox'
+      aria-expanded={isOpen}
+      aria-label={placeholder || t('selectOption')}
+      aria-owns={`${selectId}-listbox`}
+      aria-controls={`${selectId}-listbox`}
+    >
       <SelectedItem
         maxSelectedItemsCount={maxSelectedItemsCount}
         multiple={multiple}
         required={required}
         placeholder={placeholder}
         error={error}
-        warming={warming}
+        warning={warning}
         success={success}
         options={selectedOptions}
         isOpen={isOpen}
@@ -60,7 +75,10 @@ export const SelectServer = <T,>({
       />
       <div
         className={classNames(styles.select__dropdown, {
-          [styles.select__dropdown_isOpen]: isOpen
+          [styles.select__dropdown_isOpen]: !!isOpen,
+          [styles.select__dropdown_success]: !!success,
+          [styles.select__dropdown_warning]: !!warning,
+          [styles.select__dropdown_error]: !!error
         })}
         style={{ maxHeight: dropdownHeight }}
         id={`${selectId}-listbox`}
@@ -86,7 +104,7 @@ export const SelectServer = <T,>({
           focusedOptionRef={focusedOptionRef}
           multiple={multiple}
           selectedOptions={selectedOptions}
-          isOpen={isOpen && !disabled && !isLoading}
+          error={typeof error === 'string' ? error : undefined}
           onChangeOption={onChangeOption}
           selectId={selectId}
           maxSelectedItemsCount={maxSelectedItemsCount}

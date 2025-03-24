@@ -23,11 +23,12 @@ import {
 } from './assents';
 
 export type IconType =
+  | 'none'
   | 'cross'
   | 'arrowDown'
   | 'error'
   | 'success'
-  | 'warming'
+  | 'warning'
   | 'lightMode'
   | 'darkMode'
   | 'systemMode'
@@ -43,17 +44,20 @@ interface IconProps extends HTMLAttributes<HTMLDivElement> {
   className?: string;
   type: IconType;
   color?: string;
+  title?: string;
 }
 
 const getIcons = (color?: string) =>
   new Map<IconType, JSX.Element>([
+    ['none', <></>],
+
     // system icons
     ['cross', <Cross color={color} />],
     ['arrowDown', <ArrowDown color={color} />],
 
     // status icons
     ['error', <Error color={color} />],
-    ['warming', <Warning color={color} />],
+    ['warning', <Warning color={color} />],
     ['success', <Success color={color} />],
 
     // themes icons
@@ -71,11 +75,16 @@ const getIcons = (color?: string) =>
     ['de', <DeFlag color={color} />]
   ]);
 
-export const Icon: FC<IconProps> = ({ type, className, color, ...rest }) => {
+export const Icon: FC<IconProps> = ({ type, className, color, title, ...rest }) => {
   const getIcon = (type: IconType) => getIcons(color).get(type);
 
   return (
-    <div className={classNames(styles.container, {}, [className])} {...rest}>
+    <div
+      className={classNames(styles.container, {}, [className])}
+      role='img'
+      aria-label={rest['aria-label'] || title}
+      {...rest}
+    >
       {getIcon(type)}
     </div>
   );

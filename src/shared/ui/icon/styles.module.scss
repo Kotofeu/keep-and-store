@@ -1,11 +1,8 @@
 .container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
   & svg {
     width: 100%;
     height: 100%;
+    display: block;
     object-fit: contain;
     transition:
       stroke var(--transition-fast) ease-in-out,

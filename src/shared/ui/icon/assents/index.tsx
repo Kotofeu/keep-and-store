@@ -69,15 +69,21 @@ export const Warning: FC<IconsAssetsProps> = ({ color = 'var(--color-warning)' }
   <svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
     <circle cx='12' cy='12' r='12' fill={color} />
     <path
-      d='M12 4.75L19.25 17C19.5278 17.5 19.25 18 18.75 18H5.25C4.75 18 4.47222 17.5 4.75 17L12 4.75Z'
+      d='M12 3.75L19.25 16C19.5278 16.5 19.25 17 18.75 17H5.25C4.75 17 4.47222 16.5 4.75 16L12 3.75Z'
       stroke='var(--color-white)'
       strokeWidth='1.5'
       strokeLinecap='round'
       strokeLinejoin='round'
       fill='var(--color-white)'
     />
-    <circle cx='12' cy='16' r='1' strokeWidth='1' fill='var(--color-warning)' />
-    <path d='M12 9V13.5' stroke='var(--color-warning)' strokeWidth='1.5' strokeLinecap='round' strokeLinejoin='round' />
+    <circle cx='12' cy='15.6' r='1' strokeWidth='1' fill='var(--color-warning)' />
+    <path
+      d='M12 7.6V13.1'
+      stroke='var(--color-warning)'
+      strokeWidth='1.5'
+      strokeLinecap='round'
+      strokeLinejoin='round'
+    />
   </svg>
 );
 

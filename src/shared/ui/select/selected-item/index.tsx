@@ -1,4 +1,3 @@
-/* eslint-disable indent */
 import { useTranslations } from 'next-intl';
 import { memo, ReactNode } from 'react';
 
@@ -17,7 +16,7 @@ export const SelectedItem = memo(
     multiple,
     required,
     error,
-    warming,
+    warning,
     success,
     isOpen,
     disabled,
@@ -32,15 +31,20 @@ export const SelectedItem = memo(
     return (
       <div
         className={classNames(styles.value, {
-          [styles.value_isOpen]: isOpen,
-          [styles.value_disabled]: !!disabled || isLoading
+          [styles.value_isOpen]: !!isOpen,
+          [styles.value_disabled]: !!disabled || isLoading,
+          [styles.value_error]: !!error,
+          [styles.value_warning]: !!warning,
+          [styles.value_success]: !!success
         })}
         onClick={toggleDropdown}
-        id={`${selectId}-label`}
-        aria-label={placeholder || t('selectOption')}
       >
+        <StatusIcons
+          className={styles.value__status}
+          statusValues={{ error, warning, success }}
+          data-ignore-element={`${selectId}`}
+        />
         <div className={styles.value__options}>
-          <StatusIcons {...{ error, warming, success }} />
           {!!maxSelectedItemsCount && multiple && !!options.length && (
             <div className={styles.value__counter}>
               <span>{options.length}</span>
@@ -103,7 +107,7 @@ export const SelectedItem = memo(
             </div>
           ) : (
             <Icon
-              className={classNames(styles.value__arrow, { [styles.value__arrow_rotate]: isOpen })}
+              className={classNames(styles.value__arrow, { [styles.value__arrow_rotate]: !!isOpen })}
               type='arrowDown'
               color={disabled || isLoading ? 'var(--icon-secondary-disabled)' : 'var(--icon-secondary)'}
             />

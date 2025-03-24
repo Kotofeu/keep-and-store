@@ -36,7 +36,6 @@ const eslintConfig = [
       ],
       eqeqeq: ['error', 'always'],
       curly: ['error', 'all'],
-      indent: ['error', 2],
       'no-trailing-spaces': 'error',
       'prefer-const': 'error',
       'react/display-name': 'off',

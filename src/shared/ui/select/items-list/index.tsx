@@ -13,9 +13,9 @@ export const ItemsList = memo(
     selectedOptions,
     selectId,
     multiple,
-    isOpen,
     focusedIndex,
     maxSelectedItemsCount,
+    error,
     gap,
     itemHeight,
     listHeight,
@@ -27,7 +27,7 @@ export const ItemsList = memo(
     const t = useTranslations('Shared.Select');
     return (
       <div className={styles.container} ref={listContainerRef} tabIndex={-1}>
-        <div className={classNames(styles.wrapper, { [styles.wrapper_isOpen]: isOpen })} style={{ height: listHeight }}>
+        <div className={styles.wrapper} style={{ height: listHeight }}>
           <ul
             className={styles.list}
             style={{ transform: listOffsetY ? `translateY(${listOffsetY}px)` : 'none', gap }}
@@ -73,7 +73,7 @@ export const ItemsList = memo(
                 aria-label={t('emptyList')}
                 style={{ height: `${itemHeight}px` }}
               >
-                {t('emptyList')}
+                {error || t('emptyList')}
               </li>
             )}
           </ul>
