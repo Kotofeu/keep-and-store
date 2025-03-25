@@ -76,7 +76,7 @@ export const StatusIcons = (props: StatusIconsProps) => {
       {...othersProps}
     >
       <Tooltip className={styles.tooltip} content={lastStatus?.value || ''}>
-        <Icon type={lastStatus?.type || 'none'} title={lastStatus?.value || undefined} />
+        <Icon type={lastStatus?.type || 'none'} aria-hidden />
       </Tooltip>
     </div>
   );

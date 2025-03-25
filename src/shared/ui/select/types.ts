@@ -19,6 +19,7 @@ export interface Option<T = any> {
 
 interface BaseProps {
   className?: string;
+  selectId?: string | number;
   disabled?: boolean;
   isLoading?: boolean;
 }
@@ -43,7 +44,7 @@ interface BaseDropdownProps {
 }
 
 interface ListItemProps<T> {
-  selectId: string;
+  selectId?: string | number;
   listHeight: number;
   listOffsetY: number;
   focusedIndex?: number;
@@ -68,12 +69,12 @@ interface SelectActions<T> {
   onRemoveOption?: (option: Option<T>) => void;
 }
 
-export interface SelectClientProps<T> extends BaseSelectProps<T>, BaseDropdownProps, SearchableProps, SelectActions<T> {
+export interface SelectProps<T> extends BaseSelectProps<T>, BaseDropdownProps, SearchableProps, SelectActions<T> {
   excludeSelected?: boolean;
   value?: Option<T> | Option<T>[] | null;
 }
 
-export interface SelectServerProps<T>
+export interface SelectComponentProps<T>
   extends BaseSelectProps<T>,
     BaseDropdownProps,
     ListItemProps<T>,
@@ -91,7 +92,6 @@ export interface SelectServerProps<T>
 }
 
 export interface SelectedItemProps<T> extends BaseSelectProps<T>, SelectActions<T> {
-  selectId: string;
   maxSelectedItemsCount?: number;
   isLoading: boolean;
   options: Option<T>[];

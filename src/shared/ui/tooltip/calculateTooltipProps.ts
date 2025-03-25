@@ -40,7 +40,7 @@ export const getTooltipPosition = ({
         const left = targetCenter - tooltipRect.width / 2;
         const clampedLeft = Math.max(offset, Math.min(left, viewportWidth - tooltipRect.width - offset));
         arrowStyle = {
-          [pos]: `-${offset}px`,
+          [pos]: `-${offset + 1}px`,
           left: '50%',
           transform: `translateX(-50%)${pos === 'bottom' ? ' rotate(180deg)' : ''}`
         };
@@ -63,7 +63,7 @@ export const getTooltipPosition = ({
 
         arrowStyle = {
           top: '50%',
-          [pos]: `-${offset}px`,
+          [pos]: `-${offset + 1}px`,
           transform: `translateY(-50%) ${pos === 'left' ? 'rotate(270deg)' : 'rotate(90deg)'}`
         };
 

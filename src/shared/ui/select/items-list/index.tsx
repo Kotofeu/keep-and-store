@@ -33,6 +33,7 @@ export const ItemsList = memo(
             style={{ transform: listOffsetY ? `translateY(${listOffsetY}px)` : 'none', gap }}
             role='listbox'
             aria-labelledby={`${selectId}-label`}
+            aria-multiselectable={multiple}
           >
             {!!visibleItems.length ? (
               visibleItems.map(({ item: option, index: visibleIndex }) => {
@@ -58,7 +59,9 @@ export const ItemsList = memo(
                     id={`${selectId}-option-${visibleIndex}`}
                     aria-label={option.label}
                     style={{ height: `${itemHeight}px` }}
-                    data-ignore-element={`${selectId}`}
+                    aria-disabled={isDisabled}
+                    aria-posinset={visibleIndex + 1}
+                    aria-setsize={visibleItems.length}
                   >
                     {option.ui || option.label}
                   </li>

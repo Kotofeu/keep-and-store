@@ -5,9 +5,9 @@ import { classNames } from '@/shared/lib';
 import styles from './styles.module.scss';
 import { SelectedItem } from '../selected-item';
 import { ItemsList } from '../items-list';
-import { SelectServerProps } from '../types';
+import { SelectComponentProps } from '../types';
 
-export const SelectServer = <T,>({
+export const SelectComponent = <T,>({
   className,
   placeholder,
   selectedOptions,
@@ -40,7 +40,7 @@ export const SelectServer = <T,>({
   toggleDropdown,
   onRemoveOption,
   removeAllOptions
-}: SelectServerProps<T>) => {
+}: SelectComponentProps<T>) => {
   const t = useTranslations('Shared.Select');
   return (
     <div
@@ -48,13 +48,15 @@ export const SelectServer = <T,>({
       ref={ref}
       onKeyDown={isOpen && !isLoading && !error ? handleKeyDown : openSelectByEnter}
       id={`${selectId}-label`}
-      tabIndex={0}
+      tabIndex={disabled ? -1 : 0}
       role='combobox'
       aria-haspopup='listbox'
       aria-expanded={isOpen}
       aria-label={placeholder || t('selectOption')}
       aria-owns={`${selectId}-listbox`}
       aria-controls={`${selectId}-listbox`}
+      aria-disabled={disabled}
+      aria-busy={isLoading}
     >
       <SelectedItem
         maxSelectedItemsCount={maxSelectedItemsCount}
@@ -83,6 +85,7 @@ export const SelectServer = <T,>({
         style={{ maxHeight: dropdownHeight }}
         id={`${selectId}-listbox`}
         aria-labelledby={`${selectId}-label`}
+        aria-hidden={!isOpen}
       >
         {searchable && (
           <div className={styles.select__searchBox}>
@@ -96,6 +99,7 @@ export const SelectServer = <T,>({
               aria-label={t('search')}
               aria-controls={`${selectId}-listbox`}
               tabIndex={isOpen ? undefined : -1}
+              aria-hidden={!isOpen}
             />
           </div>
         )}

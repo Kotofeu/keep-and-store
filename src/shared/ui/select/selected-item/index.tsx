@@ -7,6 +7,7 @@ import styles from './styles.module.scss';
 import { Icon } from '../../icon';
 import { SelectedItemProps } from '../types';
 import { StatusIcons } from '../../status-icons';
+import { Tooltip } from '../../tooltip';
 
 export const SelectedItem = memo(
   <T,>({
@@ -38,11 +39,17 @@ export const SelectedItem = memo(
           [styles.value_success]: !!success
         })}
         onClick={toggleDropdown}
+        role='button'
+        aria-haspopup='listbox'
+        aria-expanded={isOpen}
+        aria-disabled={disabled || isLoading}
+        aria-labelledby={`${selectId}-label`}
+        tabIndex={disabled || isLoading ? -1 : 0}
       >
         <StatusIcons
           className={styles.value__status}
           statusValues={{ error, warning, success }}
-          data-ignore-element={`${selectId}`}
+          onClick={e => e.stopPropagation()}
         />
         <div className={styles.value__options}>
           {!!maxSelectedItemsCount && multiple && !!options.length && (
@@ -62,22 +69,28 @@ export const SelectedItem = memo(
                 >
                   {option.ui || option.label}
                   {multiple && (
-                    <button
-                      type='button'
-                      className={styles.value__remove}
-                      onClick={e => {
-                        e.stopPropagation();
-                        onRemoveOption(option);
-                      }}
-                      title={t('removeOption', { optionLabel: option.label })}
-                      data-ignore-element={`${selectId}`}
-                      aria-label={t('removeOption', { optionLabel: option.label })}
+                    <Tooltip
+                      className={styles.tooltip}
+                      content={t('removeOption', { optionLabel: option.label })}
+                      backgroundColor='var(--icon-secondary)'
                     >
-                      <Icon
-                        type='cross'
-                        color={disabled || isLoading ? 'var(--icon-secondary-disabled)' : 'var(--icon-secondary)'}
-                      />
-                    </button>
+                      <button
+                        type='button'
+                        className={styles.value__remove}
+                        onClick={e => {
+                          e.stopPropagation();
+                          onRemoveOption(option);
+                        }}
+                        data-ignore-element={`${selectId}`}
+                        aria-label={t('removeOption', { optionLabel: option.label })}
+                      >
+                        <Icon
+                          type='cross'
+                          color={disabled || isLoading ? 'var(--icon-secondary-disabled)' : 'var(--icon-secondary)'}
+                          aria-hidden
+                        />
+                      </button>
+                    </Tooltip>
                   )}
                 </span>
               ))
@@ -85,19 +98,20 @@ export const SelectedItem = memo(
         </div>
         <div className={styles.value__buttons}>
           {!required && !!options.length && !disabled && !isLoading && (
-            <button
-              type='button'
-              className={classNames(styles.value__remove, {}, [styles.value__remove_all])}
-              onClick={e => {
-                e.stopPropagation();
-                removeAllOptions();
-              }}
-              title={t('removeAllOption')}
-              data-ignore-element={`${selectId}`}
-              aria-label={t('removeAllOption')}
-            >
-              <Icon type='cross' color={'var(--icon-secondary)'} />
-            </button>
+            <Tooltip className={styles.tooltip} content={t('removeAllOption')} backgroundColor='var(--icon-secondary)'>
+              <button
+                type='button'
+                className={classNames(styles.value__remove, {}, [styles.value__remove_all])}
+                onClick={e => {
+                  e.stopPropagation();
+                  removeAllOptions();
+                }}
+                data-ignore-element={`${selectId}`}
+                aria-label={t('removeAllOption')}
+              >
+                <Icon type='cross' color={'var(--icon-secondary)'} aria-hidden />
+              </button>
+            </Tooltip>
           )}
           {isLoading ? (
             <div className={styles.value__loader} aria-hidden>
@@ -110,6 +124,7 @@ export const SelectedItem = memo(
               className={classNames(styles.value__arrow, { [styles.value__arrow_rotate]: !!isOpen })}
               type='arrowDown'
               color={disabled || isLoading ? 'var(--icon-secondary-disabled)' : 'var(--icon-secondary)'}
+              aria-hidden
             />
           )}
         </div>

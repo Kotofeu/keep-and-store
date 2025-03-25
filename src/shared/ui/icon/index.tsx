@@ -75,16 +75,11 @@ const getIcons = (color?: string) =>
     ['de', <DeFlag color={color} />]
   ]);
 
-export const Icon: FC<IconProps> = ({ type, className, color, title, ...rest }) => {
+export const Icon: FC<IconProps> = ({ className, type, color, ...otherProps }) => {
   const getIcon = (type: IconType) => getIcons(color).get(type);
 
   return (
-    <div
-      className={classNames(styles.container, {}, [className])}
-      role='img'
-      aria-label={rest['aria-label'] || title}
-      {...rest}
-    >
+    <div className={classNames(styles.container, {}, [className])} {...otherProps}>
       {getIcon(type)}
     </div>
   );

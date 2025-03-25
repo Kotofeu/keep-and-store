@@ -1,4 +1,5 @@
 .value {
+  user-select: none;
   position: relative;
   font: inherit;
   display: flex;
@@ -30,12 +31,15 @@
 }
 
 .value__status {
+  cursor: default;
   position: absolute;
+  display: flex;
+  align-items: center;
   top: 0;
   bottom: 0;
   left: 14px;
   width: 16px;
-  transition-delay: 0;
+  transition-delay: 0s;
 }
 
 .value_success,

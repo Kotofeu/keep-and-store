@@ -9,6 +9,7 @@ import styles from './styles.module.scss';
 interface IconButtonProps {
   className?: string;
   title?: string;
+  ariaLabel?: string;
   icon: IconType;
   color?: string;
   isActive?: boolean;
@@ -20,6 +21,7 @@ interface IconButtonProps {
 export const IconButton: FC<IconButtonProps> = ({
   className,
   title,
+  ariaLabel,
   icon,
   color,
   isActive = false,
@@ -50,12 +52,13 @@ export const IconButton: FC<IconButtonProps> = ({
         [className]
       )}
       onClick={onClick}
-      title={title}
       type='button'
+      title={title}
+      aria-label={ariaLabel}
       onMouseEnter={() => setIsHover(!isActive)}
       onMouseLeave={() => setIsHover(false)}
     >
-      <Icon className={styles.button__icon} type={icon} color={getIconColor()} />
+      <Icon className={styles.button__icon} type={icon} color={getIconColor()} aria-hidden />
     </button>
   );
 };
