@@ -85,7 +85,6 @@ export const SelectComponent = <T,>({
         style={{ maxHeight: dropdownHeight }}
         id={`${selectId}-listbox`}
         aria-labelledby={`${selectId}-label`}
-        aria-hidden={!isOpen}
       >
         {searchable && (
           <div className={styles.select__searchBox}>
@@ -99,7 +98,6 @@ export const SelectComponent = <T,>({
               aria-label={t('search')}
               aria-controls={`${selectId}-listbox`}
               tabIndex={isOpen ? undefined : -1}
-              aria-hidden={!isOpen}
             />
           </div>
         )}

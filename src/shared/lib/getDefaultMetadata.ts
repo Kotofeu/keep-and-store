@@ -2,9 +2,11 @@ import { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import { AlternateURLs } from 'next/dist/lib/metadata/types/alternative-urls-types';
 
+import { Locale } from '@/shared/i18n';
+
 export const getDefaultMetadata = async (
   path: string = '/',
-  locale: string = 'en',
+  locale: Locale = 'en',
   allLocales: string[] = []
 ): Promise<Metadata> => {
   const baseUrl = process.env.NEXT_PUBLIC_URL || 'https://localhost:4000';

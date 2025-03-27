@@ -72,63 +72,51 @@
 
   --field-border-radius: 7px;
   --item-border-radius: 4px;
-}
 
-[data-theme='light'] {
   /* Primary Colors */
   --primary-color: var(--color-white);
   --primary-color-hover: var(--color-gray-100);
   --primary-color-active: var(--color-gray-200);
   --primary-color-disabled: var(--color-gray-100);
-
   /* Secondary Colors */
   --secondary-color: var(--color-gray-100);
   --secondary-color-hover: var(--color-gray-200);
   --secondary-color-active: var(--color-gray-300);
   --secondary-color-disabled: var(--color-gray-100);
-
   /* Text Colors */
   --text-primary: var(--color-gray-900);
   --text-primary-hover: var(--color-black);
   --text-primary-active: var(--color-blue-800);
   --text-primary-disabled: var(--color-gray-600);
-
   --text-secondary: var(--color-gray-800);
   --text-secondary-hover: var(--color-gray-900);
   --text-secondary-active: var(--color-blue-800);
   --text-secondary-disabled: var(--color-gray-600);
-
   /* Title Colors */
   --title-primary: var(--color-gray-900);
   --title-primary-hover: var(--color-black);
   --title-primary-active: var(--color-black);
   --title-primary-disabled: var(--color-gray-700);
-
   --title-secondary: var(--color-gray-800);
   --title-secondary-hover: var(--color-gray-900);
   --title-secondary-active: var(--color-blue-800);
   --title-secondary-disabled: var(--color-gray-600);
-
   /* Accent Colors */
   --accent-color: var(--color-blue-500);
   --accent-color-hover: var(--color-blue-600);
   --accent-color-active: var(--color-blue-700);
   --accent-color-disabled: var(--color-gray-500);
-
   /* Icons */
   --icon-primary: var(--color-blue-500);
   --icon-primary-hover: var(--color-blue-600);
   --icon-primary-active: var(--color-blue-700);
   --icon-primary-disabled: var(--color-gray-500);
-
   --icon-secondary: var(--color-gray-700);
   --icon-secondary-hover: var(--color-gray-800);
   --icon-secondary-active: var(--color-gray-900);
   --icon-secondary-disabled: var(--color-gray-500);
-
   /* Shadows */
   --box-shadow: var(--box-shadow-light);
-
   /* Buttons */
   --button-primary-background: var(--color-blue-500);
   --button-primary-background-hover: var(--color-blue-600);
@@ -138,7 +126,6 @@
   --button-primary-text-hover: var(--color-white);
   --button-primary-text-active: var(--color-white);
   --button-primary-text-disabled: var(--color-gray-200);
-
   --button-secondary-background: var(--color-gray-200);
   --button-secondary-background-hover: var(--color-gray-300);
   --button-secondary-background-active: var(--color-gray-400);
@@ -147,74 +134,60 @@
   --button-secondary-text-hover: var(--color-gray-900);
   --button-secondary-text-active: var(--color-gray-900);
   --button-secondary-text-disabled: var(--color-gray-500);
-
   /* Links */
   --link-primary-color: var(--color-blue-500);
   --link-primary-color-hover: var(--color-blue-600);
   --link-primary-color-active: var(--color-blue-700);
   --link-primary-color-disabled: var(--color-gray-500);
-
   --link-secondary-color: var(--color-gray-700);
   --link-secondary-color-hover: var(--color-gray-800);
   --link-secondary-color-active: var(--color-gray-900);
   --link-secondary-color-disabled: var(--color-gray-500);
-
   /* Status Colors */
   --error-color: var(--color-error);
   --warning-color: var(--color-warning);
   --success-color: var(--color-success);
-
   /* Tooltip Colors */
   --tooltip-background-color: var(--color-blue-800);
   --tooltip-color: var(--color-white);
-
   /* Field Colors - Primary */
   --field-primary-border: var(--color-gray-300);
   --field-primary-border-hover: var(--color-blue-500);
   --field-primary-border-active: var(--color-blue-600);
   --field-primary-border-disabled: var(--color-gray-400);
-
   --field-primary-background: var(--color-white);
   --field-primary-background-hover: var(--color-gray-100);
   --field-primary-background-active: var(--color-gray-200);
   --field-primary-background-disabled: var(--color-gray-200);
-
   --field-primary-text: var(--color-gray-900);
   --field-primary-text-hover: var(--color-black);
   --field-primary-text-active: var(--color-black);
   --field-primary-text-disabled: var(--color-gray-600);
-
   --field-primary-label: var(--color-gray-800);
   --field-primary-label-hover: var(--color-gray-900);
   --field-primary-label-active: var(--color-gray-900);
   --field-primary-label-disabled: var(--color-gray-600);
-
   --field-primary-placeholder: var(--color-gray-500);
   --field-primary-placeholder-hover: var(--color-gray-600);
   --field-primary-placeholder-active: var(--color-gray-700);
   --field-primary-placeholder-disabled: var(--color-gray-400);
-
   /* Field Colors - Secondary */
   --field-secondary-border: var(--color-gray-300);
   --field-secondary-border-hover: var(--color-blue-500);
   --field-secondary-border-active: var(--color-blue-600);
   --field-secondary-border-disabled: var(--color-gray-500);
-
   --field-secondary-background: var(--color-gray-200);
   --field-secondary-background-hover: var(--color-gray-300);
   --field-secondary-background-active: var(--color-gray-400);
   --field-secondary-background-disabled: var(--color-gray-100);
-
   --field-secondary-text: var(--color-gray-800);
   --field-secondary-text-hover: var(--color-gray-900);
   --field-secondary-text-active: var(--color-gray-900);
   --field-secondary-text-disabled: var(--color-gray-600);
-
   --field-secondary-label: var(--color-gray-700);
   --field-secondary-label-hover: var(--color-gray-800);
   --field-secondary-label-active: var(--color-gray-800);
   --field-secondary-label-disabled: var(--color-gray-600);
-
   --field-secondary-placeholder: var(--color-gray-500);
   --field-secondary-placeholder-hover: var(--color-gray-600);
   --field-secondary-placeholder-active: var(--color-gray-700);

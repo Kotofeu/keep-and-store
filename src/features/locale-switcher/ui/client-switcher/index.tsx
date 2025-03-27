@@ -2,7 +2,7 @@
 import { FC, useTransition } from 'react';
 import { useParams } from 'next/navigation';
 
-import { routing, usePathname, useRouter } from '@/shared/i18n';
+import { Locale, routing, usePathname, useRouter } from '@/shared/i18n';
 import { Option, Select } from '@/shared/ui/select';
 
 import styles from './styles.module.scss';
@@ -18,7 +18,7 @@ export const ClientSelect: FC<SwitcherSelectProps> = ({ value, options }) => {
   const pathname = usePathname();
   const params = useParams();
   function onSelectChange(option: Option | Option[] | null) {
-    const locale = option && !Array.isArray(option) ? option.value : routing.defaultLocale;
+    const locale = option && !Array.isArray(option) ? (option.value as Locale) : routing.defaultLocale;
     startTransition(() => {
       router.replace({ pathname, ...(params ? { params } : {}) }, { locale });
     });
