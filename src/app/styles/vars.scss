@@ -1,4 +1,4 @@
-:root {
+html {
   /* Layout and Structure */
   --container-width: 1420px;
 
@@ -72,7 +72,9 @@
 
   --field-border-radius: 7px;
   --item-border-radius: 4px;
+}
 
+[data-theme='light'] {
   /* Primary Colors */
   --primary-color: var(--color-white);
   --primary-color-hover: var(--color-gray-100);

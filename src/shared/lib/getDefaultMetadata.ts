@@ -2,23 +2,22 @@ import { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import { AlternateURLs } from 'next/dist/lib/metadata/types/alternative-urls-types';
 
-import { Locale } from '@/shared/i18n';
+import { Locale, routing } from '@/shared/i18n';
 
 export const getDefaultMetadata = async (
-  path: string = '/',
-  locale: Locale = 'en',
-  allLocales: string[] = []
+  path: string = routing.pathnames['/'],
+  locale: Locale = routing.defaultLocale
 ): Promise<Metadata> => {
   const baseUrl = process.env.NEXT_PUBLIC_URL || 'https://localhost:4000';
   const t = await getTranslations({ locale, namespace: 'Metadata' });
   const alternateURLs: AlternateURLs = {
-    canonical: `/${locale}`,
+    canonical: `/${locale === routing.defaultLocale ? '' : locale}${path}`.replace(/\/$/, ''),
     languages: {
-      ...allLocales.reduce((acc: { [key: string]: string }, lang) => {
-        acc[lang] = `/${lang}${path}`;
+      ...routing.locales.reduce((acc: { [key: string]: string }, lang) => {
+        acc[lang] = `/${lang === routing.defaultLocale ? '' : lang}${path}`.replace(/\/$/, '');
         return acc;
       }, {}),
-      'x-default': '/'
+      'x-default': path
     }
   };
   return {

@@ -7,7 +7,9 @@ export const routing = defineRouting({
   pathnames: {
     '/': '/',
     '/about': '/about'
-  }
+  },
+  localePrefix: 'as-needed',
+  localeDetection: false
 });
 
 export type Pathnames = keyof typeof routing.pathnames;

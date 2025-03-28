@@ -12,11 +12,7 @@ export const generateStaticParams = () => routing.locales.map(locale => ({ local
 
 export const generateMetadata = async ({ params }: Omit<BaseLayoutProps, 'children'>) => {
   const { locale } = await params;
-  return getDefaultMetadata(
-    '/',
-    locale,
-    routing.locales.map(loc => loc)
-  );
+  return getDefaultMetadata(routing.pathnames['/'], locale);
 };
 
 const LocaleLayout: FC<BaseLayoutProps> = async ({ children, params }) => {
