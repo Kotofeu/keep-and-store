@@ -4,12 +4,13 @@
   position: relative;
   width: 100%;
   min-height: 40px;
-  outline: none;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  transition: outline-color var(--transition-fast);
+  border-radius: var(--field-border-radius);
 
-  &:focus-visible {
-    outline: 2px solid var(--field-primary-border-active);
-    outline-offset: 2px;
-    border-radius: var(--field-border-radius);
+  &:focus-within {
+    outline-color: var(--field-primary-border-active);
   }
 }
 

@@ -54,6 +54,7 @@ export const ItemsList = memo(
                     onClick={() =>
                       (!isSelected || multiple) && !isDisabled ? onChangeOption(visibleIndex) : undefined
                     }
+                    
                     role='option'
                     aria-selected={isSelected}
                     id={`${selectId}-option-${visibleIndex}`}

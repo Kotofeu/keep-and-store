@@ -43,21 +43,7 @@ export const SelectComponent = <T,>({
 }: SelectComponentProps<T>) => {
   const t = useTranslations('Shared.Select');
   return (
-    <div
-      className={classNames(styles.select, {}, [className])}
-      ref={ref}
-      onKeyDown={isOpen && !isLoading && !error ? handleKeyDown : openSelectByEnter}
-      id={`${selectId}-label`}
-      tabIndex={disabled ? -1 : 0}
-      role='combobox'
-      aria-haspopup='listbox'
-      aria-expanded={isOpen}
-      aria-label={placeholder || t('selectOption')}
-      aria-owns={`${selectId}-listbox`}
-      aria-controls={`${selectId}-listbox`}
-      aria-disabled={disabled}
-      aria-busy={isLoading}
-    >
+    <div className={classNames(styles.select, {}, [className])} ref={ref}>
       <SelectedItem
         maxSelectedItemsCount={maxSelectedItemsCount}
         multiple={multiple}
@@ -70,6 +56,8 @@ export const SelectComponent = <T,>({
         isOpen={isOpen}
         onRemoveOption={onRemoveOption}
         toggleDropdown={toggleDropdown}
+        handleKeyDown={handleKeyDown}
+        openSelectByEnter={openSelectByEnter}
         removeAllOptions={removeAllOptions}
         selectId={selectId}
         disabled={disabled}

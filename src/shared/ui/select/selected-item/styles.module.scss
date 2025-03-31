@@ -13,6 +13,7 @@
   background-color: var(--field-primary-background);
   cursor: pointer;
   flex-grow: 1;
+  outline: none;
   transition:
     border-radius var(--transition-fast),
     border var(--transition-fast),

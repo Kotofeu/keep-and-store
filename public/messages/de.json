@@ -42,7 +42,9 @@
       "emptyList": "Nothing was found",
       "selectOption": "Select an option",
       "removeOption": "Remove {optionLabel}",
-      "removeAllOption": "Remove selected"
+      "removeAllOption": "Remove selected",
+      "loadingError": "An error occurred while loading options [digest: {digest}]"
+
     }
   },
   "BaseLabels": {

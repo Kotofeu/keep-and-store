@@ -1,5 +1,6 @@
 'use client';
 import { useState, useCallback, useMemo, useEffect, KeyboardEvent } from 'react';
+import { useTranslations } from 'next-intl';
 
 import { useDebounce } from '@/shared/hooks';
 
@@ -18,6 +19,8 @@ export const useSelectLogic = <T>({
   onChange,
   loadOptions
 }: UseSelectLogicProps<T>): UseSelectLogicReturn<T> => {
+  const t = useTranslations('Shared.Select');
+
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [loadedOptions, setLoadedOptions] = useState<Option<T>[]>(options);
@@ -62,14 +65,13 @@ export const useSelectLogic = <T>({
           setLoadedOptions(newOptions as Option<T>[]);
         })
         .catch(error => {
-          const errorMessage = (error as Error).message || 'Loading options error';
-          setError(errorMessage);
+          setError(t('loadingError', { digest: error.digest }));
         })
         .finally(() => {
           setIsLoading(false);
         });
     }
-  }, [error, isOpen, isOptionsWasLoaded, loadOptions]);
+  }, [error, isOpen, isOptionsWasLoaded, loadOptions, t]);
 
   const handleOptionClick = useCallback(
     (index: number) => {

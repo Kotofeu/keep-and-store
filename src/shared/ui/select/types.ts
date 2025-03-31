@@ -97,6 +97,8 @@ export interface SelectedItemProps<T> extends BaseSelectProps<T>, SelectActions<
   options: Option<T>[];
   removeAllOptions: () => void;
   onRemoveOption: (option: Option<T>) => void;
+  handleKeyDown: (e: KeyboardEvent<HTMLElement>) => void;
+  openSelectByEnter: (e: KeyboardEvent<HTMLDivElement>) => void;
 }
 
 export interface ItemsListProps<T> extends ListItemProps<T>, BaseDropdownProps {

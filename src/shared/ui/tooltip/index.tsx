@@ -40,55 +40,73 @@ export const Tooltip: FC<TooltipWrapperProps> = ({
   const [isVisible, setIsVisible] = useClickOutside(targetRef);
   const debounceVisible = useDebounce(isVisible, showDelay);
   const [isTouchDevice, setIsTouchDevice] = useState(false);
-  const isLongTouchRef = useRef<boolean>(false);
+  const frameRef = useRef<number | null>(null);
 
   useEffect(() => {
-    setIsTouchDevice(() => 'ontouchstart' in window || navigator.maxTouchPoints > 0);
+    setIsTouchDevice('ontouchstart' in window || navigator.maxTouchPoints > 0);
   }, []);
 
   const updateTooltipPosition = useCallback(() => {
-    if (debounceVisible && targetRef.current && tooltipRef.current) {
+    if (isVisible && targetRef.current && tooltipRef.current) {
       const targetRect = targetRef.current.getBoundingClientRect();
       const tooltipRect = tooltipRef.current.getBoundingClientRect();
 
-      const styles = getTooltipPosition({
-        targetRect,
-        tooltipRect,
-        position,
-        offset
-      });
-      setTooltipStyles(styles);
+      setTooltipStyles(
+        getTooltipPosition({
+          targetRect,
+          tooltipRect,
+          position,
+          offset
+        })
+      );
     }
-  }, [debounceVisible, position, offset]);
+  }, [isVisible, position, offset]);
 
-  const showTooltip = useCallback(() => {
-    setCalculatedMaxWidth(getMaxTooltipWidth(maxWidth, offset));
-    setIsVisible(true);
-    isLongTouchRef.current = true;
-  }, [maxWidth, offset, setIsVisible]);
+  const updateTooltipWidth = useCallback(() => {
+    if (isVisible) {
+      setCalculatedMaxWidth(getMaxTooltipWidth(maxWidth, offset));
+    }
+  }, [isVisible, maxWidth, offset]);
 
-  const hideTooltip = useCallback(() => {
-    setIsVisible(false);
-    isLongTouchRef.current = false;
-  }, [setIsVisible]);
-
-  const handleTouchEnd = useCallback(
-    (e: React.TouchEvent) => {
-      hideTooltip();
-    },
-    [hideTooltip]
-  );
+  const showTooltip = useCallback(() => setIsVisible(true), [setIsVisible]);
+  const hideTooltip = useCallback(() => setIsVisible(false), [setIsVisible]);
 
   useEffect(() => {
-    updateTooltipPosition();
-    window.addEventListener('resize', updateTooltipPosition);
-    window.addEventListener('scroll', updateTooltipPosition, true);
+    const observer = new ResizeObserver(() => {
+      if (frameRef.current) {
+        cancelAnimationFrame(frameRef.current);
+      }
+      frameRef.current = requestAnimationFrame(updateTooltipPosition);
+    });
+
+    if (tooltipRef.current) {
+      observer.observe(tooltipRef.current);
+    }
 
     return () => {
-      window.removeEventListener('resize', updateTooltipPosition);
-      window.removeEventListener('scroll', updateTooltipPosition, true);
+      observer.disconnect();
+      if (frameRef.current) {
+        cancelAnimationFrame(frameRef.current);
+      }
     };
   }, [updateTooltipPosition]);
+
+  useEffect(() => {
+    if (isVisible) {
+      updateTooltipWidth();
+      updateTooltipPosition();
+
+      const handleScroll = () => {
+        if (frameRef.current) {
+          cancelAnimationFrame(frameRef.current);
+        }
+        frameRef.current = requestAnimationFrame(updateTooltipPosition);
+      };
+
+      window.addEventListener('scroll', handleScroll, true);
+      return () => window.removeEventListener('scroll', handleScroll, true);
+    }
+  }, [isVisible, updateTooltipWidth, updateTooltipPosition]);
 
   const tooltipStyle: CSSProperties = {
     ...tooltipStyles.tooltipStyle,
@@ -116,7 +134,7 @@ export const Tooltip: FC<TooltipWrapperProps> = ({
       onMouseEnter={!isTouchDevice ? showTooltip : undefined}
       onMouseLeave={!isTouchDevice ? hideTooltip : undefined}
       onTouchStart={isTouchDevice ? showTooltip : undefined}
-      onTouchEnd={isTouchDevice ? handleTouchEnd : undefined}
+      onTouchEnd={isTouchDevice ? hideTooltip : undefined}
       onContextMenu={isTouchDevice ? e => e.preventDefault() : undefined}
     >
       <div ref={targetRef} className={classNames(styles.wrapper, { [styles.wrapper_visible]: debounceVisible })}>

@@ -25,6 +25,8 @@ export const SelectedItem = memo(
     maxSelectedItemsCount,
     onRemoveOption,
     toggleDropdown,
+    handleKeyDown,
+    openSelectByEnter,
     removeAllOptions
   }: SelectedItemProps<T>) => {
     const t = useTranslations('Shared.Select');
@@ -38,13 +40,17 @@ export const SelectedItem = memo(
           [styles.value_warning]: !!warning,
           [styles.value_success]: !!success
         })}
+        onKeyDown={isOpen && !isLoading && !error ? handleKeyDown : openSelectByEnter}
         onClick={toggleDropdown}
-        role='button'
+        tabIndex={disabled ? -1 : 0}
+        role='combobox'
         aria-haspopup='listbox'
         aria-expanded={isOpen}
-        aria-disabled={disabled || isLoading}
-        aria-labelledby={`${selectId}-label`}
-        tabIndex={disabled || isLoading ? -1 : 0}
+        aria-label={placeholder || t('selectOption')}
+        aria-owns={`${selectId}-listbox`}
+        aria-controls={`${selectId}-listbox`}
+        aria-disabled={disabled}
+        aria-busy={isLoading}
       >
         <StatusIcons
           className={styles.value__status}

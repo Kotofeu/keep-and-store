@@ -13,7 +13,7 @@ interface RootProviderProps {
 }
 
 export const RootProvider: FC<RootProviderProps> = async ({ locale, children }) => {
-  const messages = await getMessages();
+  const messages = await getMessages({ locale });
   return (
     <html className={`${titleFont.variable} ${textFont.variable}`} lang={locale} suppressHydrationWarning>
       <body>

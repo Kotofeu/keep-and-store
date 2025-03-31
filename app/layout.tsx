@@ -13,6 +13,6 @@ type RootLayoutProps = {
 
 export const generateMetadata = async (): Promise<Metadata> => getDefaultMetadata();
 
-const RootLayout: FC<RootLayoutProps> = ({ children }) => children;
+const RootLayout: FC<RootLayoutProps> = async ({ children }) => children;
 
 export default RootLayout;

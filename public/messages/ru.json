@@ -42,7 +42,8 @@
       "emptyList": "Ничего не нашлось",
       "selectOption": "Выберите опцию",
       "removeOption": "Удалить {optionLabel}",
-      "removeAllOption": "Удалить выбранное"
+      "removeAllOption": "Удалить выбранное",
+      "loadingError": "Произошла ошибка при загрузке опций [digest: {digest}]"
     }
   },
   "BaseLabels": {

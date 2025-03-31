@@ -5,34 +5,14 @@ import { setRequestLocale } from 'next-intl/server';
 import { Link } from '@/shared/i18n';
 import { BasePageProps } from '@/shared/types';
 import { ThemeSwitcher } from '@/features/theme-switcher';
-import { Option, Select } from '@/shared/ui/select';
+import { Select } from '@/shared/ui/select';
 import { Tooltip } from '@/shared/ui/tooltip';
+
+import { loadTestOptions } from './testLoading';
 
 const HomePage: FC<BasePageProps> = ({ params }) => {
   const { locale } = use(params);
   setRequestLocale(locale);
-  const loadTestOptions = async (): Promise<Option<string>[]> => {
-    'use server';
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        try {
-          // Пример условия для ошибки
-          const shouldThrowError = Math.random() > 1; // 20% chance to throw an error
-          if (shouldThrowError) {
-            throw new Error('Произошла ошибка при загрузке опций');
-          }
-
-          const options: Option<string>[] = Array.from({ length: 10000 }, (_, index) => ({
-            value: `${index}`,
-            label: `Option ${index}`
-          }));
-          resolve(options);
-        } catch (error) {
-          reject(error);
-        }
-      }, 1000);
-    });
-  };
   const t = useTranslations('MainPage');
   return (
     <main>
