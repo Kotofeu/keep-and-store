@@ -1,16 +1,11 @@
 import { useState, useEffect, HTMLAttributes } from 'react';
 
 import { classNames } from '@/shared/lib';
+import { StatusValues } from '@/shared/types';
 
 import { Icon } from '../icon';
 import styles from './styles.module.scss';
 import { Tooltip } from '../tooltip';
-
-interface StatusValues {
-  error?: boolean | string | null;
-  success?: boolean | string | null;
-  warning?: boolean | string | null;
-}
 
 interface StatusIconsProps extends HTMLAttributes<HTMLDivElement> {
   statusValues?: StatusValues;

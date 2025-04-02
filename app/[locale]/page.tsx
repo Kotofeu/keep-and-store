@@ -24,7 +24,6 @@ const HomePage: FC<BasePageProps> = ({ params }) => {
           { label: '3', value: '4' }
         ]}
         placeholder='Селектор'
-        searchable
         multiple
       />
       <Select options={[{ label: '1', value: '1' }]} placeholder='Селектор' searchable multiple />

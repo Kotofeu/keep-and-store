@@ -7,6 +7,7 @@ interface VirtualListProps<T> {
   overscanCount: number;
   gap?: number;
   containerHeight: number;
+  focusedIndex?: number;
   containerRef: RefObject<HTMLDivElement | null>;
 }
 
@@ -21,9 +22,32 @@ export const useVirtualList = <T>({
   overscanCount,
   containerHeight,
   containerRef,
+  focusedIndex,
   gap = 0
 }: VirtualListProps<T>) => {
   const [scrollTop, setScrollTop] = useState(0);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container || typeof focusedIndex !== 'number' || focusedIndex < 0 || focusedIndex >= items.length) {
+      return;
+    }
+
+    const itemPosition = focusedIndex * itemHeight;
+    const itemBottom = itemPosition + itemHeight;
+    const containerBottom = container.scrollTop + containerHeight;
+
+    if (itemPosition < container.scrollTop || itemBottom > containerBottom) {
+      const newScrollTop = Math.max(0, itemPosition - (containerHeight - itemHeight) / 2);
+
+      container.scrollTo({
+        top: newScrollTop,
+        behavior: 'auto'
+      });
+
+      setScrollTop(newScrollTop);
+    }
+  }, [focusedIndex, containerRef, containerHeight, itemHeight, items.length]);
 
   useEffect(() => {
     const container = containerRef.current;

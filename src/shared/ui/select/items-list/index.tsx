@@ -9,7 +9,7 @@ import { ItemsListProps } from '../types';
 
 export const ItemsList = memo(
   <T,>({
-    visibleItems,
+    visibleOptions,
     selectedOptions,
     selectId,
     multiple,
@@ -35,8 +35,8 @@ export const ItemsList = memo(
             aria-labelledby={`${selectId}-label`}
             aria-multiselectable={multiple}
           >
-            {!!visibleItems.length ? (
-              visibleItems.map(({ item: option, index: visibleIndex }) => {
+            {!!visibleOptions.length ? (
+              visibleOptions.map(({ item: option, index: visibleIndex }) => {
                 const isSelected = selectedOptions.some(o => o.value === option.value);
                 const isDisabled =
                   ((maxSelectedItemsCount && selectedOptions.length >= maxSelectedItemsCount) || !!option.disabled) &&
@@ -67,7 +67,7 @@ export const ItemsList = memo(
                     style={{ height: `${itemHeight}px` }}
                     aria-disabled={isDisabled}
                     aria-posinset={visibleIndex + 1}
-                    aria-setsize={visibleItems.length}
+                    aria-setsize={visibleOptions.length}
                   >
                     {option.ui || option.label}
                   </li>

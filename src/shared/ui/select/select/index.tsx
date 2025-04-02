@@ -35,15 +35,15 @@ export const Select = <T,>({
 }: SelectProps<T>) => {
   const ref = useRef<HTMLDivElement>(null);
   const focusedOptionRef = useRef<HTMLLIElement | null>(null);
-  const searchInputRef = useRef<HTMLInputElement>(null);
-  const listContainerRef = useRef<HTMLDivElement>(null);
+  const searchInputRef = useRef<HTMLInputElement | null>(null);
+  const listContainerRef = useRef<HTMLDivElement | null>(null);
   const randomId = useId();
 
   const [isOpen, setIsOpen] = useClickOutside(ref, undefined, `data-ignore-element="${selectId || randomId}"`);
 
   const {
     searchValue,
-    error: loadingError,
+    loadingError,
     focusedIndex,
     isLoading: promiseIsLoading,
     filteredOptions,
@@ -53,7 +53,8 @@ export const Select = <T,>({
     toggleDropdown,
     handleOptionClick,
     handleRemoveOption,
-    onSelectKeyDown
+    onSelectKeyDown,
+    itemsListNavigation
   } = useSelectLogic<T>({
     maxSelectedItemsCount,
     isOpen,
@@ -71,7 +72,7 @@ export const Select = <T,>({
   });
 
   const {
-    visibleItems,
+    visibleItems: visibleOptions,
     totalHeight: listHeight,
     offsetY: listOffsetY
   } = useVirtualList({
@@ -80,7 +81,8 @@ export const Select = <T,>({
     overscanCount,
     containerRef: listContainerRef,
     containerHeight: getDropdownHeight(dropdownHeight) / 2,
-    gap
+    gap,
+    focusedIndex
   });
 
   const calcIsLoading = isLoading || promiseIsLoading;
@@ -92,7 +94,8 @@ export const Select = <T,>({
       placeholder={placeholder}
       selectedOptions={selectedOptions}
       selectId={selectId || randomId}
-      visibleItems={visibleItems}
+      focusedIndex={focusedIndex}
+      visibleOptions={visibleOptions}
       searchable={searchable}
       isOpen={isOpen && !calcIsLoading && !disabled}
       required={required}
@@ -105,7 +108,6 @@ export const Select = <T,>({
       itemHeight={itemHeight}
       listHeight={listHeight}
       listOffsetY={listOffsetY}
-      focusedIndex={focusedIndex}
       searchValue={searchValue}
       success={success}
       warning={warning}
@@ -115,6 +117,7 @@ export const Select = <T,>({
       listContainerRef={listContainerRef}
       ref={ref}
       onSelectKeyDown={onSelectKeyDown}
+      itemsListNavigation={itemsListNavigation}
       onChangeOption={handleOptionClick}
       onSearchChange={setSearchValue}
       toggleDropdown={toggleDropdown}

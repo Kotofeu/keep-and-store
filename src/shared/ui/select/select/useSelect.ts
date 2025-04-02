@@ -26,14 +26,29 @@ export const useSelectLogic = <T>({
 
   // State management
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [loadingError, setLoadingError] = useState<string | null>(null);
   const [loadedOptions, setLoadedOptions] = useState<Option<T>[]>(options);
   const [isOptionsWasLoaded, setIsOptionsWasLoaded] = useState<boolean>(false);
   const [selectedOptions, setSelectedOptions] = useState<Option<T>[]>(
     value ? (Array.isArray(value) ? value : [value]) : []
   );
   const [searchValue, setSearchValue] = useState('');
+
+  // Focused management
   const [focusedIndex, setFocusedIndex] = useState(-1);
+
+  useEffect(() => {
+    if (focusedIndex && focusedOptionRef.current) {
+      focusedOptionRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'nearest'
+      });
+      focusedOptionRef.current.focus();
+    }
+  }, [focusedIndex, focusedOptionRef]);
+  useEffect(() => {
+    setFocusedIndex(-1);
+  }, [isOpen]);
 
   // Debounced values
   const debouncedSearchValue = useDebounce(searchValue, 300);
@@ -56,20 +71,6 @@ export const useSelectLogic = <T>({
     }
   }, [setIsOpen, disabled, isLoading]);
 
-  // Focus management effects
-  useEffect(() => {
-    setFocusedIndex(-1);
-  }, [isOpen]);
-
-  useEffect(() => {
-    if (focusedIndex !== undefined && focusedOptionRef.current) {
-      focusedOptionRef.current.scrollIntoView({
-        behavior: 'smooth',
-        block: 'nearest'
-      });
-    }
-  }, [focusedIndex, focusedOptionRef]);
-
   // Options loading effect
   useEffect(() => {
     if (!isOpen && loadOptions && !isOptionsWasLoaded) {
@@ -80,13 +81,13 @@ export const useSelectLogic = <T>({
           setLoadedOptions(newOptions as Option<T>[]);
         })
         .catch(error => {
-          setError(t('loadingError', { digest: error.digest }));
+          setLoadingError(t('loadingError', { digest: error.digest }));
         })
         .finally(() => {
           setIsLoading(false);
         });
     }
-  }, [error, isOpen, isOptionsWasLoaded, loadOptions, t]);
+  }, [loadingError, isOpen, isOptionsWasLoaded, loadOptions, t]);
 
   // Option selection handlers
   const handleOptionClick = useCallback(
@@ -152,10 +153,54 @@ export const useSelectLogic = <T>({
     [disabled, isLoading, isOpen, toggleDropdown, searchInputRef, searchable]
   );
 
+  // Keyboard navigation handler
+  const itemsListNavigation = useCallback(
+    (e: KeyboardEvent<HTMLDivElement>) => {
+      if (disabled || isLoading || !isOpen) {
+        return;
+      }
+
+      e.preventDefault();
+
+      if (e.key === 'Escape') {
+        toggleDropdown();
+      } else if (isOpen) {
+        switch (e.key) {
+          case 'Tab':
+            if (e.shiftKey) {
+              const prevIndex = focusedIndex > 0 ? focusedIndex - 1 : filteredOptions.length - 1;
+              setFocusedIndex(prevIndex);
+            } else {
+              const nextIndex = focusedIndex < filteredOptions.length - 1 ? focusedIndex + 1 : 0;
+              setFocusedIndex(nextIndex);
+            }
+            break;
+          case 'ArrowDown':
+          case 'ArrowRight':
+            const nextIndex = focusedIndex < filteredOptions.length - 1 ? focusedIndex + 1 : 0;
+            setFocusedIndex(nextIndex);
+            break;
+          case 'ArrowUp':
+          case 'ArrowLeft':
+            const prevIndex = focusedIndex > 0 ? focusedIndex - 1 : filteredOptions.length - 1;
+            setFocusedIndex(prevIndex);
+            break;
+          case 'Home':
+            setFocusedIndex(0);
+            break;
+          case 'End':
+            setFocusedIndex(filteredOptions.length - 1);
+            break;
+        }
+      }
+    },
+    [disabled, isLoading, isOpen, toggleDropdown, filteredOptions, focusedIndex]
+  );
+
   // Return all necessary values and handlers
   return {
     searchValue,
-    error,
+    loadingError,
     focusedIndex,
     isLoading,
     filteredOptions,
@@ -165,6 +210,7 @@ export const useSelectLogic = <T>({
     toggleDropdown,
     handleOptionClick,
     handleRemoveOption,
-    onSelectKeyDown
+    onSelectKeyDown,
+    itemsListNavigation
   };
 };

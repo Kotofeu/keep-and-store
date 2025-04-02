@@ -12,7 +12,8 @@ export const SelectComponent = <T,>({
   placeholder,
   selectedOptions,
   selectId,
-  visibleItems,
+  visibleOptions,
+  focusedIndex,
   searchable,
   isOpen,
   required,
@@ -25,7 +26,6 @@ export const SelectComponent = <T,>({
   itemHeight,
   listHeight,
   listOffsetY,
-  focusedIndex,
   searchValue,
   error,
   warning,
@@ -35,6 +35,7 @@ export const SelectComponent = <T,>({
   listContainerRef,
   ref,
   onSelectKeyDown,
+  itemsListNavigation,
   onChangeOption,
   onSearchChange,
   toggleDropdown,
@@ -46,7 +47,7 @@ export const SelectComponent = <T,>({
   return (
     <div
       className={classNames(styles.select, {}, [className])}
-      onKeyDown={e => (!disabled && !isLoading && isOpen && e.key === 'Escape' ? toggleDropdown() : undefined)}
+      onKeyDown={itemsListNavigation}
       ref={ref}
       role='combobox'
       aria-haspopup='listbox'
@@ -104,7 +105,7 @@ export const SelectComponent = <T,>({
           </div>
         )}
         <ItemsList
-          visibleItems={visibleItems}
+          visibleOptions={visibleOptions}
           selectedOptions={selectedOptions}
           selectId={selectId}
           multiple={multiple}

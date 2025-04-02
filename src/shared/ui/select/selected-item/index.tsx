@@ -5,7 +5,7 @@ import { classNames } from '@/shared/lib';
 
 import styles from './styles.module.scss';
 import { Icon } from '../../icon';
-import { SelectedItemProps } from '../types';
+import { SelectedItemsProps } from '../types';
 import { StatusIcons } from '../../status-icons';
 import { Tooltip } from '../../tooltip';
 
@@ -27,7 +27,7 @@ export const SelectedItem = memo(
     toggleDropdown,
     onSelectKeyDown,
     removeAllOptions
-  }: SelectedItemProps<T>) => {
+  }: SelectedItemsProps<T>) => {
     const t = useTranslations('Shared.Select');
 
     return (
@@ -134,4 +134,4 @@ export const SelectedItem = memo(
       </div>
     );
   }
-) as <T>(props: SelectedItemProps<T>) => ReactNode;
+) as <T>(props: SelectedItemsProps<T>) => ReactNode;
