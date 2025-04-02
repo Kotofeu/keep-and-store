@@ -2,10 +2,10 @@
 
 import { useId, useRef } from 'react';
 
-import { useClickOutside, useKeyboardNavigation, useSelectLogic, useVirtualList } from '@/shared/hooks';
+import { useClickOutside, useSelectLogic, useVirtualList } from '@/shared/hooks';
 
 import { SelectComponent } from '../select-component';
-import { dropdownHeightMap, Option, SelectProps } from '../types';
+import { dropdownHeightMap, SelectProps } from '../types';
 
 const getDropdownHeight = (height: keyof typeof dropdownHeightMap | number): number =>
   typeof height === 'number' ? height : dropdownHeightMap[height];
@@ -34,62 +34,51 @@ export const Select = <T,>({
   loadOptions
 }: SelectProps<T>) => {
   const ref = useRef<HTMLDivElement>(null);
-  const iconRef = useRef<HTMLDivElement>(null);
   const focusedOptionRef = useRef<HTMLLIElement | null>(null);
+  const searchInputRef = useRef<HTMLInputElement>(null);
+  const listContainerRef = useRef<HTMLDivElement>(null);
   const randomId = useId();
 
-  const [isOpen, setIsOpen, closeDropdown] = useClickOutside(
-    ref,
-    iconRef,
-    `data-ignore-element="${selectId || randomId}"`
-  );
+  const [isOpen, setIsOpen] = useClickOutside(ref, undefined, `data-ignore-element="${selectId || randomId}"`);
 
   const {
-    selectedOptions,
     searchValue,
-    focusedIndex,
-    filteredOptions,
-    isLoading: promiseIsLoading,
     error: loadingError,
+    focusedIndex,
+    isLoading: promiseIsLoading,
+    filteredOptions,
+    selectedOptions,
     setSearchValue,
-    setFocusedIndex,
+    removeAllOptions,
+    toggleDropdown,
     handleOptionClick,
     handleRemoveOption,
-    openSelectByEnter,
-    removeAllOptions,
-    toggleDropdown
+    onSelectKeyDown
   } = useSelectLogic<T>({
-    options,
-    multiple,
-    value,
-    isOpen,
     maxSelectedItemsCount,
+    isOpen,
     disabled: disabled || isLoading || !!error,
+    multiple,
     excludeSelected,
+    searchable,
+    value,
+    options,
     focusedOptionRef,
+    searchInputRef,
     setIsOpen,
     onChange,
     loadOptions
   });
 
-  const handleKeyDown = useKeyboardNavigation<Option<T>>({
-    disabled: !!disabled,
-    items: filteredOptions,
-    focusedIndex,
-    setFocusedIndex,
-    handleEnterClick: handleOptionClick,
-    handleEscapeClick: closeDropdown
-  });
-
   const {
     visibleItems,
     totalHeight: listHeight,
-    offsetY: listOffsetY,
-    containerRef: listContainerRef
+    offsetY: listOffsetY
   } = useVirtualList({
     items: filteredOptions,
     itemHeight,
     overscanCount,
+    containerRef: listContainerRef,
     containerHeight: getDropdownHeight(dropdownHeight) / 2,
     gap
   });
@@ -110,8 +99,8 @@ export const Select = <T,>({
       multiple={multiple}
       disabled={disabled}
       isLoading={calcIsLoading}
-      dropdownHeight={getDropdownHeight(dropdownHeight)}
       maxSelectedItemsCount={maxSelectedItemsCount}
+      dropdownHeight={getDropdownHeight(dropdownHeight)}
       gap={gap}
       itemHeight={itemHeight}
       listHeight={listHeight}
@@ -121,16 +110,16 @@ export const Select = <T,>({
       success={success}
       warning={warning}
       error={calcError}
-      ref={ref}
       focusedOptionRef={focusedOptionRef}
+      searchInputRef={searchInputRef}
       listContainerRef={listContainerRef}
-      onSearchChange={setSearchValue}
+      ref={ref}
+      onSelectKeyDown={onSelectKeyDown}
       onChangeOption={handleOptionClick}
+      onSearchChange={setSearchValue}
+      toggleDropdown={toggleDropdown}
       onRemoveOption={handleRemoveOption}
       removeAllOptions={removeAllOptions}
-      toggleDropdown={toggleDropdown}
-      handleKeyDown={handleKeyDown}
-      openSelectByEnter={openSelectByEnter}
     />
   );
 };

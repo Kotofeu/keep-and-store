@@ -31,10 +31,10 @@ export const SelectComponent = <T,>({
   warning,
   success,
   focusedOptionRef,
+  searchInputRef,
   listContainerRef,
   ref,
-  handleKeyDown,
-  openSelectByEnter,
+  onSelectKeyDown,
   onChangeOption,
   onSearchChange,
   toggleDropdown,
@@ -42,26 +42,38 @@ export const SelectComponent = <T,>({
   removeAllOptions
 }: SelectComponentProps<T>) => {
   const t = useTranslations('Shared.Select');
+
   return (
-    <div className={classNames(styles.select, {}, [className])} ref={ref}>
+    <div
+      className={classNames(styles.select, {}, [className])}
+      onKeyDown={e => (!disabled && !isLoading && isOpen && e.key === 'Escape' ? toggleDropdown() : undefined)}
+      ref={ref}
+      role='combobox'
+      aria-haspopup='listbox'
+      aria-expanded={isOpen}
+      aria-owns={`${selectId}-listbox`}
+      aria-controls={`${selectId}-listbox`}
+      aria-disabled={disabled}
+      aria-busy={isLoading}
+      tabIndex={-1}
+    >
       <SelectedItem
-        maxSelectedItemsCount={maxSelectedItemsCount}
+        placeholder={placeholder}
+        selectedOptions={selectedOptions}
+        selectId={selectId}
         multiple={multiple}
         required={required}
-        placeholder={placeholder}
-        error={error}
-        warning={warning}
         success={success}
-        options={selectedOptions}
+        warning={warning}
+        error={error}
         isOpen={isOpen}
-        onRemoveOption={onRemoveOption}
-        toggleDropdown={toggleDropdown}
-        handleKeyDown={handleKeyDown}
-        openSelectByEnter={openSelectByEnter}
-        removeAllOptions={removeAllOptions}
-        selectId={selectId}
         disabled={disabled}
         isLoading={isLoading}
+        maxSelectedItemsCount={maxSelectedItemsCount}
+        onRemoveOption={onRemoveOption}
+        toggleDropdown={toggleDropdown}
+        onSelectKeyDown={onSelectKeyDown}
+        removeAllOptions={removeAllOptions}
       />
       <div
         className={classNames(styles.select__dropdown, {
@@ -73,6 +85,7 @@ export const SelectComponent = <T,>({
         style={{ maxHeight: dropdownHeight }}
         id={`${selectId}-listbox`}
         aria-labelledby={`${selectId}-label`}
+        aria-live='polite'
       >
         {searchable && (
           <div className={styles.select__searchBox}>
@@ -85,25 +98,26 @@ export const SelectComponent = <T,>({
               className={styles.select__search}
               aria-label={t('search')}
               aria-controls={`${selectId}-listbox`}
-              tabIndex={isOpen ? undefined : -1}
+              tabIndex={isOpen ? undefined : 1}
+              ref={searchInputRef}
             />
           </div>
         )}
         <ItemsList
-          focusedIndex={focusedIndex}
-          focusedOptionRef={focusedOptionRef}
-          multiple={multiple}
-          selectedOptions={selectedOptions}
-          error={typeof error === 'string' ? error : undefined}
-          onChangeOption={onChangeOption}
-          selectId={selectId}
-          maxSelectedItemsCount={maxSelectedItemsCount}
-          listHeight={listHeight}
-          listContainerRef={listContainerRef}
-          gap={gap}
           visibleItems={visibleItems}
-          listOffsetY={listOffsetY}
+          selectedOptions={selectedOptions}
+          selectId={selectId}
+          multiple={multiple}
+          focusedIndex={focusedIndex}
+          maxSelectedItemsCount={maxSelectedItemsCount}
+          error={error}
+          gap={gap}
           itemHeight={itemHeight}
+          listHeight={listHeight}
+          listOffsetY={listOffsetY}
+          listContainerRef={listContainerRef}
+          focusedOptionRef={focusedOptionRef}
+          onChangeOption={onChangeOption}
         />
       </div>
     </div>

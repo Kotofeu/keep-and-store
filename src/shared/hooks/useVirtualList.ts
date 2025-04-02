@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
+'use client';
+import { RefObject, useEffect, useState } from 'react';
 
 interface VirtualListProps<T> {
   items: T[];
@@ -6,6 +7,7 @@ interface VirtualListProps<T> {
   overscanCount: number;
   gap?: number;
   containerHeight: number;
+  containerRef: RefObject<HTMLDivElement | null>;
 }
 
 export interface VisibleItem<T> {
@@ -18,10 +20,10 @@ export const useVirtualList = <T>({
   itemHeight,
   overscanCount,
   containerHeight,
+  containerRef,
   gap = 0
 }: VirtualListProps<T>) => {
   const [scrollTop, setScrollTop] = useState(0);
-  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -35,7 +37,7 @@ export const useVirtualList = <T>({
 
     container.addEventListener('scroll', handleScroll);
     return () => container.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [containerRef]);
 
   const startIndex = Math.max(0, Math.floor(scrollTop / itemHeight) - overscanCount);
   const endIndex = Math.min(items.length - 1, Math.floor((scrollTop + containerHeight) / itemHeight) + overscanCount);

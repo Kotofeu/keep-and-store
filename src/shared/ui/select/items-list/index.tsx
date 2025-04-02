@@ -54,7 +54,12 @@ export const ItemsList = memo(
                     onClick={() =>
                       (!isSelected || multiple) && !isDisabled ? onChangeOption(visibleIndex) : undefined
                     }
-                    
+                    onKeyDown={e => {
+                      if (e.key === 'Enter' && (!isSelected || multiple) && !isDisabled) {
+                        e.preventDefault();
+                        onChangeOption(visibleIndex);
+                      }
+                    }}
                     role='option'
                     aria-selected={isSelected}
                     id={`${selectId}-option-${visibleIndex}`}
@@ -77,7 +82,7 @@ export const ItemsList = memo(
                 aria-label={t('emptyList')}
                 style={{ height: `${itemHeight}px` }}
               >
-                {error || t('emptyList')}
+                {error && typeof error === 'string' ? error : t('emptyList')}
               </li>
             )}
           </ul>

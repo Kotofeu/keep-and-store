@@ -6,7 +6,7 @@ export const loadTestOptions = async (): Promise<Option<string>[]> =>
   new Promise((resolve, reject) => {
     setTimeout(() => {
       try {
-        const shouldThrowError = Math.random() > 0; // 20% chance
+        const shouldThrowError = Math.random() > 1; // 20% chance
         if (shouldThrowError) {
           throw new Error('Произошла ошибка при загрузке опций');
         }

@@ -12,7 +12,7 @@ import { Tooltip } from '../../tooltip';
 export const SelectedItem = memo(
   <T,>({
     placeholder,
-    options,
+    selectedOptions,
     selectId,
     multiple,
     required,
@@ -25,8 +25,7 @@ export const SelectedItem = memo(
     maxSelectedItemsCount,
     onRemoveOption,
     toggleDropdown,
-    handleKeyDown,
-    openSelectByEnter,
+    onSelectKeyDown,
     removeAllOptions
   }: SelectedItemProps<T>) => {
     const t = useTranslations('Shared.Select');
@@ -40,15 +39,13 @@ export const SelectedItem = memo(
           [styles.value_warning]: !!warning,
           [styles.value_success]: !!success
         })}
-        onKeyDown={isOpen && !isLoading && !error ? handleKeyDown : openSelectByEnter}
+        onKeyDown={onSelectKeyDown}
         onClick={toggleDropdown}
         tabIndex={disabled ? -1 : 0}
-        role='combobox'
+        role='button'
         aria-haspopup='listbox'
         aria-expanded={isOpen}
         aria-label={placeholder || t('selectOption')}
-        aria-owns={`${selectId}-listbox`}
-        aria-controls={`${selectId}-listbox`}
         aria-disabled={disabled}
         aria-busy={isLoading}
       >
@@ -58,15 +55,15 @@ export const SelectedItem = memo(
           onClick={e => e.stopPropagation()}
         />
         <div className={styles.value__options}>
-          {!!maxSelectedItemsCount && multiple && !!options.length && (
+          {!!maxSelectedItemsCount && multiple && !!selectedOptions.length && (
             <div className={styles.value__counter}>
-              <span>{options.length}</span>
+              <span>{selectedOptions.length}</span>
               <span>/</span>
               <span>{maxSelectedItemsCount}</span>
             </div>
           )}
-          {options.length > 0
-            ? options.map(option => (
+          {selectedOptions.length > 0
+            ? selectedOptions.map(option => (
                 <span
                   key={option.value}
                   className={classNames(styles.value__selected, {
@@ -103,7 +100,7 @@ export const SelectedItem = memo(
             : placeholder}
         </div>
         <div className={styles.value__buttons}>
-          {!required && !!options.length && !disabled && !isLoading && (
+          {!required && !!selectedOptions.length && !disabled && !isLoading && (
             <Tooltip className={styles.tooltip} content={t('removeAllOption')} backgroundColor='var(--icon-secondary)'>
               <button
                 type='button'

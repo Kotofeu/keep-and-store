@@ -7,20 +7,24 @@ import { useDebounce } from '@/shared/hooks';
 import { Option, UseSelectLogicProps, UseSelectLogicReturn } from '../types';
 
 export const useSelectLogic = <T>({
-  options,
-  multiple,
-  value,
-  isOpen,
-  excludeSelected,
   maxSelectedItemsCount,
-  focusedOptionRef,
+  isOpen,
   disabled,
+  multiple,
+  excludeSelected,
+  searchable,
+  value,
+  options,
+  focusedOptionRef,
+  searchInputRef,
   setIsOpen,
   onChange,
   loadOptions
 }: UseSelectLogicProps<T>): UseSelectLogicReturn<T> => {
+  // Translations
   const t = useTranslations('Shared.Select');
 
+  // State management
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [loadedOptions, setLoadedOptions] = useState<Option<T>[]>(options);
@@ -28,11 +32,13 @@ export const useSelectLogic = <T>({
   const [selectedOptions, setSelectedOptions] = useState<Option<T>[]>(
     value ? (Array.isArray(value) ? value : [value]) : []
   );
-
   const [searchValue, setSearchValue] = useState('');
-  const debouncedSearchValue = useDebounce(searchValue, 300);
   const [focusedIndex, setFocusedIndex] = useState(-1);
 
+  // Debounced values
+  const debouncedSearchValue = useDebounce(searchValue, 300);
+
+  // Filtered options calculation
   const filteredOptions = useMemo(() => {
     const filtered = loadedOptions.filter(option =>
       option.label.toLowerCase().includes(debouncedSearchValue.toLowerCase())
@@ -40,9 +46,17 @@ export const useSelectLogic = <T>({
     if (excludeSelected) {
       return filtered.filter(option => !selectedOptions.some(selected => selected.value === option.value));
     }
-
     return filtered;
   }, [loadedOptions, debouncedSearchValue, selectedOptions, excludeSelected]);
+
+  // Dropdown toggle handler
+  const toggleDropdown = useCallback(() => {
+    if (!disabled && !isLoading) {
+      setIsOpen(prev => !prev);
+    }
+  }, [setIsOpen, disabled, isLoading]);
+
+  // Focus management effects
   useEffect(() => {
     setFocusedIndex(-1);
   }, [isOpen]);
@@ -56,6 +70,7 @@ export const useSelectLogic = <T>({
     }
   }, [focusedIndex, focusedOptionRef]);
 
+  // Options loading effect
   useEffect(() => {
     if (!isOpen && loadOptions && !isOptionsWasLoaded) {
       setIsLoading(true);
@@ -73,6 +88,7 @@ export const useSelectLogic = <T>({
     }
   }, [error, isOpen, isOptionsWasLoaded, loadOptions, t]);
 
+  // Option selection handlers
   const handleOptionClick = useCallback(
     (index: number) => {
       const option = filteredOptions[index];
@@ -101,6 +117,7 @@ export const useSelectLogic = <T>({
     },
     [disabled, isLoading, multiple, selectedOptions, maxSelectedItemsCount, onChange, filteredOptions, setIsOpen]
   );
+
   const handleRemoveOption = useCallback(
     (option: Option<T>) => {
       if (!disabled && !isLoading) {
@@ -117,34 +134,37 @@ export const useSelectLogic = <T>({
     onChange?.(null);
   }, [onChange]);
 
-  const openSelectByEnter = useCallback(
+  // Keyboard navigation handler
+  const onSelectKeyDown = useCallback(
     (e: KeyboardEvent<HTMLDivElement>) => {
-      if (e.key === 'Enter' && !disabled && !isLoading) {
-        setIsOpen(true);
+      if (!disabled && !isLoading) {
+        if (e.key === 'Enter') {
+          toggleDropdown();
+        }
+        if (e.key === 'Tab' && isOpen) {
+          if (searchable && searchInputRef && searchInputRef.current) {
+            e.preventDefault();
+            searchInputRef.current.focus();
+          }
+        }
       }
     },
-    [setIsOpen, disabled, isLoading]
+    [disabled, isLoading, isOpen, toggleDropdown, searchInputRef, searchable]
   );
 
-  const toggleDropdown = useCallback(() => {
-    if (!disabled && !isLoading) {
-      setIsOpen(prev => !prev);
-    }
-  }, [setIsOpen, disabled, isLoading]);
-
+  // Return all necessary values and handlers
   return {
-    selectedOptions,
     searchValue,
+    error,
     focusedIndex,
+    isLoading,
     filteredOptions,
+    selectedOptions,
     setSearchValue,
-    setFocusedIndex,
-    handleOptionClick,
-    handleRemoveOption,
     removeAllOptions,
     toggleDropdown,
-    openSelectByEnter,
-    isLoading,
-    error
+    handleOptionClick,
+    handleRemoveOption,
+    onSelectKeyDown
   };
 };
