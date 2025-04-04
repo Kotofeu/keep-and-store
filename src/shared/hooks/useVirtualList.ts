@@ -72,9 +72,8 @@ export const useVirtualList = <T>({
   }));
 
   const offsetY = startIndex * itemHeight;
-
-  const totalHeight = items.length * itemHeight + gap * (visibleItems.length - 1);
-
+  const totalHeight =
+    !!items.length && !!visibleItems.length ? items.length * itemHeight + gap * (visibleItems.length - 1) : 'auto';
   return {
     totalHeight,
     visibleItems,

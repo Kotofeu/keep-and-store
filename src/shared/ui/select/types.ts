@@ -45,6 +45,7 @@ interface SelectRefs {
   focusedOptionRef: RefObject<HTMLLIElement | null>; // Ref for currently focused option
   searchInputRef: RefObject<HTMLInputElement | null>; // Ref for search input
   listContainerRef: RefObject<HTMLDivElement | null>; // Ref for options list container
+  selectorRef: RefObject<HTMLDivElement | null>; // Selector ref
   ref: RefObject<HTMLDivElement | null>; // Main component ref
 }
 
@@ -55,7 +56,7 @@ interface SelectVirtualList {
   dropdownHeight: keyof typeof dropdownHeightMap | number; // Height of dropdown
   gap: number; // Gap between items
   itemHeight: number; // Height of each item
-  listHeight: number; // Total height of the list
+  listHeight: number | string; // Total height of the list
   listOffsetY: number; // Vertical offset of the list
 }
 
@@ -135,7 +136,8 @@ export interface SelectedItemsProps<T>
     Omit<SelectStateProps, 'searchable'>,
     Pick<BaseSelectProps, 'placeholder'>,
     SelectCommonFunctions<T>,
-    Pick<SelectKeyboardFunctions, 'onSelectKeyDown'> {
+    Pick<SelectKeyboardFunctions, 'onSelectKeyDown'>,
+    Pick<SelectRefs, 'selectorRef'> {
   selectedOptions: Option<T>[]; // Selected options to display
   selectId: string | number; // Unique identifier
   maxSelectedItemsCount: number; // Maximum allowed selected items
@@ -166,7 +168,7 @@ export interface ItemsListProps<T>
  */
 export interface UseSelectLogicProps<T>
   extends Omit<SelectStateProps, 'isLoading' | 'required'>,
-    Pick<SelectRefs, 'focusedOptionRef' | 'searchInputRef'> {
+    Omit<SelectRefs, 'listContainerRef' | 'ref'> {
   maxSelectedItemsCount: number; // Maximum allowed selected items
   excludeSelected: boolean; // Whether to hide selected options
   value?: SelectValue<T>; // Initial value

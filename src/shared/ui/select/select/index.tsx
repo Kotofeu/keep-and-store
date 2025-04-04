@@ -34,6 +34,7 @@ export const Select = <T,>({
   loadOptions
 }: SelectProps<T>) => {
   const ref = useRef<HTMLDivElement>(null);
+  const selectorRef = useRef<HTMLDivElement | null>(null);
   const focusedOptionRef = useRef<HTMLLIElement | null>(null);
   const searchInputRef = useRef<HTMLInputElement | null>(null);
   const listContainerRef = useRef<HTMLDivElement | null>(null);
@@ -64,13 +65,13 @@ export const Select = <T,>({
     searchable,
     value,
     options,
+    selectorRef,
     focusedOptionRef,
     searchInputRef,
     setIsOpen,
     onChange,
     loadOptions
   });
-
   const {
     visibleItems: visibleOptions,
     totalHeight: listHeight,
@@ -115,6 +116,7 @@ export const Select = <T,>({
       focusedOptionRef={focusedOptionRef}
       searchInputRef={searchInputRef}
       listContainerRef={listContainerRef}
+      selectorRef={selectorRef}
       ref={ref}
       onSelectKeyDown={onSelectKeyDown}
       itemsListNavigation={itemsListNavigation}

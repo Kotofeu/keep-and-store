@@ -187,3 +187,17 @@
     }
   }
 }
+
+@keyframes bounce {
+  0%,
+  80%,
+  100% {
+    background-color: var(--icon-secondary-active);
+    transform: translateY(50%);
+  }
+
+  40% {
+    background-color: var(--icon-secondary-disabled);
+    transform: translateY(-50%);
+  }
+}

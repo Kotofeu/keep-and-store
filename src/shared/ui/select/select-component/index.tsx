@@ -1,3 +1,4 @@
+'use client';
 import { useTranslations } from 'next-intl';
 
 import { classNames } from '@/shared/lib';
@@ -33,6 +34,7 @@ export const SelectComponent = <T,>({
   focusedOptionRef,
   searchInputRef,
   listContainerRef,
+  selectorRef,
   ref,
   onSelectKeyDown,
   itemsListNavigation,
@@ -71,6 +73,7 @@ export const SelectComponent = <T,>({
         disabled={disabled}
         isLoading={isLoading}
         maxSelectedItemsCount={maxSelectedItemsCount}
+        selectorRef={selectorRef}
         onRemoveOption={onRemoveOption}
         toggleDropdown={toggleDropdown}
         onSelectKeyDown={onSelectKeyDown}

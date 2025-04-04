@@ -16,7 +16,7 @@ type StatusType = 'error' | 'success' | 'warning';
 type StatusResult = {
   type: StatusType;
   value: string;
-  color: string;
+  backgroundColor: string;
 } | null;
 
 const getStatusColor = (type: StatusType): string => {
@@ -42,7 +42,7 @@ const getStatus = (statusValues?: StatusValues): StatusResult => {
         return {
           type,
           value: typeof value === 'string' ? value : '',
-          color: getStatusColor(type)
+          backgroundColor: getStatusColor(type)
         };
       }
     }
@@ -70,7 +70,12 @@ export const StatusIcons = (props: StatusIconsProps) => {
       className={classNames(styles.status, { [styles.status_hidden]: !currentStatus }, [className])}
       {...othersProps}
     >
-      <Tooltip className={styles.tooltip} content={lastStatus?.value || ''}>
+      <Tooltip
+        className={styles.tooltip}
+        content={lastStatus?.value || ''}
+        backgroundColor={lastStatus?.backgroundColor}
+        color={'var(--color-white)'}
+      >
         <Icon type={lastStatus?.type || 'none'} aria-hidden />
       </Tooltip>
     </div>

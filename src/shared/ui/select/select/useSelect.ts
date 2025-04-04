@@ -17,6 +17,7 @@ export const useSelectLogic = <T>({
   options,
   focusedOptionRef,
   searchInputRef,
+  selectorRef,
   setIsOpen,
   onChange,
   loadOptions
@@ -37,15 +38,6 @@ export const useSelectLogic = <T>({
   // Focused management
   const [focusedIndex, setFocusedIndex] = useState(-1);
 
-  useEffect(() => {
-    if (focusedIndex && focusedOptionRef.current) {
-      focusedOptionRef.current.scrollIntoView({
-        behavior: 'smooth',
-        block: 'nearest'
-      });
-      focusedOptionRef.current.focus();
-    }
-  }, [focusedIndex, focusedOptionRef]);
   useEffect(() => {
     setFocusedIndex(-1);
   }, [isOpen]);
@@ -139,64 +131,85 @@ export const useSelectLogic = <T>({
   const onSelectKeyDown = useCallback(
     (e: KeyboardEvent<HTMLDivElement>) => {
       if (!disabled && !isLoading) {
-        if (e.key === 'Enter') {
+        if (e.key === 'Enter' && focusedIndex === -1) {
           toggleDropdown();
-        }
-        if (e.key === 'Tab' && isOpen) {
-          if (searchable && searchInputRef && searchInputRef.current) {
-            e.preventDefault();
-            searchInputRef.current.focus();
-          }
         }
       }
     },
-    [disabled, isLoading, isOpen, toggleDropdown, searchInputRef, searchable]
+    [disabled, isLoading, focusedIndex, toggleDropdown]
   );
 
-  // Keyboard navigation handler
   const itemsListNavigation = useCallback(
     (e: KeyboardEvent<HTMLDivElement>) => {
       if (disabled || isLoading || !isOpen) {
         return;
       }
-
-      e.preventDefault();
-
       if (e.key === 'Escape') {
+        selectorRef && selectorRef.current?.focus();
         toggleDropdown();
-      } else if (isOpen) {
+        return;
+      }
+      if (isOpen) {
+        const isNavigationKey = ['Tab', 'ArrowDown', 'ArrowUp', 'ArrowRight', 'ArrowLeft', 'Home', 'End'].includes(
+          e.key
+        );
+        if (isNavigationKey) {
+          e.preventDefault();
+          if (searchable && searchInputRef?.current) {
+            searchInputRef.current.focus();
+          }
+        }
+        const lastIndex = filteredOptions.length - 1;
+
         switch (e.key) {
           case 'Tab':
-            if (e.shiftKey) {
-              const prevIndex = focusedIndex > 0 ? focusedIndex - 1 : filteredOptions.length - 1;
-              setFocusedIndex(prevIndex);
-            } else {
-              const nextIndex = focusedIndex < filteredOptions.length - 1 ? focusedIndex + 1 : 0;
-              setFocusedIndex(nextIndex);
-            }
+            setFocusedIndex(
+              e.shiftKey
+                ? focusedIndex > 0
+                  ? focusedIndex - 1
+                  : lastIndex
+                : focusedIndex < lastIndex
+                  ? focusedIndex + 1
+                  : 0
+            );
             break;
           case 'ArrowDown':
           case 'ArrowRight':
-            const nextIndex = focusedIndex < filteredOptions.length - 1 ? focusedIndex + 1 : 0;
-            setFocusedIndex(nextIndex);
+            setFocusedIndex(focusedIndex < lastIndex ? focusedIndex + 1 : 0);
             break;
+
           case 'ArrowUp':
           case 'ArrowLeft':
-            const prevIndex = focusedIndex > 0 ? focusedIndex - 1 : filteredOptions.length - 1;
-            setFocusedIndex(prevIndex);
+            setFocusedIndex(focusedIndex > 0 ? focusedIndex - 1 : lastIndex);
             break;
+
           case 'Home':
             setFocusedIndex(0);
             break;
+
           case 'End':
-            setFocusedIndex(filteredOptions.length - 1);
+            setFocusedIndex(lastIndex);
+            break;
+
+          case 'Enter':
+            focusedOptionRef.current?.click();
             break;
         }
       }
     },
-    [disabled, isLoading, isOpen, toggleDropdown, filteredOptions, focusedIndex]
+    [
+      disabled,
+      isLoading,
+      isOpen,
+      toggleDropdown,
+      filteredOptions,
+      focusedIndex,
+      focusedOptionRef,
+      searchable,
+      searchInputRef,
+      selectorRef
+    ]
   );
-
   // Return all necessary values and handlers
   return {
     searchValue,

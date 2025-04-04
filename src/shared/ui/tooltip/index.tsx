@@ -24,7 +24,7 @@ export const Tooltip: FC<TooltipWrapperProps> = ({
   className,
   content,
   position = 'auto',
-  backgroundColor = 'var(--color-black)',
+  backgroundColor = 'var(--tooltip-background-color)',
   color = 'var(--tooltip-color)',
   maxWidth = 250,
   maxHeight = 200,
