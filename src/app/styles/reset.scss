@@ -45,6 +45,10 @@ body {
   font-weight: 400;
 }
 
+main {
+  overflow: hidden;
+}
+
 ul[class],
 ol[class] {
   list-style: none;

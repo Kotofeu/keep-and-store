@@ -28,13 +28,7 @@ export const ItemsList = memo(
     return (
       <div className={styles.container} ref={listContainerRef} tabIndex={-1}>
         <div className={styles.wrapper} style={{ height: listHeight }}>
-          <ul
-            className={styles.list}
-            style={{ transform: listOffsetY ? `translateY(${listOffsetY}px)` : 'none', gap }}
-            role='listbox'
-            aria-labelledby={`${selectId}-label`}
-            aria-multiselectable={multiple}
-          >
+          <ul className={styles.list} style={{ transform: listOffsetY ? `translateY(${listOffsetY}px)` : 'none', gap }}>
             {!!visibleOptions.length ? (
               visibleOptions.map(({ item: option, index: visibleIndex }) => {
                 const isSelected = selectedOptions.some(o => o.value === option.value);
@@ -60,14 +54,11 @@ export const ItemsList = memo(
                         onChangeOption(visibleIndex);
                       }
                     }}
+                    style={{ height: `${itemHeight}px` }}
                     role='option'
                     aria-selected={isSelected}
-                    id={`${selectId}-option-${visibleIndex}`}
-                    aria-label={option.label}
-                    style={{ height: `${itemHeight}px` }}
                     aria-disabled={isDisabled}
-                    aria-posinset={visibleIndex + 1}
-                    aria-setsize={visibleOptions.length}
+                    id={`${selectId}-option-${visibleIndex}`}
                   >
                     {option.ui || option.label}
                   </li>
@@ -80,6 +71,7 @@ export const ItemsList = memo(
                 aria-selected={false}
                 id={`${selectId}-option-empty`}
                 aria-label={t('emptyList')}
+                aria-disabled='true'
                 style={{ height: `${itemHeight}px` }}
               >
                 {error && typeof error === 'string' ? error : t('emptyList')}

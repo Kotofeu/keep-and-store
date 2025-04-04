@@ -12,27 +12,33 @@
   gap: 8px;
   flex-direction: column;
   z-index: var(--z-index-dropdown);
-  top: 100%;
   left: 0;
   right: 0;
   border: 1px solid var(--field-primary-border);
-  border-top: none;
   border-radius: var(--field-border-radius);
   background-color: var(--primary-color);
   list-style: none;
-  box-shadow: 0 1px 2px var(--box-shadow);
   opacity: 0;
   transition:
     opacity var(--transition-fast),
     border-radius var(--transition-fast),
-    border var(--transition-fast);
+    border-color var(--transition-fast);
   padding: 8px 0 10px;
   pointer-events: none;
 
   &_isOpen {
     pointer-events: all;
-    border-radius: 0 0 var(--field-border-radius) var(--field-border-radius);
     opacity: 1;
+  }
+
+  &_isOpen.top {
+    border-radius: var(--field-border-radius) var(--field-border-radius) 0 0;
+    box-shadow: 0 0 2px var(--box-shadow);
+  }
+
+  &_isOpen.bottom {
+    border-radius: 0 0 var(--field-border-radius) var(--field-border-radius);
+    box-shadow: 0 1px 2px var(--box-shadow);
   }
 
   &_success {
@@ -46,6 +52,18 @@
   &_error {
     border-color: var(--color-error);
   }
+}
+
+.top {
+  top: auto;
+  bottom: 100%;
+  border-bottom-width: 0;
+}
+
+.bottom {
+  top: 100%;
+  bottom: auto;
+  border-top-width: 0;
 }
 
 .select__searchBox {

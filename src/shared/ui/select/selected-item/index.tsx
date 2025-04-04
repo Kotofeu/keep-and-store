@@ -23,6 +23,7 @@ export const SelectedItem = memo(
     disabled,
     isLoading,
     maxSelectedItemsCount,
+    openPosition,
     selectorRef,
     onRemoveOption,
     toggleDropdown,
@@ -62,6 +63,7 @@ export const SelectedItem = memo(
       <div
         className={classNames(styles.value, {
           [styles.value_isOpen]: isOpen,
+          [styles.value_top]: isOpen && openPosition === 'top',
           [styles.value_disabled]: disabled || isLoading,
           [styles.value_error]: !!error,
           [styles.value_warning]: !!warning,
@@ -72,11 +74,9 @@ export const SelectedItem = memo(
         onClick={toggleDropdown}
         tabIndex={disabled ? -1 : 0}
         role='button'
-        aria-haspopup='listbox'
+        id={`${selectId}-label`}
+        aria-label={placeholder}
         aria-expanded={isOpen}
-        aria-label={placeholder || t('selectOption')}
-        aria-disabled={disabled}
-        aria-busy={isLoading}
       >
         <StatusIcons
           className={styles.value__status}
@@ -149,7 +149,10 @@ export const SelectedItem = memo(
             </div>
           ) : (
             <Icon
-              className={classNames(styles.value__arrow, { [styles.value__arrow_rotate]: isOpen })}
+              className={classNames(styles.value__arrow, {
+                [styles.value__arrow_rotate]: isOpen,
+                [styles.value__arrow_top]: isOpen && openPosition === 'top'
+              })}
               type='arrowDown'
               color={iconColor}
               aria-hidden

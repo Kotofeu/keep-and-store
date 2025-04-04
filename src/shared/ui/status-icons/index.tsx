@@ -27,8 +27,6 @@ const getStatusColor = (type: StatusType): string => {
       return 'var(--color-success)';
     case 'warning':
       return 'var(--color-warning)';
-    default:
-      return '';
   }
 };
 
@@ -69,6 +67,7 @@ export const StatusIcons = (props: StatusIconsProps) => {
     <div
       className={classNames(styles.status, { [styles.status_hidden]: !currentStatus }, [className])}
       {...othersProps}
+      aria-label={lastStatus?.value}
     >
       <Tooltip
         className={styles.tooltip}

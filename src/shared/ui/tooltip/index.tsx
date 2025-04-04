@@ -1,5 +1,5 @@
 'use client';
-import { CSSProperties, FC, HTMLAttributes, ReactNode, useEffect, useRef, useState, useCallback } from 'react';
+import { CSSProperties, FC, HTMLAttributes, ReactNode, useEffect, useRef, useState, useCallback, useId } from 'react';
 
 import { classNames } from '@/shared/lib';
 import { useClickOutside, useDebounce } from '@/shared/hooks';
@@ -33,6 +33,7 @@ export const Tooltip: FC<TooltipWrapperProps> = ({
   children,
   ...otherProps
 }) => {
+  const randomId = useId();
   const targetRef = useRef<HTMLDivElement>(null);
   const tooltipRef = useRef<HTMLDivElement>(null);
   const [tooltipStyles, setTooltipStyles] = useState<TooltipStyles>({});
@@ -136,14 +137,22 @@ export const Tooltip: FC<TooltipWrapperProps> = ({
       onTouchStart={isTouchDevice ? showTooltip : undefined}
       onTouchEnd={isTouchDevice ? hideTooltip : undefined}
       onContextMenu={isTouchDevice ? e => e.preventDefault() : undefined}
+      onFocus={showTooltip}
+      onBlur={hideTooltip}
+      aria-describedby={debounceVisible ? `${randomId}-tooltip` : undefined}
     >
-      <div ref={targetRef} className={classNames(styles.wrapper, { [styles.wrapper_visible]: debounceVisible })}>
+      <div
+        ref={targetRef}
+        className={classNames(styles.wrapper, { [styles.wrapper_visible]: debounceVisible })}
+        aria-hidden={!debounceVisible}
+      >
         <div className={styles.arrow} style={arrowStyle} aria-hidden />
         <div
           ref={tooltipRef}
           className={classNames(styles.tooltip, { [styles.tooltip_text]: isStringContent })}
           style={tooltipStyle}
           role='tooltip'
+          id={`${randomId}-tooltip`}
         >
           {isStringContent ? <span className={styles.content}>{content}</span> : content}
         </div>

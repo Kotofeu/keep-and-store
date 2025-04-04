@@ -23,6 +23,7 @@ export const SelectComponent = <T,>({
   isLoading,
   maxSelectedItemsCount,
   dropdownHeight,
+  openPosition,
   gap,
   itemHeight,
   listHeight,
@@ -51,14 +52,14 @@ export const SelectComponent = <T,>({
       className={classNames(styles.select, {}, [className])}
       onKeyDown={itemsListNavigation}
       ref={ref}
+      tabIndex={-1}
       role='combobox'
       aria-haspopup='listbox'
       aria-expanded={isOpen}
-      aria-owns={`${selectId}-listbox`}
-      aria-controls={`${selectId}-listbox`}
       aria-disabled={disabled}
       aria-busy={isLoading}
-      tabIndex={-1}
+      aria-controls={`${selectId}-listbox`}
+      aria-labelledby={`${selectId}-label`}
     >
       <SelectedItem
         placeholder={placeholder}
@@ -73,6 +74,7 @@ export const SelectComponent = <T,>({
         disabled={disabled}
         isLoading={isLoading}
         maxSelectedItemsCount={maxSelectedItemsCount}
+        openPosition={openPosition}
         selectorRef={selectorRef}
         onRemoveOption={onRemoveOption}
         toggleDropdown={toggleDropdown}
@@ -80,30 +82,34 @@ export const SelectComponent = <T,>({
         removeAllOptions={removeAllOptions}
       />
       <div
-        className={classNames(styles.select__dropdown, {
-          [styles.select__dropdown_isOpen]: !!isOpen,
-          [styles.select__dropdown_success]: !!success,
-          [styles.select__dropdown_warning]: !!warning,
-          [styles.select__dropdown_error]: !!error
-        })}
+        className={classNames(
+          styles.select__dropdown,
+          {
+            [styles.select__dropdown_isOpen]: !!isOpen,
+            [styles.select__dropdown_success]: !!success,
+            [styles.select__dropdown_warning]: !!warning,
+            [styles.select__dropdown_error]: !!error
+          },
+          [styles[openPosition]]
+        )}
         style={{ maxHeight: dropdownHeight }}
         id={`${selectId}-listbox`}
-        aria-labelledby={`${selectId}-label`}
-        aria-live='polite'
+        role='listbox'
+        aria-multiselectable={multiple}
       >
         {searchable && (
           <div className={styles.select__searchBox}>
             <input
+              className={styles.select__search}
               id={`${selectId}-search`}
               type='text'
               placeholder={t('search')}
               value={searchValue}
               onChange={e => onSearchChange?.(e.target.value)}
-              className={styles.select__search}
+              tabIndex={isOpen ? undefined : -1}
+              ref={searchInputRef}
               aria-label={t('search')}
               aria-controls={`${selectId}-listbox`}
-              tabIndex={isOpen ? undefined : 1}
-              ref={searchInputRef}
             />
           </div>
         )}

@@ -21,6 +21,7 @@ export const Select = <T,>({
   required = false,
   isLoading = false,
   excludeSelected = false,
+  openPosition = 'auto',
   success = null,
   warning = null,
   error = null,
@@ -49,6 +50,7 @@ export const Select = <T,>({
     isLoading: promiseIsLoading,
     filteredOptions,
     selectedOptions,
+    openPosition: calcOpenPosition,
     setSearchValue,
     removeAllOptions,
     toggleDropdown,
@@ -65,6 +67,8 @@ export const Select = <T,>({
     searchable,
     value,
     options,
+    dropdownHeight: getDropdownHeight(dropdownHeight),
+    openPosition,
     selectorRef,
     focusedOptionRef,
     searchInputRef,
@@ -105,6 +109,7 @@ export const Select = <T,>({
       isLoading={calcIsLoading}
       maxSelectedItemsCount={maxSelectedItemsCount}
       dropdownHeight={getDropdownHeight(dropdownHeight)}
+      openPosition={calcOpenPosition}
       gap={gap}
       itemHeight={itemHeight}
       listHeight={listHeight}

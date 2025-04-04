@@ -24,6 +24,10 @@
     border-radius: var(--field-border-radius) var(--field-border-radius) 0 0;
   }
 
+  &_top {
+    border-radius: 0 0 var(--field-border-radius) var(--field-border-radius);
+  }
+
   &_disabled {
     background-color: var(--field-primary-background-disabled);
     border-color: var(--field-primary-border-disabled);
@@ -155,9 +159,15 @@
 .value__arrow {
   width: 16px;
   transition: transform var(--transition-momentary);
+  transform: rotate(-90deg);
 
   &_rotate {
-    transform: scaleY(-1);
+    transform: rotate(0deg);
+  }
+
+  &_top {
+    transform: rotate(-180deg);
+
   }
 }
 

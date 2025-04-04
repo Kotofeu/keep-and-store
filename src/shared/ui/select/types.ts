@@ -9,6 +9,8 @@ export const dropdownHeightMap = {
   large: 250
 } as const;
 
+export type SelectOpenPosition = 'top' | 'bottom' | 'auto';
+
 export interface Option<T = any> {
   value: string;
   label: string;
@@ -36,6 +38,7 @@ interface SelectStateProps {
   multiple: boolean; // Whether multiple selection is allowed
   disabled: boolean; // Whether the select is disabled
   isLoading: boolean; // Whether options are being loaded
+  openPosition: SelectOpenPosition; // Opening direction
 }
 
 /**
@@ -173,6 +176,7 @@ export interface UseSelectLogicProps<T>
   excludeSelected: boolean; // Whether to hide selected options
   value?: SelectValue<T>; // Initial value
   options: Option<T>[]; // Available options
+  dropdownHeight: number;
   setIsOpen: Dispatch<SetStateAction<boolean>>; // Dropdown visibility setter
   onChange?: (option: SelectValue<T>) => void; // Change handler
   loadOptions?: () => Promise<Option<T>[]> | Option<T>[]; // Async option loader
@@ -182,7 +186,7 @@ export interface UseSelectLogicProps<T>
  * Return type of the custom Select logic hook
  */
 export interface UseSelectLogicReturn<T>
-  extends Pick<SelectStateProps, 'isLoading'>,
+  extends Pick<SelectStateProps, 'isLoading' | 'openPosition'>,
     Omit<SelectCommonFunctions<T>, 'onRemoveOption'>,
     SelectKeyboardFunctions {
   searchValue: string; // Current search value

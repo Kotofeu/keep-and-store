@@ -12,11 +12,12 @@ body {
 
 main {
   margin: 0 auto;
-  padding: 0 10px;
-  padding-top: 80px;
+  padding: 80px 10px;
+  padding-bottom: 0;
   width: 100%;
   max-width: var(--container-width);
   min-height: 100vh;
+  overflow: hidden;
 }
 
 a,

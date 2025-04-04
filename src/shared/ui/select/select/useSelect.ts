@@ -4,7 +4,9 @@ import { useTranslations } from 'next-intl';
 
 import { useDebounce } from '@/shared/hooks';
 
-import { Option, UseSelectLogicProps, UseSelectLogicReturn } from '../types';
+import { Option, SelectOpenPosition, UseSelectLogicProps, UseSelectLogicReturn } from '../types';
+
+const MIN_OFFSET_TO_SELECT = 10;
 
 export const useSelectLogic = <T>({
   maxSelectedItemsCount,
@@ -15,6 +17,8 @@ export const useSelectLogic = <T>({
   searchable,
   value,
   options,
+  openPosition,
+  dropdownHeight,
   focusedOptionRef,
   searchInputRef,
   selectorRef,
@@ -34,7 +38,7 @@ export const useSelectLogic = <T>({
     value ? (Array.isArray(value) ? value : [value]) : []
   );
   const [searchValue, setSearchValue] = useState('');
-
+  const [calcOpenPosition, setCalcOpenPosition] = useState<SelectOpenPosition>(openPosition);
   // Focused management
   const [focusedIndex, setFocusedIndex] = useState(-1);
 
@@ -210,6 +214,24 @@ export const useSelectLogic = <T>({
       selectorRef
     ]
   );
+
+  // Calculate dropdown position
+  useEffect(() => {
+    const handler = () => {
+      if (selectorRef && selectorRef.current && isOpen && openPosition === 'auto') {
+        const viewportHeight = document.documentElement.clientHeight;
+        const selectorRect = selectorRef.current.getBoundingClientRect();
+        const placeBelow = viewportHeight - selectorRect.top >= dropdownHeight + MIN_OFFSET_TO_SELECT;
+        const placeAbove = selectorRect.top >= dropdownHeight + MIN_OFFSET_TO_SELECT;
+        setCalcOpenPosition(!placeBelow && placeAbove ? 'top' : 'bottom');
+      }
+    };
+
+    handler();
+    window.addEventListener('scroll', handler);
+    return () => window.removeEventListener('scroll', handler);
+  }, [dropdownHeight, isOpen, openPosition, selectorRef]);
+
   // Return all necessary values and handlers
   return {
     searchValue,
@@ -218,6 +240,7 @@ export const useSelectLogic = <T>({
     isLoading,
     filteredOptions,
     selectedOptions,
+    openPosition: calcOpenPosition,
     setSearchValue,
     removeAllOptions,
     toggleDropdown,
