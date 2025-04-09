@@ -58,6 +58,7 @@ export const ItemsList = memo(
                     role='option'
                     aria-selected={isSelected}
                     aria-disabled={isDisabled}
+                    aria-current={focusedIndex === visibleIndex}
                     id={`${selectId}-option-${visibleIndex}`}
                   >
                     {option.ui || option.label}

@@ -16,7 +16,7 @@ export const LocaleItem: FC<LocaleItemProps> = ({ className, locale }) => {
   const t = useTranslations('LocalSwitcher');
   return (
     <div className={classNames(styles.locale, {}, [className])}>
-      <Icon className={styles.locale__icon} type={locale} />
+      <Icon className={styles.locale__icon} type={locale} aria-hidden />
       <span className={styles.locale__label}>{t(locale)}</span>
     </div>
   );

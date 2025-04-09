@@ -26,7 +26,7 @@ const HomePage: FC<BasePageProps> = ({ params }) => {
         placeholder='Селектор'
         multiple
       />
-      <Select options={[{ label: '1', value: '1' }]} placeholder='Селектор' searchable multiple />
+      <Select options={[{ label: '1', value: '1' }]} placeholder='Селектор' searchable />
       <Link href={'/about'}>ABOUT</Link>
       <Link href={'/'} locale={'ru'}>
         RU

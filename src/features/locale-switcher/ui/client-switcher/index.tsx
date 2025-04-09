@@ -10,9 +10,10 @@ import styles from './styles.module.scss';
 type SwitcherSelectProps = {
   value: Option;
   options: Option[];
+  placeholder: string;
 };
 
-export const ClientSelect: FC<SwitcherSelectProps> = ({ value, options }) => {
+export const ClientSelect: FC<SwitcherSelectProps> = ({ value, options, placeholder }) => {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const pathname = usePathname();
@@ -34,6 +35,7 @@ export const ClientSelect: FC<SwitcherSelectProps> = ({ value, options }) => {
       required
       searchable
       itemHeight={40}
+      placeholder={placeholder}
     />
   );
 };

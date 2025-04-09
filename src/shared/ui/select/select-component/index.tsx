@@ -59,7 +59,8 @@ export const SelectComponent = <T,>({
       aria-disabled={disabled}
       aria-busy={isLoading}
       aria-controls={`${selectId}-listbox`}
-      aria-labelledby={`${selectId}-label`}
+      aria-required={required}
+      aria-label={placeholder}
     >
       <SelectedItem
         placeholder={placeholder}
@@ -96,6 +97,9 @@ export const SelectComponent = <T,>({
         id={`${selectId}-listbox`}
         role='listbox'
         aria-multiselectable={multiple}
+        aria-activedescendant={focusedIndex !== -1 ? `${selectId}-option-${focusedIndex}` : undefined}
+        aria-hidden={!isOpen}
+        tabIndex={-1}
       >
         {searchable && (
           <div className={styles.select__searchBox}>

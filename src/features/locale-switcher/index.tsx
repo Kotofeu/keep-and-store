@@ -21,6 +21,7 @@ export const LocaleSwitcher: FC = () => {
         label: t(cur),
         ui: <LocaleItem locale={cur} key={cur} />
       }))}
+      placeholder={t('title')}
     />
   );
 };

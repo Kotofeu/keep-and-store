@@ -74,9 +74,6 @@ export const SelectedItem = memo(
         onClick={toggleDropdown}
         tabIndex={disabled ? -1 : 0}
         role='button'
-        id={`${selectId}-label`}
-        aria-label={placeholder}
-        aria-expanded={isOpen}
       >
         <StatusIcons
           className={styles.value__status}
