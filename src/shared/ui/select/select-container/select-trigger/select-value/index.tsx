@@ -1,27 +1,14 @@
 'use client';
-import { memo, RefObject, useCallback } from 'react';
+import { memo, useCallback } from 'react';
 import { useTranslations } from 'next-intl';
 
 import { classNames } from '@/shared/lib';
 
+import { Option } from '../../..';
+import { Tooltip } from '../../../../tooltip';
+import { Icon } from '../../../../icon';
 import styles from './styles.module.scss';
-import { Option } from '../../select';
-import { Tooltip } from '../../tooltip';
-import { Icon } from '../../icon';
-
-interface SelectValueProps<T> {
-  placeholder?: string;
-  selectedOptions: Option<T>[];
-  selectId: string;
-  multiple: boolean;
-  disabled: boolean;
-  isLoading: boolean;
-  required: boolean;
-  maxSelectedItemsCount: number;
-  selectorRef: RefObject<HTMLDivElement | null>;
-  onRemoveOption: (option: Option<T>) => void;
-  removeAllOptions: () => void;
-}
+import { SelectValueProps } from '../../../types';
 
 export const SelectValue = memo(
   <T,>({
@@ -66,24 +53,37 @@ export const SelectValue = memo(
       [removeAllOptions, selectorRef]
     );
 
+    const showMaxSelected = maxSelectedItemsCount && multiple && hasSelectedOptions;
+    const maxShowText = `${selectedOptions.length}/${maxSelectedItemsCount}`;
+
+    const label = showMaxSelected
+      ? t('selectedByMaxSelected', { selected: selectedOptions.length, maxSelected: maxSelectedItemsCount })
+      : t('selected');
     return (
       <div className={styles.value}>
-        <div className={styles.value__options}>
-          {maxSelectedItemsCount && multiple && hasSelectedOptions && (
-            <div className={styles.value__counter}>
-              <span>{selectedOptions.length}</span>
-              <span>/</span>
-              <span>{maxSelectedItemsCount}</span>
+        <div
+          className={styles.value__options}
+          id={`${selectId}-label`}
+          aria-label={
+            selectedOptions.length ? `${label}: ${selectedOptions.map(option => option.label).join(', ')}` : placeholder
+          }
+        >
+          {showMaxSelected && (
+            <div className={styles.value__counter} aria-label={maxShowText}>
+              <span aria-hidden>{selectedOptions.length}</span>
+              <span aria-hidden>/</span>
+              <span aria-hidden>{maxSelectedItemsCount}</span>
             </div>
           )}
 
           {hasSelectedOptions
             ? selectedOptions.map(option => (
-                <span
+                <div
                   key={option.value}
                   className={classNames(styles.value__selected, {
                     [styles.value__selected_multiple]: multiple
                   })}
+                  aria-label={option.label}
                 >
                   {option.ui || option.label}
                   {multiple && (
@@ -104,7 +104,7 @@ export const SelectValue = memo(
                       </button>
                     </Tooltip>
                   )}
-                </span>
+                </div>
               ))
             : placeholder}
         </div>

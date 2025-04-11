@@ -38,6 +38,7 @@
   "Shared": {
     "Select": {
       "search": "Search...",
+      "selectedByMaxSelected": "Selected {selected} by {maxSelected}",
       "selected": "Selected",
       "emptyList": "Nothing was found",
       "selectOption": "Select an option",

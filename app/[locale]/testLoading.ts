@@ -11,7 +11,7 @@ export const loadTestOptions = async (): Promise<Option<string>[]> =>
           throw new Error('Произошла ошибка при загрузке опций');
         }
 
-        const options: Option<string>[] = Array.from({ length: 100000 }, (_, index) => ({
+        const options: Option<string>[] = Array.from({ length: 100 }, (_, index) => ({
           value: `${index}`,
           label: `Option ${index}`
         }));

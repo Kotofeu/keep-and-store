@@ -38,6 +38,7 @@
   "Shared": {
     "Select": {
       "search": "Поиск...",
+      "selectedByMaxSelected": "Выбрано {selected} из {maxSelected}",
       "selected": "Выбрано",
       "emptyList": "Ничего не нашлось",
       "selectOption": "Выберите опцию",

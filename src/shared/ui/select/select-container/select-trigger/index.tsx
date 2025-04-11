@@ -1,20 +1,18 @@
 'use client';
-import { memo } from 'react';
-
 import { classNames } from '@/shared/lib';
+import { Icon } from '@/shared/ui/icon';
+import { StatusIcons } from '@/shared/ui/status-icons';
 
 import styles from './styles.module.scss';
-import { Icon } from '../../icon';
-import { StatusIcons } from '../../status-icons';
-import { useSelectContext } from '../select-provider';
-import { SelectValue } from '../select-value';
+import { useSelectContext } from '../../select-provider';
+import { SelectValue } from './select-value';
 
 interface SelectValueProps {
   className?: string;
   placeholder?: string;
 }
 
-export const SelectTrigger = memo(({ className, placeholder }: SelectValueProps) => {
+export const SelectTrigger = ({ className, placeholder }: SelectValueProps) => {
   const {
     selectedOptions,
     selectId,
@@ -40,14 +38,14 @@ export const SelectTrigger = memo(({ className, placeholder }: SelectValueProps)
   return (
     <div
       className={classNames(
-        styles.value,
+        styles.trigger,
         {
-          [styles.value_isOpen]: isOpen,
-          [styles.value_top]: isOpen && openPosition === 'top',
-          [styles.value_disabled]: disabled || isLoading,
-          [styles.value_error]: !!error,
-          [styles.value_warning]: !!warning,
-          [styles.value_success]: !!success
+          [styles.trigger_isOpen]: isOpen,
+          [styles.trigger_top]: isOpen && openPosition === 'top',
+          [styles.trigger_disabled]: disabled || isLoading,
+          [styles.trigger_error]: !!error,
+          [styles.trigger_warning]: !!warning,
+          [styles.trigger_success]: !!success
         },
         [className]
       )}
@@ -56,9 +54,11 @@ export const SelectTrigger = memo(({ className, placeholder }: SelectValueProps)
       onClick={toggleDropdown}
       tabIndex={disabled ? -1 : 0}
       role='button'
+      aria-labelledby={`${selectId}-label`}
+      aria-controls={`${selectId}-listbox`}
     >
       <StatusIcons
-        className={styles.value__status}
+        className={styles.trigger__status}
         statusValues={{ error, warning, success }}
         onClick={e => e.stopPropagation()}
       />
@@ -75,25 +75,24 @@ export const SelectTrigger = memo(({ className, placeholder }: SelectValueProps)
         onRemoveOption={onRemoveOption}
         removeAllOptions={removeAllOptions}
       />
-      <div className={styles.value__buttons}>
+      <div className={styles.trigger__icons} aria-hidden>
         {isLoading ? (
-          <div className={styles.value__loader} aria-hidden>
+          <div className={styles.trigger__loader}>
             <div />
             <div />
             <div />
           </div>
         ) : (
           <Icon
-            className={classNames(styles.value__arrow, {
-              [styles.value__arrow_rotate]: isOpen,
-              [styles.value__arrow_top]: isOpen && openPosition === 'top'
+            className={classNames(styles.trigger__arrow, {
+              [styles.trigger__arrow_rotate]: isOpen,
+              [styles.trigger__arrow_top]: isOpen && openPosition === 'top'
             })}
             type='arrowDown'
             color={iconColor}
-            aria-hidden
           />
         )}
       </div>
     </div>
   );
-});
+};

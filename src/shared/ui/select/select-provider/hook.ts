@@ -40,10 +40,10 @@ export const useSelectLogic = <T>({
   const [searchValue, setSearchValue] = useState('');
   const [calcOpenPosition, setCalcOpenPosition] = useState<SelectOpenPosition>(openPosition);
   // Focused management
-  const [focusedIndex, setFocusedIndex] = useState(-1);
+  const [focusedIndex, setFocusedIndex] = useState(-2);
 
   useEffect(() => {
-    setFocusedIndex(-1);
+    setFocusedIndex(-2);
   }, [isOpen]);
 
   // Debounced values
@@ -66,6 +66,12 @@ export const useSelectLogic = <T>({
       setIsOpen(prev => !prev);
     }
   }, [setIsOpen, disabled, isLoading]);
+
+  useEffect(() => {
+    if (focusedOptionRef && focusedOptionRef.current && isOpen && !disabled) {
+      focusedOptionRef.current.focus();
+    }
+  }, [focusedOptionRef, focusedOptionRef.current, focusedIndex]);
 
   // Options loading effect
   useEffect(() => {
@@ -135,7 +141,7 @@ export const useSelectLogic = <T>({
   const onSelectKeyDown = useCallback(
     (e: KeyboardEvent<HTMLDivElement>) => {
       if (!disabled && !isLoading) {
-        if (e.key === 'Enter' && focusedIndex === -1) {
+        if (e.key === 'Enter' && focusedIndex === -2) {
           toggleDropdown();
         }
       }
@@ -143,7 +149,7 @@ export const useSelectLogic = <T>({
     [disabled, isLoading, focusedIndex, toggleDropdown]
   );
 
-  const itemsListNavigation = useCallback(
+  const onSelectNavigation = useCallback(
     (e: KeyboardEvent<HTMLDivElement>) => {
       if (disabled || isLoading || !isOpen) {
         return;
@@ -159,8 +165,10 @@ export const useSelectLogic = <T>({
         );
         if (isNavigationKey) {
           e.preventDefault();
-          if (searchable && searchInputRef?.current) {
+          if (searchable && searchInputRef?.current && focusedIndex === -2) {
             searchInputRef.current.focus();
+            setFocusedIndex(-1);
+            return;
           }
         }
         const lastIndex = filteredOptions.length - 1;
@@ -247,6 +255,6 @@ export const useSelectLogic = <T>({
     handleOptionClick,
     handleRemoveOption,
     onSelectKeyDown,
-    itemsListNavigation
+    onSelectNavigation
   };
 };

@@ -6,7 +6,6 @@ import { Link } from '@/shared/i18n';
 import { BasePageProps } from '@/shared/types';
 import { ThemeSwitcher } from '@/features/theme-switcher';
 import { Select } from '@/shared/ui/select';
-import { Select as Wow } from '@/shared/ui/wow-select';
 import { Tooltip } from '@/shared/ui/tooltip';
 
 import { loadTestOptions } from './testLoading';
@@ -43,17 +42,6 @@ const HomePage: FC<BasePageProps> = ({ params }) => {
       </Link>
       {t('a')}
       <ThemeSwitcher />
-      <Wow loadOptions={loadTestOptions} placeholder='Селектор' searchable multiple />
-      <Wow
-        options={[
-          { label: '1', value: '1', disabled: true },
-          { label: '2', value: '3' },
-          { label: '3', value: '4' }
-        ]}
-        placeholder='Селектор'
-        multiple
-      />
-      <Wow options={[{ label: '1', value: '1' }]} placeholder='Селектор' searchable />
 
       <Tooltip content='Большоооооооооооооооооооооооооой туууултипп' position='auto'>
         <div style={{ width: 20, height: 20, backgroundColor: 'red' }}></div>

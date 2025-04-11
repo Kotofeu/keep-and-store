@@ -1,4 +1,4 @@
-.value {
+.trigger {
   user-select: none;
   position: relative;
   font: inherit;
@@ -52,7 +52,7 @@
   }
 }
 
-.value__status {
+.trigger__status {
   cursor: default;
   position: absolute;
   display: flex;
@@ -64,99 +64,37 @@
   transition-delay: 0s;
 }
 
-.value_success,
-.value_warning,
-.value_error {
+.trigger_success,
+.trigger_warning,
+.trigger_error {
   padding-left: 40px;
   transition-delay: 0s;
 
-  .value__status {
+  .trigger__status {
     transition-delay: var(--transition-momentary);
   }
 }
 
-.value_success {
+.trigger_success {
   border-color: var(--color-success);
 }
 
-.value_warning {
+.trigger_warning {
   border-color: var(--color-warning);
 }
 
-.value_error {
+.trigger_error {
   border-color: var(--color-error);
 }
 
-.value__counter {
-  display: flex;
-  align-items: center;
-  cursor: default;
-  gap: 1px;
-  font-size: 14px;
-  font-weight: 500;
-  padding: 3px 10px;
-  border-radius: var(--item-border-radius);
-  color: var(--field-secondary-text);
-  background-color: var(--field-secondary-background-active);
-
-  .value_disabled & {
-    background-color: var(--field-secondary-background-disabled);
-  }
-}
-
-.value__selected {
-  font: inherit;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  color: var(--field-primary-text);
-
-  &_multiple {
-    gap: 10px;
-    background-color: var(--field-secondary-background);
-    padding: 3px 10px;
-    border-radius: var(--item-border-radius);
-    cursor: default;
-
-    .value_disabled & {
-      background-color: var(--field-secondary-background-disabled);
-      color: var(--field-primary-text-disabled);
-    }
-  }
-}
-
-.value__remove {
-  background-color: transparent;
-  border: none;
-  display: block;
-  width: 14px;
-  padding: 2px;
-
-  &_all {
-    width: 16px;
-  }
-
-  .value_disabled & {
-    cursor: default;
-  }
-}
-
-.value__options {
-  display: flex;
-  align-items: center;
-  flex-flow: row wrap;
-  flex-grow: 1;
-  gap: 5px;
-}
-
-.value__buttons {
+.trigger__icons {
   align-items: center;
   display: flex;
   flex-shrink: 0;
   gap: 10px;
 }
 
-.value__arrow {
+.trigger__arrow {
   width: 16px;
   transition: transform var(--transition-momentary);
   transform: rotate(-90deg);
@@ -167,11 +105,10 @@
 
   &_top {
     transform: rotate(-180deg);
-
   }
 }
 
-.value__loader {
+.trigger__loader {
   display: flex;
   align-items: center;
   justify-content: center;

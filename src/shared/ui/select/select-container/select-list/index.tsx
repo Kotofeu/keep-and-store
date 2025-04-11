@@ -6,11 +6,9 @@ import { useTranslations } from 'next-intl';
 import { classNames } from '@/shared/lib';
 
 import styles from './styles.module.scss';
-import { useSelectContext } from '../select-provider';
+import { useSelectContext } from '../../select-provider';
 
-interface SelectListProps {}
-
-export const SelectList: FC<SelectListProps> = memo(({}) => {
+export const SelectList: FC = memo(({}) => {
   const t = useTranslations('Shared.Select');
   const {
     visibleOptions,
@@ -31,7 +29,14 @@ export const SelectList: FC<SelectListProps> = memo(({}) => {
   return (
     <div className={styles.container} ref={listContainerRef} tabIndex={-1}>
       <div className={styles.wrapper} style={{ height: listHeight }}>
-        <ul className={styles.list} style={{ transform: listOffsetY ? `translateY(${listOffsetY}px)` : 'none', gap }}>
+        <div
+          className={styles.list}
+          style={{ transform: listOffsetY ? `translateY(${listOffsetY}px)` : 'none', gap }}
+          aria-multiselectable={multiple}
+          aria-labelledby={`${selectId}-label`}
+          role='listbox'
+          id={`${selectId}-listbox`}
+        >
           {!!visibleOptions.length ? (
             visibleOptions.map(({ item: option, index: visibleIndex }) => {
               const isSelected = selectedOptions.some(o => o.value === option.value);
@@ -39,12 +44,11 @@ export const SelectList: FC<SelectListProps> = memo(({}) => {
                 ((maxSelectedItemsCount && selectedOptions.length >= maxSelectedItemsCount) || !!option.disabled) &&
                 !isSelected;
               return (
-                <li
+                <div
                   key={option.value}
                   ref={visibleIndex === focusedIndex ? focusedOptionRef : null}
                   className={classNames(styles.list__option, {
                     [styles.list__option_multiple]: !!multiple,
-                    [styles.list__option_focused]: focusedIndex === visibleIndex,
                     [styles.list__option_selected]: isSelected,
                     [styles.list__option_disable]: isDisabled
                   })}
@@ -59,27 +63,26 @@ export const SelectList: FC<SelectListProps> = memo(({}) => {
                   role='option'
                   aria-selected={isSelected}
                   aria-disabled={isDisabled}
-                  aria-current={focusedIndex === visibleIndex}
                   id={`${selectId}-option-${visibleIndex}`}
+                  tabIndex={-1}
                 >
                   {option.ui || option.label}
-                </li>
+                </div>
               );
             })
           ) : (
-            <li
+            <div
               className={classNames(styles.list__option, {}, [styles.list__option_disable])}
+              style={{ height: `${itemHeight}px` }}
               role='option'
               aria-selected={false}
-              id={`${selectId}-option-empty`}
-              aria-label={t('emptyList')}
-              aria-disabled='true'
-              style={{ height: `${itemHeight}px` }}
+              aria-disabled={true}
+              id={`${selectId}-option-${error ? 'error' : 'empty'}`}
             >
               {error && typeof error === 'string' ? error : t('emptyList')}
-            </li>
+            </div>
           )}
-        </ul>
+        </div>
       </div>
     </div>
   );

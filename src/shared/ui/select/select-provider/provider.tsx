@@ -37,7 +37,7 @@ export const SelectProvider = <T,>({
 }: SelectProviderProps<T>) => {
   const ref = useRef<HTMLDivElement>(null);
   const selectorRef = useRef<HTMLDivElement | null>(null);
-  const focusedOptionRef = useRef<HTMLLIElement | null>(null);
+  const focusedOptionRef = useRef<HTMLDivElement | null>(null);
   const searchInputRef = useRef<HTMLInputElement | null>(null);
   const listContainerRef = useRef<HTMLDivElement | null>(null);
 
@@ -57,7 +57,7 @@ export const SelectProvider = <T,>({
     handleOptionClick,
     handleRemoveOption,
     onSelectKeyDown,
-    itemsListNavigation
+    onSelectNavigation
   } = useSelectLogic<T>({
     maxSelectedItemsCount,
     isOpen,
@@ -123,7 +123,7 @@ export const SelectProvider = <T,>({
       selectorRef,
       ref,
       onSelectKeyDown,
-      itemsListNavigation,
+      onSelectNavigation,
       onChangeOption: handleOptionClick,
       onSearchChange: setSearchValue,
       toggleDropdown,
@@ -154,7 +154,7 @@ export const SelectProvider = <T,>({
       warning,
       calcError,
       onSelectKeyDown,
-      itemsListNavigation,
+      onSelectNavigation,
       handleOptionClick,
       setSearchValue,
       toggleDropdown,
