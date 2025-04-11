@@ -7,11 +7,11 @@ import { Option, Select } from '@/shared/ui/select';
 
 import styles from './styles.module.scss';
 
-type SwitcherSelectProps = {
+interface SwitcherSelectProps {
   value: Option;
   options: Option[];
   placeholder: string;
-};
+}
 
 export const ClientSelect: FC<SwitcherSelectProps> = ({ value, options, placeholder }) => {
   const router = useRouter();

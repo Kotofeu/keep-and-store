@@ -23,7 +23,7 @@ export interface Option<T = any> {
 /**
  * Base properties for all Select components
  */
-interface BaseSelectProps {
+export interface BaseSelectProps {
   className?: string; // CSS class for styling
   placeholder?: string; // Placeholder text when no option is selected
 }
@@ -106,7 +106,7 @@ export interface SelectProps<T>
   excludeSelected?: boolean; // Whether to hide already selected options
   overscanCount?: number; // Number of extra items to render in virtual list
   maxSelectedItemsCount?: number; // Maximum allowed selected items
-  selectId?: string | number; // Unique identifier for the select
+  selectId?: string; // Unique identifier for the select
   onChange?: (option: SelectValue<T>) => void; // Change handler
   loadOptions?: () => Promise<Option<T>[]> | Option<T>[]; // Async option loader
 }

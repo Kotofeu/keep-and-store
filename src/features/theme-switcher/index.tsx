@@ -1,5 +1,4 @@
 'use client';
-import { useEffect, useState } from 'react';
 import { useTheme } from 'next-themes';
 import { useTranslations } from 'next-intl';
 
@@ -20,12 +19,7 @@ interface ThemeSwitcherProps {
 
 export function ThemeSwitcher({ className }: ThemeSwitcherProps) {
   const t = useTranslations('ThemeSwitcher');
-  const { resolvedTheme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const { setTheme } = useTheme();
 
   return (
     <div className={classNames(styles.switcher, {}, [className])}>
@@ -35,9 +29,8 @@ export function ThemeSwitcher({ className }: ThemeSwitcherProps) {
             className={classNames(styles.switcher__button, {}, [btnClass])}
             onClick={() => setTheme(key)}
             icon={icon}
-            isActive={mounted && resolvedTheme === key}
             color='none'
-            ariaLabel={t(key)}
+            aria-label={t(key)}
           />
         </Tooltip>
       ))}

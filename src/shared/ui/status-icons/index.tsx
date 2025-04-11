@@ -1,3 +1,4 @@
+'use client';
 import { useState, useEffect, HTMLAttributes } from 'react';
 
 import { classNames } from '@/shared/lib';
