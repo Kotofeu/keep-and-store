@@ -1,10 +1,12 @@
 /node_modules
-# next.js
 /.next/
-# production
 /build
 *.pem
 npm-debug.log*
+.DS_Store
 .env*
-next-env.d.ts
+.env.development
+.env.production
 certificates
+next-env.d.ts
+npm-debug.log*

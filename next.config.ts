@@ -1,24 +1,33 @@
-/** @type {import('next').NextConfig} */
+import type { NextConfig } from 'next';
 
-import createNextIntlPlugin from 'next-intl/plugin';
+const nextConfig: NextConfig = {
+  turbopack: {
+    resolveAlias: {
+      '@': '.',
+      '@app': './app',
+      '@src': './src',
+      '@pages': './src/pages',
+      '@widgets': './src/widgets',
+      '@features': './src/features',
+      '@entities': './src/entities',
+      '@shared': './src/shared'
+    }
+  },
 
-const withNextIntl = createNextIntlPlugin('./src/shared/i18n/request.ts');
-
-const nextConfig = {
-  reactStrictMode: true
-  //async headers() {
-  //  return [
-  //    {
-  //      source: '/(.*)',
-  //      headers: [
-  //        {
-  //          key: 'Cache-Control',
-  //          value: 'public, max-age=31536000, immutable'
-  //        }
-  //      ]
-  //    }
-  //  ];
-  //}
+  webpack: (config) => {
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      '@': '.',
+      '@app': './app',
+      '@src': './src',
+      '@pages': './src/pages',
+      '@widgets': './src/widgets',
+      '@features': './src/features',
+      '@entities': './src/entities',
+      '@shared': './src/shared'
+    };
+    return config;
+  }
 };
 
-export default withNextIntl(nextConfig);
+export default nextConfig;
