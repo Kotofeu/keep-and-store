@@ -1,5 +1,7 @@
-/node_modules
-/.next/
-/build
+.next
+node_modules
+dist
+build
 *.d.ts
 **/*.md
+public

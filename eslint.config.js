@@ -1,67 +1,58 @@
 import js from '@eslint/js';
+import nextPlugin from '@next/eslint-plugin-next';
+import { defineConfig } from 'eslint/config';
+import configPrettier from 'eslint-config-prettier';
+import pluginImport from 'eslint-plugin-import';
+import jsxA11y from 'eslint-plugin-jsx-a11y';
+import pluginPrettier from 'eslint-plugin-prettier';
+import pluginReact from 'eslint-plugin-react';
+import reactHooks from 'eslint-plugin-react-hooks';
+import securityPlugin from 'eslint-plugin-security';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
-import reactHooks from 'eslint-plugin-react-hooks';
-import eslintPluginPrettier from 'eslint-plugin-prettier';
-import reactPlugin from 'eslint-plugin-react';
-import eslintPluginImport from 'eslint-plugin-import';
-import eslintPluginNext from '@next/eslint-plugin-next';
-import eslintConfigPrettier from 'eslint-config-prettier';
-import jsxA11y from 'eslint-plugin-jsx-a11y';
 
-export default tseslint.config(
+export default defineConfig([
   {
-    ignores: [
-      '**/node_modules/**',
-      '**/.next/**',
-      '**/build/**',
-      '**/out/**',
-      '**/dist/**',
-      '**/public/**',
-      '**/certificates/**',
-      'eslint.config.js',
-      '**/*.config.js',
-      '**/*.config.ts',
-      'next-env.d.ts'
-    ]
-  },
-  {
-    files: ['**/*.{ts,tsx,js,jsx}'],
-    plugins: {
-      react: reactPlugin,
-      prettier: eslintPluginPrettier,
-      'jsx-a11y': jsxA11y,
-      import: eslintPluginImport,
-      '@next/next': eslintPluginNext
-    },
-    extends: [
-      js.configs.recommended,
-      tseslint.configs.recommended,
-      reactHooks.configs['recommended-latest'],
-      eslintConfigPrettier
-    ],
+    files: ['**/*.{js,jsx,mjs,cjs}'],
+    extends: [js.configs.recommended],
     languageOptions: {
-      ecmaVersion: 2022,
+      ecmaVersion: 'latest',
       sourceType: 'module',
+      parserOptions: {
+        ecmaFeatures: {
+          jsx: true
+        }
+      },
       globals: {
         ...globals.browser,
-        ...globals.node,
-        React: 'readonly'
-      },
+        ...globals.node
+      }
+    }
+  },
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      ...tseslint.configs.recommended,
+      ...tseslint.configs.strictTypeChecked,
+      ...tseslint.configs.stylisticTypeChecked
+    ],
+    languageOptions: {
+      parser: tseslint.parser,
       parserOptions: {
+        ecmaVersion: 'latest',
+        sourceType: 'module',
         ecmaFeatures: {
           jsx: true
         },
         project: './tsconfig.json',
-        tsconfigRootDir: import.meta.dirname
+        tsconfigRootDir: process.cwd()
+      },
+      globals: {
+        ...globals.browser,
+        ...globals.node
       }
     },
     rules: {
-      ...jsxA11y.configs.recommended.rules,
-      ...eslintPluginNext.configs.recommended.rules,
-      '@typescript-eslint/triple-slash-reference': 'off',
-      '@typescript-eslint/explicit-function-return-type': 'off',
-      '@typescript-eslint/explicit-module-boundary-types': 'off',
       '@typescript-eslint/no-unused-vars': [
         'error',
         {
@@ -69,33 +60,85 @@ export default tseslint.config(
           vars: 'all',
           ignoreRestSiblings: true,
           argsIgnorePattern: '^_',
-          varsIgnorePattern: '^_'
+          caughtErrors: 'none'
         }
       ],
+      '@typescript-eslint/explicit-function-return-type': 'off',
+      '@typescript-eslint/explicit-module-boundary-types': 'off',
       '@typescript-eslint/no-explicit-any': 'warn',
-      '@typescript-eslint/consistent-type-imports': 'error',
-      '@typescript-eslint/consistent-type-definitions': ['error', 'interface'],
-      '@typescript-eslint/no-require-imports': 'error',
-      'react-hooks/exhaustive-deps': 'error',
-      'react/jsx-key': 'error',
-      'react/jsx-no-target-blank': 'error',
-      'react/jsx-curly-brace-presence': ['error', { props: 'never', children: 'never' }],
-      'react/self-closing-comp': [
+      '@typescript-eslint/no-var-requires': 'error',
+      '@typescript-eslint/consistent-type-imports': [
         'error',
         {
-          component: true,
-          html: true
+          prefer: 'type-imports',
+          fixStyle: 'inline-type-imports'
         }
       ],
+      '@typescript-eslint/no-unnecessary-type-assertion': 'error',
+      '@typescript-eslint/no-floating-promises': 'error',
+      '@typescript-eslint/await-thenable': 'error',
+      '@typescript-eslint/no-misused-promises': 'error',
+      '@typescript-eslint/prefer-nullish-coalescing': 'error',
+      '@typescript-eslint/prefer-optional-chain': 'error'
+    }
+  },
+  {
+    files: ['**/*.{js,jsx,ts,tsx}'],
+    plugins: {
+      '@next/next': nextPlugin
+    },
+    rules: {
+      '@next/next/no-html-link-for-pages': 'error',
+      '@next/next/no-img-element': 'warn',
+      '@next/next/no-sync-scripts': 'error',
+      '@next/next/no-typos': 'warn'
+    }
+  },
+  {
+    files: ['**/*.{jsx,tsx}'],
+    plugins: {
+      react: pluginReact,
+      'jsx-a11y': jsxA11y,
+      'react-hooks': reactHooks
+    },
+    settings: {
+      react: {
+        version: 'detect'
+      }
+    },
+    rules: {
       'react/display-name': 'off',
       'react/react-in-jsx-scope': 'off',
-      '@next/next/no-before-interactive-script-outside-document': 'error',
-      '@next/next/no-duplicate-head': 'error',
-      '@next/next/no-html-link-for-pages': 'error',
-      'max-len': ['error', { code: 120 }],
-      'no-multi-spaces': 'error',
-      'no-multiple-empty-lines': ['error', { max: 1 }],
-      'no-console': 'warn',
+      'react/prop-types': 'off',
+      'react-hooks/rules-of-hooks': 'error',
+      'react-hooks/exhaustive-deps': 'warn',
+      'react/jsx-key': 'error',
+      'react/no-unknown-property': 'error',
+      'react/jsx-no-duplicate-props': 'error',
+      'react/jsx-no-useless-fragment': 'error',
+      'react/jsx-pascal-case': 'error',
+      'jsx-a11y/alt-text': 'warn',
+      'jsx-a11y/anchor-is-valid': 'warn'
+    }
+  },
+  {
+    files: ['**/*.{js,jsx,ts,tsx}'],
+    extends: [configPrettier],
+    plugins: {
+      import: pluginImport,
+      prettier: pluginPrettier,
+      security: securityPlugin
+    },
+    settings: {
+      'import/resolver': {
+        typescript: {
+          alwaysTryTypes: true,
+          project: './tsconfig.json'
+        }
+      }
+    },
+    rules: {
+      'no-console': 'error',
       'no-var': 'error',
       'prefer-arrow-callback': 'error',
       'arrow-body-style': ['error', 'as-needed'],
@@ -104,6 +147,22 @@ export default tseslint.config(
       curly: ['error', 'all'],
       'no-trailing-spaces': 'error',
       'prefer-const': 'error',
+      'no-duplicate-imports': 'error',
+      'no-else-return': 'error',
+      'max-len': [
+        'error',
+        {
+          code: 120,
+          ignoreUrls: false,
+          ignoreStrings: false,
+          ignoreTemplateLiterals: false,
+          ignoreRegExpLiterals: false,
+          ignoreComments: false
+        }
+      ],
+      'no-multi-spaces': 'error',
+      'no-multiple-empty-lines': ['error', { max: 1 }],
+      'linebreak-style': ['error', 'windows'],
       'import/no-anonymous-default-export': [
         'error',
         {
@@ -118,13 +177,60 @@ export default tseslint.config(
         }
       ],
       'import/named': 'error',
-      'import/no-duplicates': 'error',
+      'import/no-default-export': 'off',
+      'import/no-unresolved': 'error',
       'import/order': [
         'error',
         {
-          groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index', 'object', 'type'],
+          groups: ['builtin', 'external', 'internal', ['sibling', 'parent'], 'index', 'object'],
+          pathGroups: [
+            {
+              pattern: '@public/**',
+              group: 'internal',
+              position: 'before'
+            },
+            {
+              pattern: '@app/**',
+              group: 'internal',
+              position: 'after'
+            },
+            {
+              pattern: '@src/**',
+              group: 'internal',
+              position: 'after'
+            },
+            {
+              pattern: '@pages/**',
+              group: 'internal',
+              position: 'after'
+            },
+            {
+              pattern: '@widgets/**',
+              group: 'internal',
+              position: 'after'
+            },
+            {
+              pattern: '@entities/**',
+              group: 'internal',
+              position: 'after'
+            },
+            {
+              pattern: '@features/**',
+              group: 'internal',
+              position: 'after'
+            },
+            {
+              pattern: '@shared/**',
+              group: 'internal',
+              position: 'after'
+            }
+          ],
+          pathGroupsExcludedImportTypes: ['builtin'],
           'newlines-between': 'always',
-          alphabetize: { order: 'asc', caseInsensitive: true }
+          alphabetize: {
+            order: 'asc',
+            caseInsensitive: true
+          }
         }
       ],
       'prettier/prettier': [
@@ -140,40 +246,25 @@ export default tseslint.config(
           bracketSpacing: true,
           bracketSameLine: false,
           arrowParens: 'always',
-          endOfLine: 'lf'
+          endOfLine: 'crlf'
         }
-      ]
-    },
-    settings: {
-      react: {
-        version: 'detect'
-      },
-      'import/resolver': {
-        node: {
-          extensions: ['.js', '.jsx', '.ts', '.tsx'],
-          moduleDirectory: ['node_modules', 'app', 'src']
-        },
-        typescript: {
-          alwaysTryTypes: true,
-          project: './tsconfig.json'
-        },
-        alias: {
-          map: [
-            ['@', '.'],
-            ['@app', './app'],
-            ['@src', './src'],
-            ['@pages', './src/pages'],
-            ['@widgets', './src/widgets'],
-            ['@features', './src/features'],
-            ['@entities', './src/entities'],
-            ['@shared', './src/shared']
-          ],
-          extensions: ['.js', '.jsx', '.ts', '.tsx']
-        }
-      },
-      next: {
-        rootDir: './'
-      }
+      ],
+      'security/detect-object-injection': 'warn',
+      'security/detect-non-literal-require': 'error',
+      'security/detect-possible-timing-attacks': 'warn'
     }
+  },
+  {
+    ignores: [
+      '**/node_modules/**',
+      '**/.next/**',
+      '**/public/**',
+      '**/*.md',
+      '**/*.d.ts',
+      'package-lock.json',
+      '**/dist/**',
+      '**/build/**',
+      'next.config.ts'
+    ]
   }
-);
+]);
