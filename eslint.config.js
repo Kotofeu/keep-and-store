@@ -7,7 +7,6 @@ import jsxA11y from 'eslint-plugin-jsx-a11y';
 import pluginPrettier from 'eslint-plugin-prettier';
 import pluginReact from 'eslint-plugin-react';
 import reactHooks from 'eslint-plugin-react-hooks';
-import securityPlugin from 'eslint-plugin-security';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
@@ -126,8 +125,7 @@ export default defineConfig([
     extends: [configPrettier],
     plugins: {
       import: pluginImport,
-      prettier: pluginPrettier,
-      security: securityPlugin
+      prettier: pluginPrettier
     },
     settings: {
       'import/resolver': {
@@ -179,11 +177,62 @@ export default defineConfig([
       'import/named': 'error',
       'import/no-default-export': 'off',
       'import/no-unresolved': 'error',
+      'no-restricted-imports': [
+        'error',
+        {
+          paths: [
+            {
+              name: 'next-intl',
+              importNames: ['Locale'],
+              message: 'Importing Locale from next-intl is prohibited. Please import it from @shared/i18n instead.'
+            },
+            {
+              name: 'next-intl/routing',
+              importNames: ['Pathnames'],
+              message:
+                'Importing Pathnames from next-intl/routing is prohibited. Please import it from @shared/i18n instead.'
+            },
+            {
+              name: 'next/dist/client/components/navigation',
+              importNames: ['usePathname', 'useRouter'],
+              message:
+                'Importing usePathname and useRouter from next/dist/client/components/navigation is prohibited. Please import them from @shared/i18n instead.'
+            },
+            {
+              name: 'next/dist/server/api-utils',
+              importNames: ['redirect'],
+              message:
+                'Importing redirect from next/dist/server/api-utils is prohibited. Please import it from @shared/i18n instead.'
+            },
+            {
+              name: 'next/link',
+              message: 'Importing Link from next/link is prohibited. Please import it from @shared/i18n instead.'
+            },
+            {
+              name: 'next/navigation',
+              importNames: ['redirect', 'usePathname'],
+              message:
+                'Importing redirect and usePathname from next/navigation is prohibited. Please import them from @shared/i18n instead.'
+            },
+            {
+              name: 'next/router',
+              importNames: ['Router', 'useRouter'],
+              message:
+                'Importing Router and useRouter from next/router is prohibited. Please import them from @shared/i18n instead.'
+            }
+          ]
+        }
+      ],
       'import/order': [
         'error',
         {
           groups: ['builtin', 'external', 'internal', ['sibling', 'parent'], 'index', 'object'],
           pathGroups: [
+            {
+              pattern: '~/**',
+              group: 'internal',
+              position: 'before'
+            },
             {
               pattern: '@public/**',
               group: 'internal',
@@ -191,11 +240,6 @@ export default defineConfig([
             },
             {
               pattern: '@app/**',
-              group: 'internal',
-              position: 'after'
-            },
-            {
-              pattern: '@src/**',
               group: 'internal',
               position: 'after'
             },
@@ -223,6 +267,11 @@ export default defineConfig([
               pattern: '@shared/**',
               group: 'internal',
               position: 'after'
+            },
+            {
+              pattern: '@src/**',
+              group: 'internal',
+              position: 'after'
             }
           ],
           pathGroupsExcludedImportTypes: ['builtin'],
@@ -248,10 +297,7 @@ export default defineConfig([
           arrowParens: 'always',
           endOfLine: 'crlf'
         }
-      ],
-      'security/detect-object-injection': 'warn',
-      'security/detect-non-literal-require': 'error',
-      'security/detect-possible-timing-attacks': 'warn'
+      ]
     }
   },
   {
@@ -261,10 +307,12 @@ export default defineConfig([
       '**/public/**',
       '**/*.md',
       '**/*.d.ts',
-      'package-lock.json',
+      '**/package-lock.json',
       '**/dist/**',
       '**/build/**',
-      'next.config.ts'
+      '**/next.config.ts',
+      '**/request.ts',
+      '**/eslint.config.js'
     ]
   }
 ]);

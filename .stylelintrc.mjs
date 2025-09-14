@@ -16,7 +16,8 @@ export default {
     '@stylistic/color-hex-case': 'lower',
     '@stylistic/no-extra-semicolons': true,
     '@stylistic/no-eol-whitespace': true,
-    'color-hex-length': null
+    'color-hex-length': null,
+    'color-function-alias-notation': null
   },
   ignoreFiles: ['node_modules/**', '.next/**', 'dist/**', '**/*.min.css', '**/*.js', '**/*.jsx']
 };

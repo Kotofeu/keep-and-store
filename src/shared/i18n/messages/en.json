@@ -1,0 +1,49 @@
+{
+  "Metadata": {
+    "title": "Keep&Store - Store with Security",
+    "description": "Keep&Store is a reliable solution for securely storing passwords, files, and notes with the ability to import and export data. Ensure the safety of your information with two-factor authentication and access settings.",
+    "keywords": "password storage, import from Excel, export to Excel, file storage, structuring, archiving, two-factor authentication, file sharing, notes, notifications",
+    "authorName": "Danil Petrov",
+    "authorUrl": "https://t.me/daniiilp",
+    "siteName": "Keep&Store",
+    "addressLocality": "Kaliningrad",
+    "addressCountry": "Russia",
+    "email": "cras.petrov@yandex.ru"
+  },
+  "Manifest": {
+    "name": "Keep&Store",
+    "short_name": "SM",
+    "description": "Keep&Store is a reliable solution for securely storing passwords, files, and notes with the ability to import and export data. Ensure the safety of your information with two-factor authentication and access settings."
+  },
+  "ThemeSwitcher": {
+    "light": "Light mode",
+    "dark": "Dark mode",
+    "system": "As in the system"
+  },
+  "LocalSwitcher": {
+    "ru": "Русский",
+    "en": "English",
+    "title": "Choose language"
+  },
+  "MainPage": {
+    "a": "The current theme:",
+    "lmode": "Light Mode",
+    "dmode": "Dark Mode",
+    "smode": "System Mode"
+  },
+  "Shared": {
+    "Select": {
+      "search": "Search...",
+      "selectedByMaxSelected": "Selected {selected} by {maxSelected}",
+      "selected": "Selected",
+      "emptyList": "Nothing was found",
+      "selectOption": "Select an option",
+      "removeOption": "Remove {optionLabel}",
+      "removeAllOption": "Remove selected",
+      "loadingError": "An error occurred while loading options [digest: {digest}]"
+    }
+  },
+  "BaseLabels": {
+    "delete": "Delete"
+  }
+}
