@@ -1,2 +1,0 @@
-The directory was created so that Next JS correctly detects App Routing and finds the app folder in the root of the project.  
-[Feature-Sliced guide on using Next.js](https://feature-sliced.github.io/documentation/docs/guides/tech/with-nextjs)
