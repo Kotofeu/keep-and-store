@@ -8,10 +8,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Маршруты
 app.use("/api/items", itemsRouter);
 
-// Обработка ошибок
 app.use(errorHandler);
 
 export default app;
