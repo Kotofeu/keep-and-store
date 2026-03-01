@@ -1,0 +1,35 @@
+@import 'tailwindcss';
+@import './themes/standard.css';
+@import './themes/notepad.css';
+
+@theme {
+  --color-background: var(--bg);
+  --color-foreground: var(--text);
+  --font-body: var(--font-body-family);
+  --font-heading: var(--font-heading-family);
+  --color-button-primary-bg: var(--button-primary-bg);
+  --color-button-primary-text: var(--button-primary-text);
+  --color-button-primary-hover: var(--button-primary-hover);
+  --color-button-secondary-border: var(--button-secondary-border);
+  --color-button-secondary-text: var(--button-secondary-text);
+  --color-button-secondary-hover-bg: var(--button-secondary-hover-bg);
+  --color-button-secondary-hover-border: var(--button-secondary-hover-border);
+  --color-button-secondary-hover-text: var(--button-secondary-hover-text);
+}
+
+body {
+  @apply bg-background text-foreground font-body;
+
+  transition:
+    background-color 0.3s,
+    color 0.3s;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  @apply font-heading;
+}

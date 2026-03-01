@@ -1,0 +1,12 @@
+**/node_modules/**
+**/.next/**
+**/out/**
+**/public/**
+**/dist/**
+**/coverage/**
+**/certificates/**
+*.lock.yaml
+*.lock.json
+README.md
+.env
+.env.*

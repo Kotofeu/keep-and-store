@@ -1,0 +1,29 @@
+[data-theme='standard'] {
+  --bg: #fff;
+  --text: #1f2937;
+  --font-body-family: var(--font-open-sans), sans-serif;
+  --font-heading-family: var(--font-montserrat), sans-serif;
+  --button-primary-bg: #3b82f6;
+  --button-primary-text: #fff;
+  --button-primary-hover: #2563eb;
+  --button-secondary-border: #3b82f6;
+  --button-secondary-text: #3b82f6;
+  --button-secondary-hover-bg: rgb(59 130 246 / 10%);
+  --button-secondary-hover-border: #2563eb;
+  --button-secondary-hover-text: #2563eb;
+}
+
+.dark[data-theme='standard'] {
+  --bg: #111827;
+  --text: #f9fafb;
+  --font-body-family: var(--font-open-sans), sans-serif;
+  --font-heading-family: var(--font-montserrat), sans-serif;
+  --button-primary-bg: #60a5fa;
+  --button-primary-text: #111827;
+  --button-primary-hover: #3b82f6;
+  --button-secondary-border: #60a5fa;
+  --button-secondary-text: #60a5fa;
+  --button-secondary-hover-bg: rgb(96 165 250 / 20%);
+  --button-secondary-hover-border: #3b82f6;
+  --button-secondary-hover-text: #3b82f6;
+}
