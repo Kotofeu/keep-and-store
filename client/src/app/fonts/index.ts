@@ -1,6 +1,5 @@
 import { Open_Sans, Montserrat, Courier_Prime, Crimson_Text } from 'next/font/google';
-
-import { cn } from '@shared/lib';
+import { cn } from '@shared/lib/classNames';
 
 const openSans = Open_Sans({
   subsets: ['latin'],

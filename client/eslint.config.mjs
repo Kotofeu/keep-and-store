@@ -31,7 +31,7 @@ export default defineConfig([
         'error',
         {
           groups: ['builtin', 'external', 'internal', ['parent', 'sibling'], 'index'],
-          'newlines-between': 'always',
+          'newlines-between': 'never',
           alphabetize: {
             order: 'asc',
             caseInsensitive: true
@@ -91,7 +91,6 @@ export default defineConfig([
       '@typescript-eslint/explicit-function-return-type': 'off'
     }
   },
-
   {
     files: ['**/*.{js,jsx,ts,tsx}'],
     rules: {
@@ -101,6 +100,7 @@ export default defineConfig([
       'arrow-body-style': ['error', 'as-needed'],
       eqeqeq: ['error', 'always'],
       curly: ['error', 'all'],
+      'react-hooks/set-state-in-effect': 'off',
       'prefer-const': 'error',
       'react/display-name': 'off',
       'no-unused-expressions': 'error',

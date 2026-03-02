@@ -1,4 +1,5 @@
-import { Button } from '@shared/ui/button';
+import { ThemeToggle } from '@features/ThemeToggle';
+import { Button } from '@shared/ui/Button';
 
 export default function Home() {
   return (
@@ -19,6 +20,7 @@ export default function Home() {
         <Button variant="primary" disabled>
           Disabled
         </Button>
+        <ThemeToggle />
       </main>
     </div>
   );
