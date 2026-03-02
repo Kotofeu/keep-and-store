@@ -7,7 +7,6 @@
     "dev": "next dev --experimental-https",
     "build": "next build",
     "start": "next start",
-    "test": "vitest",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "style": "stylelint \"**/*.{css,scss,sass}\"",
@@ -15,7 +14,10 @@
     "format": "prettier --check .",
     "format:fix": "prettier --write .",
     "check": "run-p lint format style",
-    "fix": "run-p style:fix format:fix lint:fix"
+    "fix": "run-p style:fix format:fix lint:fix",
+    "test": "vitest",
+    "test:e2e": "playwright test",
+    "test:e2e:report": "playwright show-report"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
@@ -43,6 +45,7 @@
     "zustand": "^5.0.11"
   },
   "devDependencies": {
+    "@playwright/test": "^1.58.2",
     "@tailwindcss/postcss": "^4",
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.9.1",
