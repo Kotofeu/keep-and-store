@@ -16,8 +16,11 @@
     "check": "run-p lint format style",
     "fix": "run-p style:fix format:fix lint:fix",
     "test": "vitest",
+    "test:coverage": "vitest --coverage",
     "test:e2e": "playwright test",
-    "test:e2e:report": "playwright show-report"
+    "test:e2e:report": "playwright show-report",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
@@ -46,6 +49,10 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.58.2",
+    "@storybook/addon-a11y": "^10.2.15",
+    "@storybook/addon-docs": "^10.2.15",
+    "@storybook/addon-vitest": "^10.2.15",
+    "@storybook/nextjs-vite": "^10.2.15",
     "@tailwindcss/postcss": "^4",
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.9.1",
@@ -55,16 +62,16 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@vitejs/plugin-react": "^5.1.4",
+    "@vitest/coverage-v8": "4.0.18",
     "eslint": "^9",
     "eslint-config-next": "16.1.6",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-prettier": "^5.5.5",
+    "eslint-plugin-storybook": "^10.2.15",
     "lint-staged": "^16.3.1",
     "msw": "^2.12.10",
-    "nextcov": "^1.1.0",
     "npm-run-all": "^4.1.5",
-    "playwright": "^1.58.2",
     "prettier": "^3.8.1",
     "prettier-plugin-tailwindcss": "^0.7.2",
     "storybook": "^10.2.13",
@@ -73,6 +80,7 @@
     "stylelint-config-tailwindcss": "^1.0.1",
     "tailwindcss": "^4",
     "typescript": "^5",
+    "vite": "^7.3.1",
     "vite-tsconfig-paths": "^6.1.1",
     "vitest": "^4.0.18"
   }
