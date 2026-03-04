@@ -24,6 +24,7 @@ export default defineConfig({
       provider: 'v8',
       reporter: ['text', 'json', 'html'],
       reportsDirectory: './coverage',
+      include: ['src/**/*.{ts,tsx}'],
       exclude: ['**/index.ts']
     },
     exclude: ['**/node_modules/**', '**/dist/**', '**/e2e/**', '**/index.ts']
