@@ -10,7 +10,7 @@ export default defineConfig([
   ...nextVitals,
   ...nextTs,
   {
-    files: ['**/*.{js,jsx,ts,tsx}'],
+    files: ['*.{js,jsx,ts,tsx}'],
     plugins: {
       import: importPlugin
     },
@@ -31,7 +31,13 @@ export default defineConfig([
       'import/order': [
         'error',
         {
-          groups: ['builtin', 'external', 'internal', ['parent', 'sibling'], 'index'],
+          groups: [
+            'builtin',
+            'external',
+            'internal',
+            ['parent', 'sibling'],
+            'index'
+          ],
           'newlines-between': 'never',
           alphabetize: {
             order: 'asc',
@@ -69,7 +75,7 @@ export default defineConfig([
           singleQuote: true,
           tabWidth: 2,
           trailingComma: 'none',
-          printWidth: 120,
+          printWidth: 80,
           bracketSpacing: true,
           arrowParens: 'always',
           endOfLine: 'auto'
@@ -78,7 +84,7 @@ export default defineConfig([
     }
   },
   {
-    files: ['**/*.{ts,tsx}'],
+    files: ['*.{js,jsx,ts,tsx}'],
     rules: {
       '@typescript-eslint/no-unused-vars': [
         'error',
@@ -93,12 +99,11 @@ export default defineConfig([
     }
   },
   {
-    files: ['**/*.{js,jsx,ts,tsx}'],
+    files: ['*.{js,jsx,ts,tsx}'],
     rules: {
       'no-console': ['error', { allow: ['warn', 'error'] }],
       'no-var': 'error',
       'prefer-arrow-callback': 'error',
-      'arrow-body-style': ['error', 'as-needed'],
       eqeqeq: ['error', 'always'],
       curly: ['error', 'all'],
       'react-hooks/set-state-in-effect': 'off',
@@ -111,6 +116,7 @@ export default defineConfig([
   },
   globalIgnores([
     '.next/**',
+    'node_modules',
     'out/**',
     'build/**',
     'next-env.d.ts',

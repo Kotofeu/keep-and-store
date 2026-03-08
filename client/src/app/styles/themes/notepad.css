@@ -1,29 +1,55 @@
-[data-theme='notepad'] {
+[data-theme='notepad-light'] {
   --bg: #f8f4e8;
   --text: #3b3b3b;
-  --font-body-family: var(--font-courier-prime), monospace;
-  --font-heading-family: var(--font-crimson-text), serif;
+  --font-body-family: var(--font-eb-garamond), sans-serif;
+  --font-heading-family: var(--font-literata), sans-serif;
+
+  /* Buttons */
   --button-primary-bg: #8b5a2b;
   --button-primary-text: #f8f4e8;
   --button-primary-hover: #6b4226;
   --button-secondary-border: #8b5a2b;
   --button-secondary-text: #8b5a2b;
-  --button-secondary-hover-bg: rgb(139 90 43 / 15%);
+  --button-secondary-hover-bg: #e8ddcc;
   --button-secondary-hover-border: #6b4226;
   --button-secondary-hover-text: #6b4226;
+
+  /* Inputs */
+  --input-background: var(--bg);
+  --input-border: #ddceb9;
+  --input-border-hover: #ccb69c;
+  --input-border-focus: #8b5a2b;
+  --input-border-disabled: #ede5d5;
+  --input-background-disabled: #f3ecdf;
+  --input-text: var(--text);
+  --input-placeholder: #908e89;
+  --input-text-disabled: #b6b3ab;
 }
 
-.dark[data-theme='notepad'] {
+[data-theme='notepad-dark'] {
   --bg: #2b2b2b;
   --text: #e0e0e0;
-  --font-body-family: var(--font-courier-prime), monospace;
-  --font-heading-family: var(--font-crimson-text), serif;
+  --font-body-family: var(--font-eb-garamond), sans-serif;
+  --font-heading-family: var(--font-literata), sans-serif;
+
+  /* Buttons */
   --button-primary-bg: #b87c4b;
   --button-primary-text: #2b2b2b;
   --button-primary-hover: #9b5e2e;
   --button-secondary-border: #b87c4b;
   --button-secondary-text: #b87c4b;
-  --button-secondary-hover-bg: rgb(184 124 75 / 20%);
+  --button-secondary-hover-bg: #473b31;
   --button-secondary-hover-border: #9b5e2e;
   --button-secondary-hover-text: #9b5e2e;
+
+  /* Inputs */
+  --input-background: var(--bg);
+  --input-border: #554335;
+  --input-border-hover: #72543b;
+  --input-border-focus: #b87c4b;
+  --input-border-disabled: #403730;
+  --input-background-disabled: #36312e;
+  --input-text: var(--text);
+  --input-placeholder: #8f8f8f;
+  --input-text-disabled: #6a6a6a;
 }

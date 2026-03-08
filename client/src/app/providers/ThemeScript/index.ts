@@ -1,1 +1,0 @@
-export { ThemeScript } from './ThemeScript';

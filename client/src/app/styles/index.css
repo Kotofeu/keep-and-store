@@ -2,11 +2,15 @@
 @import './themes/standard.css';
 @import './themes/notepad.css';
 
+@custom-variant dark (&:where([data-theme$="-dark"] *));
+
 @theme {
   --color-background: var(--bg);
   --color-foreground: var(--text);
   --font-body: var(--font-body-family);
   --font-heading: var(--font-heading-family);
+
+  /* Buttons */
   --color-button-primary-bg: var(--button-primary-bg);
   --color-button-primary-text: var(--button-primary-text);
   --color-button-primary-hover: var(--button-primary-hover);
@@ -15,6 +19,17 @@
   --color-button-secondary-hover-bg: var(--button-secondary-hover-bg);
   --color-button-secondary-hover-border: var(--button-secondary-hover-border);
   --color-button-secondary-hover-text: var(--button-secondary-hover-text);
+
+  /* Inputs */
+  --color-input-background: var(--input-background);
+  --color-input-border: var(--input-border);
+  --color-input-border-hover: var(--input-border-hover);
+  --color-input-border-focus: var(--input-border-focus);
+  --color-input-border-disabled: var(--input-border-disabled);
+  --color-input-background-disabled: var(--input-background-disabled);
+  --color-input-text: var(--input-text);
+  --color-input-placeholder: var(--input-placeholder);
+  --color-input-text-disabled: var(--input-text-disabled);
 }
 
 body {

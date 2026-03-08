@@ -1,18 +1,15 @@
 import { Decorator } from '@storybook/nextjs-vite';
 import { useEffect } from 'react';
+import { THEME_ATTRIBUTE } from '@shared/types/theme';
 
 export const ThemeDecorator: Decorator = (Story, context) => {
-  const theme = context.globals.theme || 'standard';
+  const baseTheme = context.globals.theme || 'standard';
   const colorScheme = context.globals.colorScheme || 'light';
 
   useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
-    if (colorScheme === 'dark') {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  }, [theme, colorScheme]);
+    const fullTheme = `${baseTheme}-${colorScheme}`;
+    document.documentElement.setAttribute(THEME_ATTRIBUTE, fullTheme);
+  }, [baseTheme, colorScheme]);
 
   return <Story />;
 };

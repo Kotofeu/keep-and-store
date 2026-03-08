@@ -18,5 +18,10 @@ export default defineConfig({
     { name: 'firefox', use: { ...devices['Desktop Firefox'] } },
     { name: 'webkit', use: { ...devices['Desktop WebKit'] } }
   ],
-  webServer: { command: 'pnpm dev', port: 3000, timeout: 120_000, reuseExistingServer: true }
+  webServer: {
+    command: 'pnpm dev',
+    port: 3000,
+    timeout: 120_000,
+    reuseExistingServer: true
+  }
 });

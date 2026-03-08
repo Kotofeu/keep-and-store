@@ -1,26 +1,29 @@
-import { Open_Sans, Montserrat, Courier_Prime, Crimson_Text } from 'next/font/google';
-import { cn } from '@shared/lib/classNames';
+import { EB_Garamond, Literata, Open_Sans, Montserrat } from 'next/font/google';
+import { cn } from '@shared/utils/cn';
 
 const openSans = Open_Sans({
-  subsets: ['latin'],
+  subsets: ['latin', 'cyrillic'],
   variable: '--font-open-sans'
 });
 
 const montserrat = Montserrat({
-  subsets: ['latin'],
+  subsets: ['latin', 'cyrillic'],
   variable: '--font-montserrat'
 });
 
-const courierPrime = Courier_Prime({
-  weight: ['400', '700'],
-  subsets: ['latin'],
-  variable: '--font-courier-prime'
+const ebGaramond = EB_Garamond({
+  subsets: ['cyrillic', 'latin'],
+  variable: '--font-eb-garamond'
 });
 
-const crimsonText = Crimson_Text({
-  weight: ['400', '600', '700'],
-  subsets: ['latin'],
-  variable: '--font-crimson-text'
+const literata = Literata({
+  subsets: ['cyrillic', 'latin'],
+  variable: '--font-literata'
 });
 
-export const fontVariables = cn(openSans.variable, montserrat.variable, courierPrime.variable, crimsonText.variable);
+export const fontVariables = cn(
+  openSans.variable,
+  montserrat.variable,
+  ebGaramond.variable,
+  literata.variable
+);

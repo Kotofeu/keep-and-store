@@ -5,7 +5,15 @@ const config = {
     'at-rule-no-unknown': [
       true,
       {
-        ignoreAtRules: ['tailwind', 'apply', 'layer', 'config', 'screen', 'theme']
+        ignoreAtRules: [
+          'tailwind',
+          'apply',
+          'layer',
+          'config',
+          'screen',
+          'theme',
+          'custom-variant'
+        ]
       }
     ],
     'function-no-unknown': [
@@ -26,21 +34,7 @@ const config = {
     'color-named': null,
     'selector-no-qualifying-type': null,
     'no-descending-specificity': null
-  },
-  ignoreFiles: [
-    '**/node_modules/**',
-    '**/.next/**',
-    '**/out/**',
-    '**/public/**',
-    '**/dist/**',
-    '**/coverage/**',
-    '**/certificates/**',
-    '**/*.lock.yaml',
-    '**/*.lock.json',
-    '**/README.md',
-    '**/.env',
-    '**/.env.*'
-  ]
+  }
 };
 
 export default config;
