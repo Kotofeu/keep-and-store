@@ -9,8 +9,9 @@ import prettierConfig from 'eslint-config-prettier';
 export default defineConfig([
   ...nextVitals,
   ...nextTs,
+  ...storybook.configs['flat/recommended'],
   {
-    files: ['*.{js,jsx,ts,tsx}'],
+    files: ['**/*.{js,jsx,ts,tsx}'],
     plugins: {
       import: importPlugin
     },
@@ -84,7 +85,7 @@ export default defineConfig([
     }
   },
   {
-    files: ['*.{js,jsx,ts,tsx}'],
+    files: ['**/*.{js,jsx,ts,tsx}'],
     rules: {
       '@typescript-eslint/no-unused-vars': [
         'error',
@@ -99,14 +100,14 @@ export default defineConfig([
     }
   },
   {
-    files: ['*.{js,jsx,ts,tsx}'],
+    files: ['**/*.{js,jsx,ts,tsx}'],
     rules: {
+      'react-hooks/set-state-in-effect': 'off',
       'no-console': ['error', { allow: ['warn', 'error'] }],
       'no-var': 'error',
       'prefer-arrow-callback': 'error',
       eqeqeq: ['error', 'always'],
       curly: ['error', 'all'],
-      'react-hooks/set-state-in-effect': 'off',
       'prefer-const': 'error',
       'react/display-name': 'off',
       'no-unused-expressions': 'error',
@@ -114,6 +115,7 @@ export default defineConfig([
       'object-shorthand': ['error', 'always']
     }
   },
+
   globalIgnores([
     '.next/**',
     'node_modules',
@@ -129,6 +131,5 @@ export default defineConfig([
     'README.md',
     'package-lock.json',
     'pnpm-lock.yaml'
-  ]),
-  ...storybook.configs['flat/recommended']
+  ])
 ]);

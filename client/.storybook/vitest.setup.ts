@@ -1,5 +1,7 @@
-import * as a11yAddonAnnotations from '@storybook/addon-a11y/preview';
+import * as a11yAddon from '@storybook/addon-a11y/preview';
 import { setProjectAnnotations } from '@storybook/nextjs-vite';
-import * as projectAnnotations from './preview';
+import { beforeAll } from 'vitest';
+import * as previewAnnotations from './preview';
 
-setProjectAnnotations([a11yAddonAnnotations, projectAnnotations]);
+const annotations = setProjectAnnotations([previewAnnotations, a11yAddon]);
+beforeAll(annotations.beforeAll);

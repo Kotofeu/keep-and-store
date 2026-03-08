@@ -7,13 +7,13 @@ export const ThemeSwitcher = () => {
   const { baseTheme, setBaseTheme, isDark, toggleDark } = useAppTheme();
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsMounted(true);
   }, []);
 
   if (!isMounted) {
-    return;
+    return null;
   }
+
   return (
     <div className="flex items-center gap-4 p-4">
       <select

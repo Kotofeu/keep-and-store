@@ -14,11 +14,18 @@
   --color-button-primary-bg: var(--button-primary-bg);
   --color-button-primary-text: var(--button-primary-text);
   --color-button-primary-hover: var(--button-primary-hover);
+  --color-button-primary-disabled-bg: var(--button-primary-disabled-bg);
+  --color-button-primary-disabled-text: var(--button-primary-disabled-text);
   --color-button-secondary-border: var(--button-secondary-border);
   --color-button-secondary-text: var(--button-secondary-text);
   --color-button-secondary-hover-bg: var(--button-secondary-hover-bg);
   --color-button-secondary-hover-border: var(--button-secondary-hover-border);
   --color-button-secondary-hover-text: var(--button-secondary-hover-text);
+  --color-button-secondary-disabled-bg: var(--button-secondary-disabled-bg);
+  --color-button-secondary-disabled-border: var(
+    --button-secondary-disabled-border
+  );
+  --color-button-secondary-disabled-text: var(--button-secondary-disabled-text);
 
   /* Inputs */
   --color-input-background: var(--input-background);

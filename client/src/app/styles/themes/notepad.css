@@ -8,11 +8,16 @@
   --button-primary-bg: #8b5a2b;
   --button-primary-text: #f8f4e8;
   --button-primary-hover: #6b4226;
+  --button-primary-disabled-bg: #d9cbb8;
+  --button-primary-disabled-text: #7a7a7a;
   --button-secondary-border: #8b5a2b;
   --button-secondary-text: #8b5a2b;
   --button-secondary-hover-bg: #e8ddcc;
   --button-secondary-hover-border: #6b4226;
   --button-secondary-hover-text: #6b4226;
+  --button-secondary-disabled-bg: transparent;
+  --button-secondary-disabled-border: #d9cbb8;
+  --button-secondary-disabled-text: #7a7a7a;
 
   /* Inputs */
   --input-background: var(--bg);
@@ -36,11 +41,16 @@
   --button-primary-bg: #b87c4b;
   --button-primary-text: #2b2b2b;
   --button-primary-hover: #9b5e2e;
+  --button-primary-disabled-bg: #4a4139;
+  --button-primary-disabled-text: #8f8f8f;
   --button-secondary-border: #b87c4b;
   --button-secondary-text: #b87c4b;
   --button-secondary-hover-bg: #473b31;
   --button-secondary-hover-border: #9b5e2e;
   --button-secondary-hover-text: #9b5e2e;
+  --button-secondary-disabled-bg: #3a332e;
+  --button-secondary-disabled-border: #4a4139;
+  --button-secondary-disabled-text: #8f8f8f;
 
   /* Inputs */
   --input-background: var(--bg);
