@@ -12,7 +12,7 @@ import {
 export const useAppTheme = () => {
   const { theme, setTheme } = useNextTheme();
 
-  const currentTheme = (theme || 'standard-light') as ThemeVariant;
+  const currentTheme = (theme || ThemeVariant.STANDARD_LIGHT) as ThemeVariant;
 
   const baseTheme = useMemo(() => getBaseTheme(currentTheme), [currentTheme]);
   const isDark = useMemo(() => isDarkTheme(currentTheme), [currentTheme]);

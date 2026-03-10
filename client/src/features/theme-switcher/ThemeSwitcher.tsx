@@ -1,8 +1,8 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useAppTheme } from '@shared/hooks/useAppTheme';
 
-export const ThemeSwitcher = () => {
+export const ThemeSwitcher: FC = () => {
   const [isMounted, setIsMounted] = useState(false);
   const { baseTheme, setBaseTheme, isDark, toggleDark } = useAppTheme();
 

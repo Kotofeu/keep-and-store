@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-test('home page shows title', async ({ page }) => {
-  await page.goto('/');
-  await expect(page).toHaveTitle(/keep-and-store/i);
+test('en shows title', async ({ page }) => {
+  await page.goto('/en');
+  await expect(page).toHaveTitle('keep-and-store');
 });
