@@ -1,100 +1,116 @@
 'use client';
 
+import { useRef, useEffect, useState } from 'react';
+import { useKeyboardNavigation } from '@shared/hooks/useKeyboardNavigation';
+import { cn } from '@shared/utils/cn';
 import { SelectOption } from '../select-option';
 import { Option } from '../types';
 
 interface SelectContentProps<T> {
   isOpen: boolean;
+  onClose: () => void;
   filteredOptions: Option<T>[];
-  selectedOptionValues: string[];
-  activeIndex: number;
-  isSearchable: boolean;
   searchQuery: string;
-  setSearchQuery: (value: string) => void;
-  handleSelectOption: (option: Option<T>) => void;
-  isMultiple: boolean;
-  hasValue: boolean;
-  isClearable: boolean;
-  onClear: () => void;
+  onSearchChange: (value: string) => void;
+  multiple: boolean;
+  getIsSelected: (option: Option<T>) => boolean;
+  onOptionSelect: (option: Option<T>) => void;
+  isLoading: boolean;
+  searchPlaceholder: string;
+  listboxId: string;
 }
 
 export const SelectContent = <T,>({
   isOpen,
+  onClose,
   filteredOptions,
-  selectedOptionValues,
-  activeIndex,
-  isSearchable,
   searchQuery,
-  setSearchQuery,
-  handleSelectOption,
-  isMultiple,
-  hasValue,
-  isClearable,
-  onClear
+  onSearchChange,
+  multiple,
+  getIsSelected,
+  onOptionSelect,
+  isLoading,
+  searchPlaceholder,
+  listboxId
 }: SelectContentProps<T>) => {
+  const searchRef = useRef<HTMLInputElement>(null);
+  const [activeIndex, setActiveIndex] = useState(-1);
+
+  const keyboardNavigation = useKeyboardNavigation({
+    disabled: isLoading,
+    items: filteredOptions,
+    activeIndex,
+    isLoop: true,
+    onSelect: onOptionSelect,
+    onEscape: onClose,
+    setActiveIndex
+  });
+
+  useEffect(() => {
+    if (isOpen) {
+      searchRef.current?.focus();
+    }
+  }, [isOpen]);
+
   if (!isOpen) {
     return null;
   }
 
   return (
-    <div
-      className={
-        'border-foreground/15 bg-background animate-in fade-in slide-in-from-top-2 absolute left-0 z-50 mt-3 w-full overflow-hidden rounded-3xl border shadow-2xl duration-200'
-      }
-    >
-      {isSearchable && (
-        <div className="border-foreground/10 border-b p-4">
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Поиск..."
-            role="searchbox"
-            aria-label="Поиск вариантов"
-            className={
-              'border-input-border bg-input-background text-input-text placeholder:text-input-placeholder focus:border-input-border-focus w-full rounded-3xl border px-5 py-3.5 text-sm focus:outline-none'
+    <div className="border-input-border bg-background absolute right-0 left-0 z-50 mt-1 overflow-hidden rounded-md border shadow-lg">
+      <div className="border-input-border border-b p-2">
+        <input
+          ref={searchRef}
+          type="text"
+          value={searchQuery}
+          onChange={(e) => onSearchChange(e.target.value)}
+          placeholder={searchPlaceholder}
+          className="border-input-border bg-input-background text-input-text placeholder:text-input-placeholder focus:border-input-border-focus w-full rounded-md border px-3 py-2 focus:outline-none"
+          onKeyDown={(e) => {
+            if (e.key === 'Escape') {
+              onClose();
             }
-            autoFocus
-          />
-        </div>
-      )}
+            if (e.key === 'ArrowDown' && filteredOptions.length > 0) {
+              e.preventDefault();
+              keyboardNavigation.setActiveIndex(0);
+            }
+          }}
+        />
+      </div>
 
       <ul
-        id="select-listbox"
+        id={listboxId}
         role="listbox"
-        aria-multiselectable={isMultiple}
-        aria-activedescendant={
-          filteredOptions.length > 0 && activeIndex >= 0
-            ? `select-option-${filteredOptions[activeIndex].value}`
-            : undefined
-        }
-        className="scrollbar-thin scrollbar-thumb-foreground/10 max-h-80 overflow-auto py-2"
+        aria-multiselectable={multiple}
+        className="max-h-60 overflow-auto py-1 focus:outline-none"
+        onKeyDown={keyboardNavigation.handleKeyDown}
+        tabIndex={-1}
       >
-        {filteredOptions.length > 0 ? (
-          filteredOptions.map((option, index) => (
-            <SelectOption
-              key={option.value}
-              option={option}
-              isSelected={selectedOptionValues.includes(option.value)}
-              isActive={index === activeIndex}
-              onClick={() => handleSelectOption(option)}
-            />
-          ))
+        {isLoading ? (
+          <li className="text-input-placeholder px-4 py-3">Loading...</li>
+        ) : filteredOptions.length === 0 ? (
+          <li className="text-input-placeholder px-4 py-3">No results found</li>
         ) : (
-          <div className="text-input-placeholder py-12 text-center">
-            Ничего не найдено
-          </div>
+          filteredOptions.map((option, index) => {
+            const selected = getIsSelected(option);
+            return (
+              <SelectOption
+                key={option.value}
+                option={option}
+                selected={selected}
+                multiple={multiple}
+                role="option"
+                aria-selected={selected}
+                className={cn(
+                  keyboardNavigation.activeIndex === index && 'bg-input-border-focus text-foreground',
+                  selected && !multiple && 'bg-input-border text-input-text'
+                )}
+                {...keyboardNavigation.getItemProps(index)}
+              />
+            );
+          })
         )}
       </ul>
-
-      {isMultiple && hasValue && isClearable && (
-        <div className="border-foreground/10 text-input-placeholder flex items-center justify-between border-t px-5 py-3 text-xs">
-          <span>Выбрано: {selectedOptionValues.length}</span>
-          <button onClick={onClear} className="text-accent hover:underline">
-            Сбросить всё
-          </button>
-        </div>
-      )}
     </div>
   );
 };

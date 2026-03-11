@@ -29,11 +29,7 @@ const Layout = async (props: LayoutProps<'/[locale]'>) => {
   setRequestLocale(locale);
 
   return (
-    <html
-      lang={locale || DEFAULT_LOCALE}
-      className={fontVariables}
-      suppressHydrationWarning
-    >
+    <html lang={locale || DEFAULT_LOCALE} className={fontVariables} suppressHydrationWarning>
       <body className="antialiased">
         <RootProvider locale={locale}>{children}</RootProvider>
       </body>

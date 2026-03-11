@@ -32,13 +32,7 @@ export default defineConfig([
       'import/order': [
         'error',
         {
-          groups: [
-            'builtin',
-            'external',
-            'internal',
-            ['parent', 'sibling'],
-            'index'
-          ],
+          groups: ['builtin', 'external', 'internal', ['parent', 'sibling'], 'index'],
           'newlines-between': 'never',
           alphabetize: {
             order: 'asc',
@@ -76,7 +70,7 @@ export default defineConfig([
           singleQuote: true,
           tabWidth: 2,
           trailingComma: 'none',
-          printWidth: 80,
+          printWidth: 120,
           bracketSpacing: true,
           arrowParens: 'always',
           endOfLine: 'auto'

@@ -19,12 +19,7 @@ export default defineConfig({
           name: 'unit',
           environment: 'jsdom',
           include: ['**/*.{test,spec}.{ts,tsx}'],
-          exclude: [
-            'e2e/**',
-            '**/*.story.{ts,tsx}',
-            '**/*.stories.{ts,tsx}',
-            '**/node_modules/**'
-          ],
+          exclude: ['e2e/**', '**/*.story.{ts,tsx}', '**/*.stories.{ts,tsx}', '**/node_modules/**'],
           setupFiles: ['./vitest.setup.ts'],
           globals: false
         }

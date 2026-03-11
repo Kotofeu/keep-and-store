@@ -9,8 +9,8 @@ const buttonVariants = cva(
       variant: {
         primary:
           'bg-button-primary-bg text-button-primary-text hover:bg-button-primary-hover disabled:bg-button-primary-disabled-bg disabled:text-button-primary-disabled-text',
-        secondary:
-          'bg-transparent text-button-secondary-text border-button-secondary-border hover:bg-button-secondary-hover-bg hover:border-button-secondary-hover-border hover:text-button-secondary-hover-text disabled:border-button-secondary-disabled-border disabled:text-button-secondary-disabled-text disabled:bg-button-secondary-disabled-bg'
+        secondary: `bg-transparent text-button-secondary-text border-button-secondary-border hover:bg-button-secondary-hover-bg hover:border-button-secondary-hover-border 
+          hover:text-button-secondary-hover-text disabled:border-button-secondary-disabled-border disabled:text-button-secondary-disabled-text disabled:bg-button-secondary-disabled-bg`
       }
     },
     defaultVariants: {
@@ -19,21 +19,12 @@ const buttonVariants = cva(
   }
 );
 
-interface ButtonProps
-  extends
-    ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {}
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof buttonVariants> {}
 
-const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ variant, className, children, ...props }, ref) => (
-    <button
-      ref={ref}
-      className={cn(buttonVariants({ variant }), className)}
-      {...props}
-    >
-      {children}
-    </button>
-  )
-);
+const Button = forwardRef<HTMLButtonElement, ButtonProps>(({ variant, className, children, ...props }, ref) => (
+  <button ref={ref} className={cn(buttonVariants({ variant }), className)} {...props}>
+    {children}
+  </button>
+));
 
 export { Button, buttonVariants };

@@ -17,10 +17,11 @@ const Home = (props: PageProps<'/[locale]'>) => {
     <main className="p-8">
       <h1 className="text-4xl">{t('Home')}</h1>
       <div className="mt-10 flex gap-6">
-        <Test />
         <LanguageSwitcher />
         <ThemeSwitcher />
       </div>
+
+      <Test />
     </main>
   );
 };

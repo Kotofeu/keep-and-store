@@ -5,13 +5,7 @@ import { ThemeProvider } from 'next-themes';
 import type { ReactNode } from 'react';
 import { THEME_ATTRIBUTE, ThemeVariant } from '@shared/types/theme';
 
-export const RootProvider = ({
-  children,
-  locale
-}: {
-  children: ReactNode;
-  locale: string;
-}) => (
+export const RootProvider = ({ children, locale }: { children: ReactNode; locale: string }) => (
   <NextIntlClientProvider locale={locale}>
     <ThemeProvider
       attribute={THEME_ATTRIBUTE}

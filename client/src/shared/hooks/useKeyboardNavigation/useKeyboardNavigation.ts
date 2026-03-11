@@ -1,9 +1,10 @@
-import { Dispatch, SetStateAction, useEffect } from 'react';
+import { useRef, useEffect, useCallback, type KeyboardEvent, type Dispatch, type SetStateAction } from 'react';
 
 interface UseKeyboardNavigationProps<T> {
   disabled: boolean;
   items: T[];
   activeIndex: number;
+  isLoop?: boolean;
   onSelect: (item: T) => void;
   onEscape?: () => void;
   setActiveIndex: Dispatch<SetStateAction<number>>;
@@ -13,43 +14,82 @@ export const useKeyboardNavigation = <T>({
   disabled,
   items,
   activeIndex,
+  isLoop = true,
   onSelect,
   onEscape,
   setActiveIndex
 }: UseKeyboardNavigationProps<T>) => {
-  useEffect(() => {
-    if (disabled) {
-      return;
-    }
+  const itemRefs = useRef<(HTMLLIElement | null)[]>([]);
 
-    const handleKeyDown = (e: KeyboardEvent) => {
+  const handleKeyDown = useCallback(
+    (e: KeyboardEvent<HTMLElement>) => {
+      if (disabled || items.length === 0) {
+        return;
+      }
+
       switch (e.key) {
-        case 'Escape':
-          e.preventDefault();
-          onEscape?.();
-          break;
-
         case 'ArrowDown':
           e.preventDefault();
-          setActiveIndex((prev) => Math.min(prev + 1, items.length - 1));
+          setActiveIndex((prev) => (prev < items.length - 1 ? prev + 1 : isLoop ? 0 : prev));
           break;
 
         case 'ArrowUp':
           e.preventDefault();
-          setActiveIndex((prev) => Math.max(prev - 1, 0));
+          setActiveIndex((prev) => (prev > 0 ? prev - 1 : isLoop ? items.length - 1 : prev));
           break;
 
         case 'Enter':
         case ' ':
           e.preventDefault();
-          if (items[activeIndex]) {
+          if (activeIndex >= 0 && activeIndex < items.length) {
             onSelect(items[activeIndex]);
           }
           break;
-      }
-    };
 
-    document.addEventListener('keydown', handleKeyDown);
-    return () => document.removeEventListener('keydown', handleKeyDown);
-  }, [disabled, items, activeIndex, setActiveIndex, onSelect, onEscape]);
+        case 'Escape':
+          onEscape?.();
+          break;
+
+        case 'Home':
+          e.preventDefault();
+          setActiveIndex(0);
+          break;
+
+        case 'End':
+          e.preventDefault();
+          setActiveIndex(items.length - 1);
+          break;
+      }
+    },
+    [disabled, items, activeIndex, isLoop, onSelect, onEscape, setActiveIndex]
+  );
+
+  useEffect(() => {
+    if (activeIndex >= 0 && itemRefs.current[activeIndex]) {
+      itemRefs.current[activeIndex]?.focus();
+    }
+  }, [activeIndex]);
+
+  useEffect(() => {
+    setActiveIndex(-1);
+    itemRefs.current = [];
+  }, [items, setActiveIndex]);
+
+  const getItemProps = useCallback(
+    (index: number) => ({
+      ref: (el: HTMLLIElement | null) => {
+        itemRefs.current[index] = el;
+      },
+      tabIndex: activeIndex === index ? 0 : -1,
+      onClick: () => onSelect(items[index])
+    }),
+    [activeIndex, items, onSelect]
+  );
+
+  return {
+    activeIndex,
+    setActiveIndex,
+    handleKeyDown,
+    getItemProps
+  };
 };

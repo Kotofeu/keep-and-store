@@ -22,9 +22,7 @@
   --color-button-secondary-hover-border: var(--button-secondary-hover-border);
   --color-button-secondary-hover-text: var(--button-secondary-hover-text);
   --color-button-secondary-disabled-bg: var(--button-secondary-disabled-bg);
-  --color-button-secondary-disabled-border: var(
-    --button-secondary-disabled-border
-  );
+  --color-button-secondary-disabled-border: var(--button-secondary-disabled-border);
   --color-button-secondary-disabled-text: var(--button-secondary-disabled-text);
 
   /* Inputs */

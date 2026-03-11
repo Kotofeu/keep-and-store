@@ -118,8 +118,7 @@ export const Playground: Story = {
   parameters: {
     docs: {
       description: {
-        story:
-          'Story where you can change props in real-time via Controls and see actions in the Actions panel.'
+        story: 'Story where you can change props in real-time via Controls and see actions in the Actions panel.'
       }
     }
   }

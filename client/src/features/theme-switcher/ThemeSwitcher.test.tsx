@@ -7,9 +7,7 @@ import { ThemeSwitcher } from './ThemeSwitcher';
 const mockSetBaseTheme = vi.fn();
 const mockToggleDark = vi.fn();
 
-const mockUseAppTheme = (
-  overrides?: Partial<ReturnType<typeof useAppThemeModule.useAppTheme>>
-) => {
+const mockUseAppTheme = (overrides?: Partial<ReturnType<typeof useAppThemeModule.useAppTheme>>) => {
   const defaultMock: ReturnType<typeof useAppThemeModule.useAppTheme> = {
     theme: 'standard-light',
     setTheme: vi.fn(),
@@ -19,9 +17,7 @@ const mockUseAppTheme = (
     toggleDark: mockToggleDark,
     ...overrides
   };
-  return vi
-    .spyOn(useAppThemeModule, 'useAppTheme')
-    .mockReturnValue(defaultMock);
+  return vi.spyOn(useAppThemeModule, 'useAppTheme').mockReturnValue(defaultMock);
 };
 
 describe('ThemeSwitcher', () => {
@@ -89,9 +85,7 @@ describe('ThemeSwitcher', () => {
     render(<ThemeSwitcher />);
 
     const select = await screen.findByRole('combobox');
-    const options = Array.from(select.querySelectorAll('option')).map(
-      (opt) => opt.value
-    );
+    const options = Array.from(select.querySelectorAll('option')).map((opt) => opt.value);
 
     expect(options).toEqual(['standard', 'notepad']);
   });

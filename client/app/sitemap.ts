@@ -7,14 +7,7 @@ type Href = Parameters<typeof getPathname>[0]['href'];
 
 const getEntry = (
   href: Href,
-  changeFrequency:
-    | 'always'
-    | 'hourly'
-    | 'daily'
-    | 'weekly'
-    | 'monthly'
-    | 'yearly'
-    | 'never',
+  changeFrequency: 'always' | 'hourly' | 'daily' | 'weekly' | 'monthly' | 'yearly' | 'never',
   priority: number
 ) => ({
   url: getUrl(href, routing.defaultLocale),
@@ -22,9 +15,7 @@ const getEntry = (
   priority,
   lastModified: new Date(),
   alternates: {
-    languages: Object.fromEntries(
-      routing.locales.map((locale) => [locale, getUrl(href, locale)])
-    )
+    languages: Object.fromEntries(routing.locales.map((locale) => [locale, getUrl(href, locale)]))
   }
 });
 

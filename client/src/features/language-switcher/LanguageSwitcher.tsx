@@ -2,13 +2,7 @@
 
 import { useLocale } from 'next-intl';
 import { useCallback, useTransition } from 'react';
-import {
-  LOCALES,
-  LOCALE_NAMES,
-  Locale,
-  usePathname,
-  useRouter
-} from '@shared/i18n/routing';
+import { LOCALES, LOCALE_NAMES, Locale, usePathname, useRouter } from '@shared/i18n/routing';
 
 export const LanguageSwitcher = () => {
   const currentLocale = useLocale() as Locale;

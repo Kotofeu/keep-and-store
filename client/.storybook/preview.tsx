@@ -52,8 +52,7 @@ const preview: Preview = {
   },
   decorators: [
     (Story, context) => {
-      const selectedTheme =
-        (context.globals.theme as ThemeVariant) || ThemeVariant.STANDARD_LIGHT;
+      const selectedTheme = (context.globals.theme as ThemeVariant) || ThemeVariant.STANDARD_LIGHT;
 
       return (
         <ThemeProvider

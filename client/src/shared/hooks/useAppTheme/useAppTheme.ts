@@ -3,11 +3,7 @@
 import { useTheme as useNextTheme } from 'next-themes';
 import { useCallback, useMemo } from 'react';
 import { ThemeVariant, BaseTheme } from '@shared/types/theme';
-import {
-  combineTheme,
-  getBaseTheme,
-  isDarkTheme
-} from '@shared/utils/theme-parser';
+import { combineTheme, getBaseTheme, isDarkTheme } from '@shared/utils/theme-parser';
 
 export const useAppTheme = () => {
   const { theme, setTheme } = useNextTheme();

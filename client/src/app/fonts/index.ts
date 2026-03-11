@@ -21,9 +21,4 @@ const literata = Literata({
   variable: '--font-literata'
 });
 
-export const fontVariables = cn(
-  openSans.variable,
-  montserrat.variable,
-  ebGaramond.variable,
-  literata.variable
-);
+export const fontVariables = cn(openSans.variable, montserrat.variable, ebGaramond.variable, literata.variable);
