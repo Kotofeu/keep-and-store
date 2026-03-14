@@ -15,12 +15,30 @@ const users: Option<User>[] = [
   { value: '4', label: 'Diana Prince', data: { id: 4, role: 'admin' } }
 ];
 
-const fruits: Option[] = [
-  { value: 'apple', label: 'Apple' },
-  { value: 'banana', label: 'Banana' },
-  { value: 'orange', label: 'Orange' },
-  { value: 'grape', label: 'Grape' }
-];
+const generateRandomOptions = (count: number) => {
+  const fruits = [];
+  const letters = 'abcdefghijklmnopqrstuvwxyz';
+
+  for (let i = 1; i <= count; i++) {
+    const randomLetters = Array.from({ length: 5 }, () => letters[Math.floor(Math.random() * letters.length)]).join('');
+
+    const value = `${randomLetters}${i}`;
+    const label = `${randomLetters.charAt(0).toUpperCase() + randomLetters.slice(1)} ${i}`;
+
+    fruits.push({ value, label });
+  }
+
+  return fruits;
+};
+
+const fruits: Option[] = generateRandomOptions(1500);
+
+// [
+//   { value: 'apple', label: 'Apple' },
+//   { value: 'banana', label: 'Banana' },
+//   { value: 'orange', label: 'Orange' },
+//   { value: 'grape', label: 'Grape' }
+// ];
 
 export const Test = () => {
   const [singleValue, setSingleValue] = useState<Option<User> | null>(users[0]);
@@ -93,9 +111,10 @@ export const Test = () => {
         <div className="w-96">
           <Select
             multiple
+            clearable={false}
             options={users}
-            value={multiValue}
-            onChange={setMultiValue}
+            value={multiClearableFalse as any}
+            onChange={setMultiClearableFalse as any}
             placeholder="Select users"
             searchPlaceholder="Search..."
           />

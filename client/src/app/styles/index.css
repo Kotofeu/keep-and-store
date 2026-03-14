@@ -5,10 +5,16 @@
 @custom-variant dark (&:where([data-theme$="-dark"] *));
 
 @theme {
+  --color-white: #fff;
   --color-background: var(--bg);
   --color-foreground: var(--text);
   --font-body: var(--font-body-family);
   --font-heading: var(--font-heading-family);
+
+  /* Statuses */
+  --color-status-error: #ef4444;
+  --color-status-success: #10b981;
+  --color-status-warning: #f59e0b;
 
   /* Buttons */
   --color-button-primary-bg: var(--button-primary-bg);
@@ -31,10 +37,14 @@
   --color-input-border-hover: var(--input-border-hover);
   --color-input-border-focus: var(--input-border-focus);
   --color-input-border-disabled: var(--input-border-disabled);
+  --color-input-border-error: var(--input-border-error);
   --color-input-background-disabled: var(--input-background-disabled);
   --color-input-text: var(--input-text);
   --color-input-placeholder: var(--input-placeholder);
   --color-input-text-disabled: var(--input-text-disabled);
+
+  /* Icons */
+  --color-icon-primary: var(--icon-primary);
 }
 
 body {

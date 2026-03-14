@@ -25,10 +25,14 @@
   --input-border-hover: #ccb69c;
   --input-border-focus: #8b5a2b;
   --input-border-disabled: #ede5d5;
+  --input-border-error: #ef4444;
   --input-background-disabled: #f3ecdf;
   --input-text: var(--text);
   --input-placeholder: #908e89;
   --input-text-disabled: #b6b3ab;
+
+  /* Icons */
+  --icon-primary: #6b4f3f;
 }
 
 [data-theme='notepad-dark'] {
@@ -36,6 +40,10 @@
   --text: #e0e0e0;
   --font-body-family: var(--font-eb-garamond), sans-serif;
   --font-heading-family: var(--font-literata), sans-serif;
+  --color-white: #fff;
+
+  /* Icons */
+  --icon-secondary: #b0a090;
 
   /* Buttons */
   --button-primary-bg: #b87c4b;
@@ -58,8 +66,12 @@
   --input-border-hover: #72543b;
   --input-border-focus: #b87c4b;
   --input-border-disabled: #403730;
+  --input-border-error: #ef4444;
   --input-background-disabled: #36312e;
   --input-text: var(--text);
   --input-placeholder: #8f8f8f;
   --input-text-disabled: #6a6a6a;
+
+  /* Icons */
+  --icon-primary: #b0a090;
 }

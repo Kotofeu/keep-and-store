@@ -1,6 +1,7 @@
 const config = {
   extends: ['stylelint-config-standard', 'stylelint-config-tailwindcss'],
   plugins: [],
+  ignoreFiles: ['node_modules/**', '.next/**', 'out*/**', 'public/**', 'dist/**', 'coverage*/**', 'certificates/**'],
   rules: {
     'at-rule-no-unknown': [
       true,

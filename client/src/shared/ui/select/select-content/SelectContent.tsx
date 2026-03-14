@@ -43,7 +43,8 @@ export const SelectContent = <T,>({
     isLoop: true,
     onSelect: onOptionSelect,
     onEscape: onClose,
-    setActiveIndex
+    setActiveIndex,
+    isItemDisabled: (option) => !!option.disabled
   });
 
   useEffect(() => {
@@ -66,6 +67,7 @@ export const SelectContent = <T,>({
           onChange={(e) => onSearchChange(e.target.value)}
           placeholder={searchPlaceholder}
           className="border-input-border bg-input-background text-input-text placeholder:text-input-placeholder focus:border-input-border-focus w-full rounded-md border px-3 py-2 focus:outline-none"
+          aria-activedescendant={activeIndex >= 0 ? `select-option-${filteredOptions[activeIndex]?.value}` : undefined}
           onKeyDown={(e) => {
             if (e.key === 'Escape') {
               onClose();
@@ -77,7 +79,6 @@ export const SelectContent = <T,>({
           }}
         />
       </div>
-
       <ul
         id={listboxId}
         role="listbox"
@@ -100,7 +101,7 @@ export const SelectContent = <T,>({
                 selected={selected}
                 multiple={multiple}
                 role="option"
-                aria-selected={selected}
+                id={`select-option-${option.value}`}
                 className={cn(
                   keyboardNavigation.activeIndex === index && 'bg-input-border-focus text-foreground',
                   selected && !multiple && 'bg-input-border text-input-text'

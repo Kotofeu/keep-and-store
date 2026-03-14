@@ -25,10 +25,14 @@
   --input-border-hover: #bad3fc;
   --input-border-focus: #3b82f6;
   --input-border-disabled: #ebf3fe;
+  --input-border-error: #ef4444;
   --input-background-disabled: #f5f9ff;
   --input-text: var(--text);
   --input-placeholder: #848991;
   --input-text-disabled: #b1b4b9;
+
+  /* Icons */
+  --icon-primary: #6b7280;
 }
 
 [data-theme='standard-dark'] {
@@ -58,8 +62,12 @@
   --input-border-hover: #355784;
   --input-border-focus: #60a5fa;
   --input-border-disabled: #1a293d;
+  --input-border-error: #ef4444;
   --input-background-disabled: #172232;
   --input-text: var(--text);
   --input-placeholder: #91949a;
   --input-text-disabled: #62676f;
+
+  /* Icons */
+  --icon-primary: #9ca3af;
 }

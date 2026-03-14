@@ -9,58 +9,75 @@ import {
   useCallback,
   useId,
   useImperativeHandle,
-  KeyboardEvent
+  KeyboardEvent,
+  MouseEvent as ReactMouseEvent,
+  ForwardedRef,
+  RefAttributes,
+  ReactElement
 } from 'react';
 import { cn } from '@shared/utils/cn';
 import { SelectContent } from './select-content';
 import { SelectTrigger } from './select-trigger';
-import { Option, SelectValue, SelectRef, SelectProps } from './types';
+import type { Option, SelectValue, SelectRef, SelectProps } from './types';
 
 const Select = forwardRef(
   <T, Multiple extends boolean = false, Clearable extends boolean = true>(
     props: SelectProps<T, Multiple, Clearable>,
-    ref: React.ForwardedRef<SelectRef>
+    ref: ForwardedRef<SelectRef<T, Multiple, Clearable>>
   ) => {
     const {
       options = [],
       loadOptions,
-      value,
-      defaultValue: defaultValueProp,
       onChange,
-      multiple = false as Multiple,
-      clearable = true as Clearable,
-      placeholder = 'Select...',
-      searchPlaceholder = 'Search...',
+      multiple = false,
+      clearable = true,
+      placeholder = 'Select option',
+      searchPlaceholder = 'Search option',
       disabled = false,
-      className
+      className,
+      error: externalError
     } = props;
 
-    const [internalValue, setInternalValue] = useState<SelectValue<T, Multiple, Clearable>>(() => {
-      if (defaultValueProp !== undefined) {
-        return defaultValueProp;
-      }
+    const isControlled = 'value' in props;
+    const propValue = isControlled ? props.value : undefined;
+    const defaultValueProp = 'defaultValue' in props ? props.defaultValue : undefined;
 
-      if (multiple) {
-        return (clearable ? null : []) as SelectValue<T, Multiple, Clearable>;
-      }
-      return (clearable ? null : null) as SelectValue<T, Multiple, Clearable>;
-    });
+    const [internalValue, setInternalValue] = useState<SelectValue<T, Multiple, Clearable> | undefined>(
+      defaultValueProp as SelectValue<T, Multiple, Clearable> | undefined
+    );
 
     const [isOpen, setIsOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
     const [fetchedOptions, setFetchedOptions] = useState<Option<T>[]>([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [loadError, setLoadError] = useState<string | null>(null);
 
-    const isControlled = value !== undefined;
-    const currentValue = isControlled ? value : internalValue;
+    const combinedError = loadError || externalError;
+
+    const allOptions = useMemo(() => (loadOptions ? fetchedOptions : options), [loadOptions, fetchedOptions, options]);
+
+    const currentValue = useMemo(() => {
+      if (isControlled && propValue !== undefined) {
+        return propValue;
+      }
+      if (internalValue !== undefined) {
+        return internalValue;
+      }
+      if (multiple) {
+        const emptyValue: SelectValue<T, true, Clearable> = [];
+        return emptyValue;
+      }
+      if (clearable) {
+        const emptyValue: SelectValue<T, false, true> = null;
+        return emptyValue;
+      }
+      return allOptions[0] ?? null;
+    }, [isControlled, propValue, allOptions, internalValue, multiple, clearable]);
 
     const containerRef = useRef<HTMLDivElement>(null);
     const listboxId = useId();
-
+    const triggerRef = useRef<HTMLDivElement>(null);
     const hasLoadedRef = useRef(false);
-    const valueRef = useRef(currentValue);
-
-    const allOptions = loadOptions ? fetchedOptions : options;
 
     const filteredOptions = useMemo(() => {
       if (!searchQuery.trim()) {
@@ -68,29 +85,27 @@ const Select = forwardRef(
       }
 
       const term = searchQuery.toLowerCase().trim();
-      return allOptions.filter((o) => o.label.toLowerCase().includes(term) || o.value.toLowerCase().includes(term));
+      return allOptions.filter(
+        (option) => option.label.toLowerCase().includes(term) || option.value.toLowerCase().includes(term)
+      );
     }, [allOptions, searchQuery]);
 
     const getIsSelected = useCallback(
       (option: Option<T>) => {
-        if (!currentValue) {
-          return false;
+        if (Array.isArray(currentValue)) {
+          return currentValue.some((item) => item.value === option.value);
         }
-
-        if (multiple) {
-          return (currentValue as Option<T>[]).some((o) => o.value === option.value);
-        }
-        return (currentValue as Option<T>).value === option.value;
+        return !!currentValue && currentValue.value === option.value;
       },
-      [currentValue, multiple]
+      [currentValue]
     );
 
     const hasValue = useMemo(() => {
-      if (!currentValue) {
-        return false;
+      if (Array.isArray(currentValue)) {
+        return currentValue.length > 0;
       }
-      return multiple ? (currentValue as Option<T>[]).length > 0 : true;
-    }, [currentValue, multiple]);
+      return !!currentValue;
+    }, [currentValue]);
 
     const handleOpen = useCallback(async () => {
       if (disabled) {
@@ -100,30 +115,32 @@ const Select = forwardRef(
       setIsOpen(true);
       setSearchQuery('');
 
-      if (loadOptions && !hasLoadedRef.current) {
+      if (loadOptions && (!hasLoadedRef.current || loadError)) {
         hasLoadedRef.current = true;
         setIsLoading(true);
+        setLoadError(null);
         try {
           const loaded = await loadOptions();
           setFetchedOptions(loaded);
         } catch (err) {
-          // TODO handle the error
-          console.error('Select loadOptions error:', err);
+          const msg = err instanceof Error ? err.message : 'Failed to load options';
+          setLoadError(msg);
           setFetchedOptions([]);
         } finally {
           setIsLoading(false);
         }
       }
-    }, [disabled, loadOptions]);
+    }, [disabled, loadError, loadOptions]);
 
     const handleClose = useCallback(() => {
       setIsOpen(false);
       setSearchQuery('');
+      triggerRef.current?.focus();
     }, []);
 
     useEffect(() => {
       const handleOutside = (e: MouseEvent) => {
-        if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
+        if (containerRef.current && e.target instanceof Node && !containerRef.current.contains(e.target)) {
           handleClose();
         }
       };
@@ -134,19 +151,13 @@ const Select = forwardRef(
       return () => document.removeEventListener('mousedown', handleOutside);
     }, [isOpen, handleClose]);
 
-    useEffect(() => {
-      valueRef.current = currentValue;
-    }, [currentValue]);
-
-    useImperativeHandle(
-      ref,
-      () => ({
-        get value() {
-          return JSON.stringify(valueRef.current ?? null);
-        }
-      }),
-      []
-    );
+    useImperativeHandle(ref, () => ({
+      get value() {
+        return (currentValue ? currentValue : null) as SelectValue<T, Multiple, Clearable>;
+      },
+      open: handleOpen,
+      close: handleClose
+    }));
 
     const updateValue = useCallback(
       (newValue: SelectValue<T, Multiple, Clearable>) => {
@@ -158,52 +169,60 @@ const Select = forwardRef(
       [isControlled, onChange]
     );
 
+    const handleUpdate = useCallback(
+      (newValue: Option<T> | Option<T>[] | null) => {
+        updateValue(newValue as SelectValue<T, Multiple, Clearable>);
+      },
+      [updateValue]
+    );
+
     const handleOptionSelect = useCallback(
       (option: Option<T>) => {
-        let newValue: SelectValue<T, Multiple, Clearable>;
-
-        if (multiple) {
-          const currentArr = Array.isArray(currentValue) ? currentValue : currentValue ? [currentValue] : [];
-
-          const exists = currentArr.some((o) => o.value === option.value);
-          newValue = (
-            exists ? currentArr.filter((o) => o.value !== option.value) : [...currentArr, option]
-          ) as SelectValue<T, Multiple, Clearable>;
-        } else {
-          newValue = option as SelectValue<T, Multiple, Clearable>;
+        if (option.disabled) {
+          return;
         }
 
-        updateValue(newValue);
-        setSearchQuery('');
+        if (multiple) {
+          const currentArr = Array.isArray(currentValue) ? currentValue : [];
+          const exists = currentArr.some((item) => item.value === option.value);
+          const newArr = exists ? currentArr.filter((item) => item.value !== option.value) : [...currentArr, option];
+          handleUpdate(newArr);
+        } else {
+          handleUpdate(option);
+        }
 
+        setSearchQuery('');
         if (!multiple) {
           handleClose();
         }
       },
-      [multiple, currentValue, updateValue, handleClose]
+      [multiple, currentValue, handleUpdate, handleClose]
     );
 
     const handleClear = useCallback(
-      (e: React.MouseEvent) => {
+      (e: ReactMouseEvent) => {
         e.stopPropagation();
-        const emptyValue = multiple ? [] : null;
-        updateValue(emptyValue as SelectValue<T, Multiple, Clearable>);
+        if (multiple) {
+          handleUpdate([]);
+        } else if (clearable) {
+          handleUpdate(null);
+        }
       },
-      [multiple, updateValue]
+      [multiple, clearable, handleUpdate]
     );
 
     const handleChipRemove = useCallback(
-      (optionToRemove: Option<T>, e: React.MouseEvent) => {
+      (optionToRemove: Option<T>, e: ReactMouseEvent) => {
         e.stopPropagation();
         if (!multiple) {
           return;
         }
 
         const currentArr = Array.isArray(currentValue) ? currentValue : [];
-
-        updateValue(currentArr.filter((o) => o.value !== optionToRemove.value) as SelectValue<T, Multiple, Clearable>);
+        const newArr = currentArr.filter((item) => item.value !== optionToRemove.value);
+        handleUpdate(newArr);
       },
-      [multiple, currentValue, updateValue]
+      [multiple, currentValue, handleUpdate]
     );
 
     const handleTriggerClick = useCallback(() => {
@@ -240,27 +259,25 @@ const Select = forwardRef(
     );
 
     const renderSelected = () => {
-      if (!currentValue) {
+      if (!hasValue) {
         return <span className="text-input-placeholder">{placeholder}</span>;
       }
 
-      if (multiple) {
-        const selectedArr = Array.isArray(currentValue) ? (currentValue as Option<T>[]) : [];
-
+      if (Array.isArray(currentValue)) {
         return (
           <div className="flex flex-wrap gap-1">
-            {selectedArr.map((opt) => (
+            {currentValue.map((option) => (
               <div
-                key={opt.value}
+                key={option.value}
                 className="border-button-secondary-border bg-button-secondary-hover-bg text-button-secondary-text inline-flex items-center gap-1 rounded border py-0.5 pr-1 pl-2 text-sm"
               >
-                {opt.icon && <span className="text-xs">{opt.icon}</span>}
-                <span>{opt.label}</span>
+                {option.icon && <span className="text-xs">{option.icon}</span>}
+                <span>{option.label}</span>
                 <button
                   type="button"
-                  onClick={(e) => handleChipRemove(opt, e)}
+                  onClick={(e) => handleChipRemove(option, e)}
                   className="hover:bg-button-secondary-disabled-bg text-button-secondary-text ml-1 rounded-full p-0.5 text-lg leading-none"
-                  aria-label={`Remove ${opt.label}`}
+                  aria-label={`Remove ${option.label}`}
                 >
                   ×
                 </button>
@@ -270,11 +287,10 @@ const Select = forwardRef(
         );
       }
 
-      const opt = currentValue as Option<T>;
       return (
         <span className="flex items-center gap-2">
-          {opt.icon}
-          {opt.label}
+          {currentValue?.icon && <span>{currentValue.icon}</span>}
+          <span>{currentValue?.label}</span>
         </span>
       );
     };
@@ -287,10 +303,13 @@ const Select = forwardRef(
           hasValue={hasValue}
           displayContent={renderSelected()}
           clearable={clearable}
+          multiple={multiple}
+          error={combinedError}
           onClear={handleClear}
           onClick={handleTriggerClick}
           onKeyDown={handleTriggerKeyDown}
           listboxId={listboxId}
+          ref={triggerRef}
         />
 
         <SelectContent
@@ -310,7 +329,7 @@ const Select = forwardRef(
     );
   }
 ) as <T, Multiple extends boolean = false, Clearable extends boolean = true>(
-  props: SelectProps<T, Multiple, Clearable> & React.RefAttributes<SelectRef>
-) => React.ReactElement;
+  props: SelectProps<T, Multiple, Clearable> & RefAttributes<SelectRef>
+) => ReactElement;
 
 export { Select };
