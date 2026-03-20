@@ -1,8 +1,8 @@
 'use client';
 
+import type { ReactNode } from 'react';
 import { NextIntlClientProvider } from 'next-intl';
 import { ThemeProvider } from 'next-themes';
-import type { ReactNode } from 'react';
 import { THEME_ATTRIBUTE, ThemeVariant } from '@shared/types/theme';
 
 export const RootProvider = ({ children, locale }: { children: ReactNode; locale: string }) => (

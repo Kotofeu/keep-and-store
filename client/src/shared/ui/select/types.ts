@@ -27,10 +27,11 @@ export type SelectProps<T, Multiple extends boolean = false, Clearable extends b
   className?: string;
   placeholder?: string;
   searchPlaceholder?: string;
-  error?: string | boolean;
+  ariaLabel?: string;
   multiple?: Multiple;
   clearable?: Clearable;
   disabled?: boolean;
+  error?: string | boolean;
   options?: Option<T>[];
   loadOptions?: () => Promise<Option<T>[]>;
   onChange?: (value: SelectValue<T, Multiple, Clearable>) => void;

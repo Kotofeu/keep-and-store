@@ -1,6 +1,6 @@
+import { use } from 'react';
 import { useTranslations } from 'next-intl';
 import { setRequestLocale } from 'next-intl/server';
-import { use } from 'react';
 import { LanguageSwitcher } from '@features/language-switcher';
 import { Test } from '@features/test';
 import { ThemeSwitcher } from '@features/theme-switcher';

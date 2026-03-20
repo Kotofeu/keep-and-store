@@ -38,10 +38,19 @@
   --color-input-border-focus: var(--input-border-focus);
   --color-input-border-disabled: var(--input-border-disabled);
   --color-input-border-error: var(--input-border-error);
+  --color-input-border-error-disabled: var(--input-border-error-disabled);
   --color-input-background-disabled: var(--input-background-disabled);
   --color-input-text: var(--input-text);
   --color-input-placeholder: var(--input-placeholder);
   --color-input-text-disabled: var(--input-text-disabled);
+  --color-input-chip-bg: var(--input-chip-bg);
+  --color-input-chip-border: var(--input-chip-border);
+  --color-input-chip-text: var(--input-chip-text);
+  --color-input-chip-disabled-bg: var(--input-chip-disabled-bg);
+  --color-input-chip-disabled-border: var(--input-chip-disabled-border);
+  --color-input-chip-disabled-text: var(--input-chip-disabled-text);
+  --color-input-option-selected-bg: var(--input-option-selected-bg);
+  --color-input-option-selected-text: var(--input-option-selected-text);
 
   /* Icons */
   --color-icon-primary: var(--icon-primary);

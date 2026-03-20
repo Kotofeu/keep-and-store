@@ -51,7 +51,13 @@ export const Icon: FC<IconProps> = ({ className, type, iconClassName, ...otherPr
   const getIcon = (type: IconType) => getIcons(iconClassName).get(type);
 
   return (
-    <div className={cn('inline-flex', className)} {...otherProps}>
+    <div
+      className={cn(
+        'inline-flex [&>svg]:block [&>svg]:h-full [&>svg]:w-full [&>svg]:object-contain [&>svg]:transition-[stroke,fill] [&>svg]:duration-150 [&>svg]:ease-in-out',
+        className
+      )}
+      {...otherProps}
+    >
       {getIcon(type)}
     </div>
   );

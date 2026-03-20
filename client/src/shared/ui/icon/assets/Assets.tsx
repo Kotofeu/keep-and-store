@@ -183,7 +183,6 @@ export const UkUsFlag: FC<IconProps> = ({ className }) => (
     xmlns="http://www.w3.org/2000/svg"
     className={cn(className)}
   >
-    {' '}
     <g clipPath="url(#clip0_1902_10021)">
       <mask className={'mask-type-alpha'} maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
         <path d="M20.4853 3.51469L20.4853 0H0V20.4853L3.51472 20.4853L16.5 16.5L20.4853 3.51469Z" fill="#FF00FF" />
@@ -252,6 +251,6 @@ export const UkUsFlag: FC<IconProps> = ({ className }) => (
         <rect width="24" height="24" fill="var(--color-white)" />
       </clipPath>
     </defs>
-    <circle cx="12" cy="12" r="11.5" stroke="currentColor" strokeWidth="1" className="stroke-icon-primary" />{' '}
+    <circle cx="12" cy="12" r="11.5" stroke="currentColor" strokeWidth="1" className="stroke-icon-primary" />
   </svg>
 );

@@ -1,6 +1,6 @@
+import { useEffect } from 'react';
 import type { Preview } from '@storybook/nextjs-vite';
 import { ThemeProvider } from 'next-themes';
-import { useEffect } from 'react';
 import { useAppTheme } from '@shared/hooks/useAppTheme';
 import { THEME_ATTRIBUTE, ThemeVariant } from '@shared/types/theme';
 import '../src/app/styles/index.css';

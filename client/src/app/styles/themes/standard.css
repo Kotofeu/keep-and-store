@@ -26,10 +26,19 @@
   --input-border-focus: #3b82f6;
   --input-border-disabled: #ebf3fe;
   --input-border-error: #ef4444;
+  --input-border-error-disabled: #efb3b3;
   --input-background-disabled: #f5f9ff;
   --input-text: var(--text);
   --input-placeholder: #848991;
   --input-text-disabled: #b1b4b9;
+  --input-chip-bg: #ebf3fe;
+  --input-chip-border: #3b82f6;
+  --input-chip-text: #1f2937;
+  --input-chip-disabled-bg: #f5f9ff;
+  --input-chip-disabled-border: #ebf3fe;
+  --input-chip-disabled-text: #b1b4b9;
+  --input-option-selected-bg: #ebf3fe;
+  --input-option-selected-text: #1f2937;
 
   /* Icons */
   --icon-primary: #6b7280;
@@ -63,10 +72,19 @@
   --input-border-focus: #60a5fa;
   --input-border-disabled: #1a293d;
   --input-border-error: #ef4444;
+  --input-border-error-disabled: #efb3b3;
   --input-background-disabled: #172232;
   --input-text: var(--text);
   --input-placeholder: #91949a;
   --input-text-disabled: #62676f;
+  --input-chip-bg: #21344e;
+  --input-chip-border: #60a5fa;
+  --input-chip-text: #f9fafb;
+  --input-chip-disabled-bg: #172232;
+  --input-chip-disabled-border: #1a293d;
+  --input-chip-disabled-text: #62676f;
+  --input-option-selected-bg: #21344e;
+  --input-option-selected-text: #f9fafb;
 
   /* Icons */
   --icon-primary: #9ca3af;

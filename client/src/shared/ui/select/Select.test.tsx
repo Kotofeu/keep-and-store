@@ -1,6 +1,6 @@
+import { createRef } from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { createRef } from 'react';
 import { describe, it, expect, vi } from 'vitest';
 import { Select } from './Select';
 import type { Option, SelectRef } from './types';

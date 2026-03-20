@@ -33,13 +33,6 @@ const generateRandomOptions = (count: number) => {
 
 const fruits: Option[] = generateRandomOptions(1500);
 
-// [
-//   { value: 'apple', label: 'Apple' },
-//   { value: 'banana', label: 'Banana' },
-//   { value: 'orange', label: 'Orange' },
-//   { value: 'grape', label: 'Grape' }
-// ];
-
 export const Test = () => {
   const [singleValue, setSingleValue] = useState<Option<User> | null>(users[0]);
 
@@ -113,8 +106,8 @@ export const Test = () => {
             multiple
             clearable={false}
             options={users}
-            value={multiClearableFalse as any}
-            onChange={setMultiClearableFalse as any}
+            value={multiClearableFalse}
+            onChange={setMultiClearableFalse}
             placeholder="Select users"
             searchPlaceholder="Search..."
           />
@@ -129,7 +122,7 @@ export const Test = () => {
             clearable={false}
             options={users}
             value={multiClearableFalse}
-            onChange={setMultiClearableFalse} // ✅ accepts only Option<User>[]
+            onChange={setMultiClearableFalse}
             placeholder="Select users"
           />
         </div>

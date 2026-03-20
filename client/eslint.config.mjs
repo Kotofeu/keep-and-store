@@ -33,7 +33,19 @@ export default defineConfig([
         'error',
         {
           groups: ['builtin', 'external', 'internal', ['parent', 'sibling'], 'index'],
-          'newlines-between': 'never',
+          pathGroups: [
+            {
+              pattern: 'react',
+              group: 'external',
+              position: 'before'
+            },
+            {
+              pattern: 'next',
+              group: 'external',
+              position: 'before'
+            }
+          ],
+          pathGroupsExcludedImportTypes: ['react'],
           alphabetize: {
             order: 'asc',
             caseInsensitive: true
