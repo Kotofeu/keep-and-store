@@ -25,7 +25,7 @@ export const LanguageSwitcher = () => {
 
   return (
     <div
-      className={`border-button-secondary-border bg-background inline-flex rounded-3xl border p-1 shadow-sm`}
+      className={`border-button-secondary-border bg-bg flex rounded-3xl border p-1 shadow-sm`}
       role="group"
       aria-label="Переключатель языка"
     >
@@ -41,7 +41,7 @@ export const LanguageSwitcher = () => {
             className={`flex items-center gap-3 rounded-2xl px-6 py-3 text-sm font-medium transition-all duration-200 active:scale-[0.985] ${
               isActive
                 ? 'bg-button-primary-bg text-button-primary-text shadow'
-                : `text-button-secondary-text hover:bg-button-secondary-hover-bg hover:text-button-secondary-hover-text`
+                : `text-button-secondary-text hover:bg-button-secondary-bg-hover hover:text-button-secondary-text-hover`
             } `}
           >
             <span className="tracking-wide">{LOCALE_NAMES[locale]}</span>

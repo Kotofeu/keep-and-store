@@ -27,6 +27,11 @@ export type SelectProps<T, Multiple extends boolean = false, Clearable extends b
   className?: string;
   placeholder?: string;
   searchPlaceholder?: string;
+  loadingText?: string;
+  noResultsText?: string;
+  clearAriaLabel?: string;
+  removeAriaLabel?: string;
+  loadErrorMessage?: string;
   ariaLabel?: string;
   multiple?: Multiple;
   clearable?: Clearable;

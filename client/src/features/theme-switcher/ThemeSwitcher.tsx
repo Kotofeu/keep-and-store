@@ -19,7 +19,7 @@ export const ThemeSwitcher: FC = () => {
       <select
         value={baseTheme}
         onChange={(e) => setBaseTheme(e.target.value as 'standard' | 'notepad')}
-        className="bg-background text-foreground rounded border px-3 py-2"
+        className="bg-bg text-foreground rounded border px-3 py-2"
       >
         <option value="standard">Standard</option>
         <option value="notepad">Notepad</option>
@@ -27,7 +27,7 @@ export const ThemeSwitcher: FC = () => {
 
       <button
         onClick={toggleDark}
-        className={`bg-button-primary-bg text-button-primary-text hover:bg-button-primary-hover rounded px-4 py-2 transition`}
+        className={`bg-button-primary-bg text-button-primary-text hover:bg-button-primary-bg-hover rounded px-4 py-2 transition`}
       >
         {isDark ? '☀️ Светлая' : '🌙 Тёмная'}
       </button>

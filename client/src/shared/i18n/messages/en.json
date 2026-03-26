@@ -1,0 +1,16 @@
+{
+  "Home": "Home",
+  "switchLang": "Change language",
+  "switchTheme": "Change theme",
+  "shared": {
+    "select": {
+      "placeholder": "Select option",
+      "searchPlaceholder": "Search option",
+      "loadingText": "Loading...",
+      "noResultsText": "No results found",
+      "clearAriaLabel": "Clear selection",
+      "removeAriaLabel": "Remove",
+      "loadErrorMessage": "Failed to load options"
+    }
+  }
+}

@@ -30,7 +30,7 @@ export const Playground: Story = {
 
 export const AllIcons: Story = {
   render: () => (
-    <div className="bg-background grid grid-cols-2 gap-6 rounded-2xl p-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+    <div className="bg-bg grid grid-cols-2 gap-6 rounded-2xl p-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
       {ICON_TYPES.map((type) => (
         <div key={type} className="flex flex-col items-center gap-2 rounded-lg border p-4">
           <Icon type={type} />
@@ -43,7 +43,7 @@ export const AllIcons: Story = {
 
 export const Colors: Story = {
   render: () => (
-    <div className="bg-background flex gap-6 rounded-2xl p-6">
+    <div className="bg-bg flex gap-6 rounded-2xl p-6">
       <div className="flex flex-col items-center gap-2">
         <Icon type="cross" iconClassName="stroke-yellow-500" />
         <span className="text-xs">stroke-yellow-500</span>
@@ -62,7 +62,7 @@ export const Colors: Story = {
 
 export const Rotated: Story = {
   render: () => (
-    <div className="bg-background flex gap-6 rounded-2xl p-6">
+    <div className="bg-bg flex gap-6 rounded-2xl p-6">
       <div className="flex flex-col items-center gap-2">
         <Icon type="arrowDown" />
         <span className="text-xs">Default</span>
@@ -100,6 +100,6 @@ export const CustomWrapper: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const wrapper = canvas.getByTitle('Custom wrapper');
-    await expect(wrapper).toHaveClass('inline-flex bg-foreground p-2 rounded-full shadow-md');
+    await expect(wrapper).toHaveClass('flex bg-foreground p-2 rounded-full shadow-md');
   }
 };

@@ -6,7 +6,7 @@
 
 @theme {
   --color-white: #fff;
-  --color-background: var(--bg);
+  --color-bg: var(--bg);
   --color-foreground: var(--text);
   --font-body: var(--font-body-family);
   --font-heading: var(--font-heading-family);
@@ -18,46 +18,48 @@
 
   /* Buttons */
   --color-button-primary-bg: var(--button-primary-bg);
+  --color-button-primary-bg-hover: var(--button-primary-bg-hover);
+  --color-button-primary-bg-disabled: var(--button-primary-bg-disabled);
   --color-button-primary-text: var(--button-primary-text);
-  --color-button-primary-hover: var(--button-primary-hover);
-  --color-button-primary-disabled-bg: var(--button-primary-disabled-bg);
-  --color-button-primary-disabled-text: var(--button-primary-disabled-text);
-  --color-button-secondary-border: var(--button-secondary-border);
+  --color-button-primary-text-disabled: var(--button-primary-text-disabled);
+  --color-button-secondary-bg-hover: var(--button-secondary-bg-hover);
+  --color-button-secondary-bg-disabled: var(--button-secondary-bg-disabled);
   --color-button-secondary-text: var(--button-secondary-text);
-  --color-button-secondary-hover-bg: var(--button-secondary-hover-bg);
-  --color-button-secondary-hover-border: var(--button-secondary-hover-border);
-  --color-button-secondary-hover-text: var(--button-secondary-hover-text);
-  --color-button-secondary-disabled-bg: var(--button-secondary-disabled-bg);
-  --color-button-secondary-disabled-border: var(--button-secondary-disabled-border);
-  --color-button-secondary-disabled-text: var(--button-secondary-disabled-text);
+  --color-button-secondary-text-hover: var(--button-secondary-text-hover);
+  --color-button-secondary-text-disabled: var(--button-secondary-text-disabled);
+  --color-button-secondary-border: var(--button-secondary-border);
+  --color-button-secondary-border-hover: var(--button-secondary-border-hover);
+  --color-button-secondary-border-disabled: var(--button-secondary-border-disabled);
 
   /* Inputs */
-  --color-input-background: var(--input-background);
+  --color-input-bg: var(--input-bg);
+  --color-input-bg-disabled: var(--input-bg-disabled);
+  --color-input-text: var(--input-text);
+  --color-input-text-disabled: var(--input-text-disabled);
   --color-input-border: var(--input-border);
   --color-input-border-hover: var(--input-border-hover);
   --color-input-border-focus: var(--input-border-focus);
   --color-input-border-disabled: var(--input-border-disabled);
   --color-input-border-error: var(--input-border-error);
   --color-input-border-error-disabled: var(--input-border-error-disabled);
-  --color-input-background-disabled: var(--input-background-disabled);
-  --color-input-text: var(--input-text);
   --color-input-placeholder: var(--input-placeholder);
-  --color-input-text-disabled: var(--input-text-disabled);
   --color-input-chip-bg: var(--input-chip-bg);
-  --color-input-chip-border: var(--input-chip-border);
+  --color-input-chip-bg-disabled: var(--input-chip-bg-disabled);
   --color-input-chip-text: var(--input-chip-text);
-  --color-input-chip-disabled-bg: var(--input-chip-disabled-bg);
-  --color-input-chip-disabled-border: var(--input-chip-disabled-border);
-  --color-input-chip-disabled-text: var(--input-chip-disabled-text);
-  --color-input-option-selected-bg: var(--input-option-selected-bg);
-  --color-input-option-selected-text: var(--input-option-selected-text);
+  --color-input-chip-text-disabled: var(--input-chip-text-disabled);
+  --color-input-chip-border: var(--input-chip-border);
+  --color-input-chip-border-disabled: var(--input-chip-border-disabled);
+  --color-input-option-bg-selected: var(--input-option-bg-selected);
+  --color-input-option-text-selected: var(--input-option-text-selected);
+  --color-input-option-bg-hover: var(--input-option-bg-hover);
+  --color-input-option-text-hover: var(--input-option-text-hover);
 
   /* Icons */
   --color-icon-primary: var(--icon-primary);
 }
 
 body {
-  @apply bg-background text-foreground font-body;
+  @apply bg-bg text-foreground font-body;
 
   transition:
     background-color 0.3s,

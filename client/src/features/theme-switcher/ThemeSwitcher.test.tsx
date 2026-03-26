@@ -1,7 +1,8 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import * as useAppThemeModule from '@shared/hooks/useAppTheme';
+import { renderWithProviders } from '@shared/testing';
 import { ThemeSwitcher } from './ThemeSwitcher';
 
 const mockSetBaseTheme = vi.fn();
@@ -32,7 +33,7 @@ describe('ThemeSwitcher', () => {
 
   it('renders select and button after mount', async () => {
     mockUseAppTheme();
-    render(<ThemeSwitcher />);
+    renderWithProviders(<ThemeSwitcher />);
 
     const select = await screen.findByRole('combobox');
     const button = await screen.findByRole('button');
@@ -43,7 +44,7 @@ describe('ThemeSwitcher', () => {
 
   it('displays correct button text based on isDark (light)', async () => {
     mockUseAppTheme({ isDark: false });
-    render(<ThemeSwitcher />);
+    renderWithProviders(<ThemeSwitcher />);
 
     const button = await screen.findByRole('button');
     expect(button).toHaveTextContent('🌙 Тёмная');
@@ -51,7 +52,7 @@ describe('ThemeSwitcher', () => {
 
   it('displays correct button text based on isDark (dark)', async () => {
     mockUseAppTheme({ isDark: true });
-    render(<ThemeSwitcher />);
+    renderWithProviders(<ThemeSwitcher />);
 
     const button = await screen.findByRole('button');
     expect(button).toHaveTextContent('☀️ Светлая');
@@ -60,7 +61,7 @@ describe('ThemeSwitcher', () => {
   it('calls setBaseTheme when select value changes', async () => {
     const user = userEvent.setup();
     mockUseAppTheme({ baseTheme: 'standard' });
-    render(<ThemeSwitcher />);
+    renderWithProviders(<ThemeSwitcher />);
 
     const select = await screen.findByRole('combobox');
     await user.selectOptions(select, 'notepad');
@@ -72,7 +73,7 @@ describe('ThemeSwitcher', () => {
   it('calls toggleDark when button is clicked', async () => {
     const user = userEvent.setup();
     mockUseAppTheme();
-    render(<ThemeSwitcher />);
+    renderWithProviders(<ThemeSwitcher />);
 
     const button = await screen.findByRole('button');
     await user.click(button);
@@ -82,7 +83,7 @@ describe('ThemeSwitcher', () => {
 
   it('select has correct options', async () => {
     mockUseAppTheme();
-    render(<ThemeSwitcher />);
+    renderWithProviders(<ThemeSwitcher />);
 
     const select = await screen.findByRole('combobox');
     const options = Array.from(select.querySelectorAll('option')).map((opt) => opt.value);

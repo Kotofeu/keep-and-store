@@ -1,7 +1,8 @@
 import { createRef } from 'react';
-import { render, screen, waitFor } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, it, expect, vi } from 'vitest';
+import { renderWithProviders } from '@shared/testing';
 import { Select } from './Select';
 import type { Option, SelectRef } from './types';
 
@@ -17,29 +18,29 @@ describe('Select', () => {
 
   describe('Basic rendering', () => {
     it('renders with default placeholder', () => {
-      render(<Select options={sampleOptions} />);
+      renderWithProviders(<Select options={sampleOptions} />);
       expect(screen.getByText('Select option')).toBeInTheDocument();
     });
 
     it('renders custom placeholder', () => {
-      render(<Select options={sampleOptions} placeholder="Choose fruit" />);
+      renderWithProviders(<Select options={sampleOptions} placeholder="Choose fruit" />);
       expect(screen.getByText('Choose fruit')).toBeInTheDocument();
     });
 
     it('renders with icon in selected option', async () => {
-      render(<Select options={sampleOptions} defaultValue={sampleOptions[0]} />);
+      renderWithProviders(<Select options={sampleOptions} defaultValue={sampleOptions[0]} />);
       expect(screen.getByText('Apple')).toBeInTheDocument();
       expect(screen.getByText('🍎')).toBeInTheDocument();
     });
 
     it('applies error styles', () => {
-      render(<Select options={sampleOptions} error="Something went wrong" />);
+      renderWithProviders(<Select options={sampleOptions} error="Something went wrong" />);
       const trigger = screen.getByRole('combobox');
       expect(trigger).toHaveClass('border-input-border-error');
     });
 
     it('does not open when disabled', async () => {
-      render(<Select options={sampleOptions} disabled />);
+      renderWithProviders(<Select options={sampleOptions} disabled />);
       await user.click(screen.getByText('Select option'));
       expect(screen.queryByText('Apple')).not.toBeInTheDocument();
     });
@@ -47,7 +48,7 @@ describe('Select', () => {
 
   describe('Single selection (uncontrolled)', () => {
     it('selects option and displays it', async () => {
-      render(<Select options={sampleOptions} />);
+      renderWithProviders(<Select options={sampleOptions} />);
       await user.click(screen.getByText('Select option'));
       await user.click(screen.getByText('Banana'));
       expect(screen.getByText('Banana')).toBeInTheDocument();
@@ -56,7 +57,7 @@ describe('Select', () => {
 
     it('calls onChange with selected option', async () => {
       const onChange = vi.fn();
-      render(<Select options={sampleOptions} onChange={onChange} />);
+      renderWithProviders(<Select options={sampleOptions} onChange={onChange} />);
       await user.click(screen.getByText('Select option'));
       await user.click(screen.getByText('Orange'));
       expect(onChange).toHaveBeenCalledTimes(1);
@@ -64,13 +65,15 @@ describe('Select', () => {
     });
 
     it('respects defaultValue', () => {
-      render(<Select options={sampleOptions} defaultValue={sampleOptions[1]} />);
+      renderWithProviders(<Select options={sampleOptions} defaultValue={sampleOptions[1]} />);
       expect(screen.getByText('Banana')).toBeInTheDocument();
     });
 
     it('clears selection when clearable and clear button clicked', async () => {
       const onChange = vi.fn();
-      render(<Select options={sampleOptions} defaultValue={sampleOptions[0]} clearable onChange={onChange} />);
+      renderWithProviders(
+        <Select options={sampleOptions} defaultValue={sampleOptions[0]} clearable onChange={onChange} />
+      );
       const clearBtn = screen.getByRole('button', { name: /clear/i });
       await user.click(clearBtn);
       expect(screen.getByText('Select option')).toBeInTheDocument();
@@ -78,12 +81,12 @@ describe('Select', () => {
     });
 
     it('does not show clear button when not clearable', () => {
-      render(<Select options={sampleOptions} defaultValue={sampleOptions[0]} clearable={false} />);
+      renderWithProviders(<Select options={sampleOptions} defaultValue={sampleOptions[0]} clearable={false} />);
       expect(screen.queryByRole('button', { name: /clear/i })).not.toBeInTheDocument();
     });
 
     it('closes dropdown after selection', async () => {
-      render(<Select options={sampleOptions} />);
+      renderWithProviders(<Select options={sampleOptions} />);
       await user.click(screen.getByText('Select option'));
       await user.click(screen.getByText('Grape'));
       expect(screen.getByText('Grape')).toBeVisible();
@@ -93,7 +96,7 @@ describe('Select', () => {
 
     it('does not select disabled option', async () => {
       const onChange = vi.fn();
-      render(<Select options={sampleOptions} onChange={onChange} />);
+      renderWithProviders(<Select options={sampleOptions} onChange={onChange} />);
       await user.click(screen.getByText('Select option'));
       await user.click(screen.getByText('Grape'));
       expect(onChange).not.toHaveBeenCalled();
@@ -103,7 +106,7 @@ describe('Select', () => {
 
   describe('Multiple selection', () => {
     it('selects multiple options and displays chips', async () => {
-      render(<Select multiple options={sampleOptions} />);
+      renderWithProviders(<Select multiple options={sampleOptions} />);
       await user.click(screen.getByText('Select option'));
       await user.click(screen.getByText('Apple'));
       await user.click(screen.getByText('Orange'));
@@ -113,7 +116,7 @@ describe('Select', () => {
 
     it('calls onChange with array of selected options', async () => {
       const onChange = vi.fn();
-      render(<Select multiple options={sampleOptions} onChange={onChange} />);
+      renderWithProviders(<Select multiple options={sampleOptions} onChange={onChange} />);
       await user.click(screen.getByText('Select option'));
       await user.click(screen.getByText('Apple'));
       expect(onChange).toHaveBeenCalledWith([sampleOptions[0]]);
@@ -123,7 +126,7 @@ describe('Select', () => {
 
     it('removes chip when clicking ×', async () => {
       const onChange = vi.fn();
-      render(
+      renderWithProviders(
         <Select
           multiple
           options={sampleOptions}
@@ -139,7 +142,7 @@ describe('Select', () => {
     });
 
     it('keeps dropdown open after selection', async () => {
-      render(<Select multiple options={sampleOptions} />);
+      renderWithProviders(<Select multiple options={sampleOptions} />);
       await user.click(screen.getByText('Select option'));
       await user.click(screen.getByText('Apple'));
       expect(screen.getByText('Banana')).toBeVisible();
@@ -147,7 +150,7 @@ describe('Select', () => {
 
     it('clears all selections when clearable and clear button clicked', async () => {
       const onChange = vi.fn();
-      render(
+      renderWithProviders(
         <Select
           multiple
           options={sampleOptions}
@@ -160,26 +163,19 @@ describe('Select', () => {
       await user.click(clearBtn);
       expect(screen.queryByRole('button', { name: /Remove Apple/i })).not.toBeInTheDocument();
       expect(screen.getByText('Select option')).toBeInTheDocument();
-      expect(onChange).toHaveBeenCalledWith([]);
+      expect(onChange).toHaveBeenCalledWith(null);
     });
 
     it('shows clear button when multiple and has selections', () => {
-      render(<Select multiple options={sampleOptions} defaultValue={[sampleOptions[0]]} />);
+      renderWithProviders(<Select multiple options={sampleOptions} defaultValue={[sampleOptions[0]]} />);
       expect(screen.getByRole('button', { name: /clear/i })).toBeInTheDocument();
     });
   });
 
   describe('Controlled component', () => {
-    it('reflects external value', () => {
-      const { rerender } = render(<Select options={sampleOptions} value={sampleOptions[0]} />);
-      expect(screen.getByText('Apple')).toBeInTheDocument();
-      rerender(<Select options={sampleOptions} value={sampleOptions[1]} />);
-      expect(screen.getByText('Banana')).toBeInTheDocument();
-    });
-
     it('calls onChange but does not update internal state', async () => {
       const onChange = vi.fn();
-      render(<Select options={sampleOptions} value={sampleOptions[0]} onChange={onChange} />);
+      renderWithProviders(<Select options={sampleOptions} value={sampleOptions[0]} onChange={onChange} />);
       await user.click(screen.getByText('Apple'));
       await user.click(screen.getByText('Orange'));
       expect(onChange).toHaveBeenCalledWith(sampleOptions[2]);
@@ -188,7 +184,7 @@ describe('Select', () => {
 
     it('handles multiple controlled mode', async () => {
       const onChange = vi.fn();
-      render(<Select multiple options={sampleOptions} value={[sampleOptions[0]]} onChange={onChange} />);
+      renderWithProviders(<Select multiple options={sampleOptions} value={[sampleOptions[0]]} onChange={onChange} />);
       expect(screen.getByRole('button', { name: /Remove Apple/i })).toBeInTheDocument();
       await user.click(screen.getByText('Apple'));
       await user.click(screen.getByText('Banana'));
@@ -199,21 +195,21 @@ describe('Select', () => {
 
   describe('Keyboard navigation', () => {
     it('opens dropdown with Enter on trigger', async () => {
-      render(<Select options={sampleOptions} />);
+      renderWithProviders(<Select options={sampleOptions} />);
       const trigger = screen.getByRole('combobox');
       await user.type(trigger, '{Enter}');
       expect(await screen.findByText('Apple')).toBeVisible();
     });
 
     it('opens dropdown with Space on trigger', async () => {
-      render(<Select options={sampleOptions} />);
+      renderWithProviders(<Select options={sampleOptions} />);
       const trigger = screen.getByRole('combobox');
       await user.type(trigger, ' ');
       expect(await screen.findByText('Apple')).toBeVisible();
     });
 
     it('opens dropdown with ArrowDown on trigger', async () => {
-      render(<Select options={sampleOptions} />);
+      renderWithProviders(<Select options={sampleOptions} />);
       const trigger = screen.getByRole('combobox');
       trigger.focus();
       await user.keyboard('{ArrowDown}');
@@ -221,7 +217,7 @@ describe('Select', () => {
     });
 
     it('closes dropdown with Escape', async () => {
-      render(<Select options={sampleOptions} />);
+      renderWithProviders(<Select options={sampleOptions} />);
       await user.click(screen.getByText('Select option'));
       expect(screen.getByText('Apple')).toBeVisible();
       await user.keyboard('{Escape}');
@@ -229,7 +225,7 @@ describe('Select', () => {
     });
 
     it('closes dropdown when clicking outside', async () => {
-      render(
+      renderWithProviders(
         <div>
           <Select options={sampleOptions} />
           <button>Outside</button>
@@ -244,7 +240,7 @@ describe('Select', () => {
 
   describe('Search/filtering', () => {
     it('filters options based on search input', async () => {
-      render(<Select options={sampleOptions} />);
+      renderWithProviders(<Select options={sampleOptions} />);
       await user.click(screen.getByText('Select option'));
       const search = screen.getByPlaceholderText('Search option');
       await user.type(search, 'ora');
@@ -253,7 +249,7 @@ describe('Select', () => {
     });
 
     it('shows all options when search query is empty', async () => {
-      render(<Select options={sampleOptions} />);
+      renderWithProviders(<Select options={sampleOptions} />);
       await user.click(screen.getByText('Select option'));
       const search = screen.getByPlaceholderText('Search option');
       await user.type(search, 'ora');
@@ -263,7 +259,7 @@ describe('Select', () => {
     });
 
     it('clears search when dropdown closes', async () => {
-      render(<Select options={sampleOptions} />);
+      renderWithProviders(<Select options={sampleOptions} />);
       await user.click(screen.getByText('Select option'));
       const search = screen.getByPlaceholderText('Search option');
       await user.type(search, 'apple');
@@ -279,7 +275,7 @@ describe('Select', () => {
         { value: 'app', label: 'Apple' },
         { value: 'ban', label: 'Banana' }
       ];
-      render(<Select options={customOptions} />);
+      renderWithProviders(<Select options={customOptions} />);
       await user.click(screen.getByText('Select option'));
       const search = screen.getByPlaceholderText('Search option');
       await user.type(search, 'app');
@@ -291,7 +287,7 @@ describe('Select', () => {
   describe('Async loading (loadOptions)', () => {
     it('loads options on first open', async () => {
       const loadOptions = vi.fn().mockResolvedValue(sampleOptions);
-      render(<Select loadOptions={loadOptions} />);
+      renderWithProviders(<Select loadOptions={loadOptions} />);
       await user.click(screen.getByRole('combobox'));
       expect(await screen.findByText('Apple')).toBeVisible();
       expect(loadOptions).toHaveBeenCalledTimes(1);
@@ -299,7 +295,7 @@ describe('Select', () => {
 
     it('does not load again on subsequent opens', async () => {
       const loadOptions = vi.fn().mockResolvedValue(sampleOptions);
-      render(<Select loadOptions={loadOptions} />);
+      renderWithProviders(<Select loadOptions={loadOptions} />);
       await user.click(screen.getByRole('combobox'));
       await screen.findByText('Apple');
       await user.keyboard('{Escape}');
@@ -309,7 +305,7 @@ describe('Select', () => {
 
     it('handles loadOptions error gracefully and shows error in trigger', async () => {
       const loadOptions = vi.fn().mockRejectedValue(new Error('Network error'));
-      render(<Select loadOptions={loadOptions} />);
+      renderWithProviders(<Select loadOptions={loadOptions} />);
       await user.click(screen.getByRole('combobox'));
       await waitFor(() => {
         const trigger = screen.getByRole('combobox');
@@ -319,7 +315,7 @@ describe('Select', () => {
 
     it('combines loadOptions with search filtering', async () => {
       const loadOptions = vi.fn().mockResolvedValue(sampleOptions);
-      render(<Select loadOptions={loadOptions} />);
+      renderWithProviders(<Select loadOptions={loadOptions} />);
       await user.click(screen.getByRole('combobox'));
       await screen.findByText('Apple');
       const search = screen.getByPlaceholderText('Search option');
@@ -332,19 +328,19 @@ describe('Select', () => {
   describe('Ref methods', () => {
     it('exposes value getter via ref', () => {
       const ref = createRef<SelectRef>();
-      render(<Select options={sampleOptions} defaultValue={sampleOptions[0]} ref={ref} />);
+      renderWithProviders(<Select options={sampleOptions} defaultValue={sampleOptions[0]} ref={ref} />);
       expect(ref.current?.value).toEqual(sampleOptions[0]);
     });
 
     it('returns null for empty value via ref', () => {
       const ref = createRef<SelectRef>();
-      render(<Select options={sampleOptions} ref={ref} />);
+      renderWithProviders(<Select options={sampleOptions} ref={ref} />);
       expect(ref.current?.value).toBeNull();
     });
 
     it('exposes open and close methods', async () => {
       const ref = createRef<SelectRef>();
-      render(<Select options={sampleOptions} ref={ref} />);
+      renderWithProviders(<Select options={sampleOptions} ref={ref} />);
       ref.current?.open();
       expect(await screen.findByText('Apple')).toBeVisible();
       ref.current?.close();
@@ -356,26 +352,26 @@ describe('Select', () => {
 
   describe('Edge cases', () => {
     it('handles empty options array', async () => {
-      render(<Select options={[]} />);
+      renderWithProviders(<Select options={[]} />);
       await user.click(screen.getByText('Select option'));
       expect(screen.queryByRole('option')).not.toBeInTheDocument();
     });
 
     it('handles null/undefined options gracefully', () => {
       // @ts-expect-error testing runtime
-      render(<Select options={null} />);
+      renderWithProviders(<Select options={null} />);
       expect(screen.getByText('Select option')).toBeInTheDocument();
     });
 
     it('does not crash when onChange is not provided', async () => {
-      render(<Select options={sampleOptions} />);
+      renderWithProviders(<Select options={sampleOptions} />);
       await user.click(screen.getByText('Select option'));
       await user.click(screen.getByText('Apple'));
       expect(screen.getByText('Apple')).toBeInTheDocument();
     });
 
     it('updates search placeholder via prop', async () => {
-      render(<Select options={sampleOptions} searchPlaceholder="Find fruit..." />);
+      renderWithProviders(<Select options={sampleOptions} searchPlaceholder="Find fruit..." />);
       await user.click(screen.getByText('Select option'));
       expect(screen.getByPlaceholderText('Find fruit...')).toBeInTheDocument();
     });

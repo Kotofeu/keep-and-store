@@ -69,7 +69,8 @@ export const Single: Story = {
     });
 
     await step('Select "Apple"', async () => {
-      await userEvent.click(canvas.getByText('Apple'));
+      const apple = await canvas.findByText('Apple');
+      await userEvent.click(apple);
       expect(canvas.getByText('Apple')).toBeInTheDocument();
       expect(canvas.getByText('🍎')).toBeInTheDocument();
     });
@@ -111,7 +112,7 @@ export const ClearableFalse: Story = {
 export const WithError: Story = {
   args: {
     error: 'Something went wrong',
-    defaultValue: sampleOptions[0]
+    options: []
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
@@ -206,8 +207,7 @@ export const Playground: Story = {
     multiple: false,
     clearable: true,
     disabled: false,
-    placeholder: 'Play with me',
-    error: ''
+    placeholder: 'Play with me'
   },
   parameters: {
     docs: {

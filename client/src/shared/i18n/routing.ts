@@ -11,6 +11,10 @@ export const LOCALE_NAMES: Record<string, string> = {
   ru: 'Русский'
 } as const;
 
+export interface MessageTree {
+  [key: string]: string | MessageTree;
+}
+
 export const routing = defineRouting({
   locales: LOCALES,
   defaultLocale: DEFAULT_LOCALE,

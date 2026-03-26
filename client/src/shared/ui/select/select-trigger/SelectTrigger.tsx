@@ -7,36 +7,29 @@ import { cn } from '@shared/utils/cn';
 
 const selectTriggerVariants = cva(
   [
-    'border-input-border bg-input-background text-input-text',
-    'flex min-h-11 w-full items-center justify-between rounded-md border px-2 py-1.5 transition-all'
+    'border-input-border bg-input-bg text-input-text',
+    'flex min-h-11 w-full items-center justify-between rounded-md border px-2 py-1.5 transition-colors',
+    'hover:border-input-border-hover focus:border-input-border-focus'
   ],
   {
     variants: {
-      isOpen: {
-        true: 'border-input-border-focus ring-input-border-focus ring-1'
-      },
       disabled: {
-        true: 'bg-input-background-disabled border-input-border-disabled text-input-text-disabled cursor-not-allowed'
+        true: 'bg-input-bg-disabled border-input-border-disabled text-input-text-disabled cursor-default'
       },
       error: {
-        true: 'border-input-border-error focus:border-input-border-error focus:ring-input-border-error'
+        true: 'border-input-border-error hover:border-input-border-error focus:border-input-border-error'
       }
     },
     compoundVariants: [
       {
         disabled: true,
+        class: 'hover:border-input-border-disabled focus:border-input-border-disabled'
+      },
+      {
+        disabled: true,
         error: true,
         class:
-          'border-input-border-error-disabled bg-input-background-disabled text-input-text-disabled cursor-not-allowed'
-      },
-      {
-        disabled: true,
-        class: 'hover:border-input-border-disabled focus:border-input-border-disabled focus:ring-0'
-      },
-      {
-        disabled: true,
-        error: true,
-        class: 'hover:border-input-border-error-disabled focus:border-input-border-error-disabled focus:ring-0'
+          'border-input-border-error-disabled bg-input-bg-disabled text-input-text-disabled cursor-default hover:border-input-border-error-disabled focus:border-input-border-error-disabled'
       }
     ]
   }
@@ -44,7 +37,8 @@ const selectTriggerVariants = cva(
 
 interface SelectTriggerProps {
   listboxId: string;
-  ariaLabel?: string;
+  ariaLabel: string;
+  clearAriaLabel: string;
   isOpen: boolean;
   disabled: boolean;
   hasValue: boolean;
@@ -62,6 +56,7 @@ export const SelectTrigger = forwardRef<HTMLDivElement, SelectTriggerProps>(
     {
       listboxId,
       ariaLabel,
+      clearAriaLabel,
       isOpen,
       disabled,
       hasValue,
@@ -75,11 +70,12 @@ export const SelectTrigger = forwardRef<HTMLDivElement, SelectTriggerProps>(
     },
     ref
   ) => {
-    const showClear = hasValue && (multiple || clearable);
+    const showClear = hasValue && (multiple || clearable) && onClear;
 
     return (
       <div
-        className={cn(selectTriggerVariants({ isOpen, disabled, error: !!error }))}
+        className={cn(selectTriggerVariants({ disabled, error: !!error }))}
+        title={typeof error === 'string' ? error : undefined}
         ref={ref}
         role="combobox"
         aria-expanded={isOpen && !disabled}
@@ -92,20 +88,20 @@ export const SelectTrigger = forwardRef<HTMLDivElement, SelectTriggerProps>(
         onClick={onClick}
         onKeyDown={onKeyDown}
       >
-        <div className="flex min-w-0 flex-1 flex-wrap items-center gap-2">{displayContent}</div>
+        <div className="flex flex-1 flex-wrap items-center gap-2">{displayContent}</div>
         <div className="ml-3 flex items-center gap-3">
-          {showClear && onClear && (
+          {showClear && (
             <button
               type="button"
               onClick={onClear}
               className={cn('flex', !disabled ? 'cursor-pointer' : 'pointer-events-none')}
-              aria-label="Clear selection"
+              aria-label={clearAriaLabel}
               disabled={disabled}
             >
               <Icon type="cross" className="h-3 w-3" />
             </button>
           )}
-          <div className="bg-input-border h-5 w-px" aria-hidden="true" />
+          <div className="bg-icon-primary h-4.5 w-px" aria-hidden="true" />
           <span className={cn('flex transition-transform duration-200', isOpen && 'rotate-180')}>
             <Icon type="arrowDown" className="h-5 w-5" />
           </span>

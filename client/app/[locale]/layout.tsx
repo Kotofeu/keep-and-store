@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { hasLocale } from 'next-intl';
-import { setRequestLocale } from 'next-intl/server';
+import { getMessages, setRequestLocale } from 'next-intl/server';
 import { fontVariables } from '@app/fonts';
 import { RootProvider } from '@app/providers/root-provider';
 import { DEFAULT_LOCALE, routing } from '@shared/i18n/routing';
@@ -28,10 +28,14 @@ const Layout = async (props: LayoutProps<'/[locale]'>) => {
 
   setRequestLocale(locale);
 
+  const messages = await getMessages({ locale });
+
   return (
     <html lang={locale || DEFAULT_LOCALE} className={fontVariables} suppressHydrationWarning>
       <body className="antialiased">
-        <RootProvider locale={locale}>{children}</RootProvider>
+        <RootProvider locale={locale} messages={messages}>
+          {children}
+        </RootProvider>
       </body>
     </html>
   );

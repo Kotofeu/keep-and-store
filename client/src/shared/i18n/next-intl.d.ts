@@ -1,4 +1,4 @@
-import en from '@public/messages/en.json';
+import en from './messages/en.json';
 import { routing } from './routing';
 
 declare module 'next-intl' {

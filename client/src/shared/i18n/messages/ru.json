@@ -1,0 +1,16 @@
+{
+  "Home": "Главная",
+  "switchLang": "Сменить язык",
+  "switchTheme": "Сменить тему",
+  "shared": {
+    "select": {
+      "placeholder": "Выберите вариант",
+      "searchPlaceholder": "Поиск",
+      "loadingText": "Загрузка...",
+      "noResultsText": "Ничего не найдено",
+      "clearAriaLabel": "Очистить выбор",
+      "removeAriaLabel": "Удалить",
+      "loadErrorMessage": "Не удалось загрузить варианты"
+    }
+  }
+}

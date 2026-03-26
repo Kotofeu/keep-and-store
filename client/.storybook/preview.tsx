@@ -1,9 +1,17 @@
 import { useEffect } from 'react';
 import type { Preview } from '@storybook/nextjs-vite';
-import { ThemeProvider } from 'next-themes';
+import { RootProvider } from '@app/providers/root-provider';
 import { useAppTheme } from '@shared/hooks/useAppTheme';
-import { THEME_ATTRIBUTE, ThemeVariant } from '@shared/types/theme';
+import enMessages from '@shared/i18n/messages/en.json';
+import ruMessages from '@shared/i18n/messages/ru.json';
+import { DEFAULT_LOCALE, LOCALES, LOCALE_NAMES, MessageTree, type Locale } from '@shared/i18n/routing';
+import { ThemeVariant } from '@shared/types/theme';
 import '../src/app/styles/index.css';
+
+const messagesMap: Record<Locale, MessageTree> = {
+  en: enMessages,
+  ru: ruMessages
+};
 
 const themeItems = [
   { value: ThemeVariant.STANDARD_LIGHT, title: 'Standard - Light' },
@@ -48,23 +56,32 @@ const preview: Preview = {
         items: themeItems,
         dynamicTitle: true
       }
+    },
+    locale: {
+      name: 'Locale',
+      description: 'Language switcher',
+      defaultValue: DEFAULT_LOCALE,
+      toolbar: {
+        icon: 'globe',
+        items: LOCALES.map((locale) => ({
+          value: locale,
+          title: LOCALE_NAMES[locale]
+        })),
+        dynamicTitle: true
+      }
     }
   },
   decorators: [
     (Story, context) => {
       const selectedTheme = (context.globals.theme as ThemeVariant) || ThemeVariant.STANDARD_LIGHT;
+      const selectedLocale = (context.globals.locale as Locale) || DEFAULT_LOCALE;
+      const currentMessages = messagesMap[selectedLocale];
 
       return (
-        <ThemeProvider
-          attribute={THEME_ATTRIBUTE}
-          defaultTheme={ThemeVariant.STANDARD_LIGHT}
-          themes={Object.values(ThemeVariant)}
-          enableSystem={false}
-          disableTransitionOnChange
-        >
+        <RootProvider locale={selectedLocale} messages={currentMessages}>
           <ThemeSync selectedTheme={selectedTheme} />
           <Story />
-        </ThemeProvider>
+        </RootProvider>
       );
     }
   ]

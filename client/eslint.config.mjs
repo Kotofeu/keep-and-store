@@ -65,6 +65,19 @@ export default defineConfig([
           allowObject: true
         }
       ],
+      'no-restricted-imports': [
+        'error',
+        {
+          paths: [
+            {
+              name: '@testing-library/react',
+              importNames: ['render'],
+              message: "Use renderWithProviders from '@shared/testing' instead of render from '@testing-library/react'."
+            }
+          ],
+          patterns: []
+        }
+      ],
       'import/no-unresolved': 'error',
       'import/named': 'error'
     }
