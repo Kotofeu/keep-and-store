@@ -11,6 +11,11 @@
   --font-body: var(--font-body-family);
   --font-heading: var(--font-heading-family);
 
+  /* Scroll */
+  --color-scrollbar-track: var(--scrollbar-track);
+  --color-scrollbar-thumb: var(--scrollbar-thumb);
+  --color-scrollbar-thumb-hover: var(--scrollbar-thumb-hover);
+
   /* Statuses */
   --color-status-error: #ef4444;
   --color-status-success: #10b981;
@@ -59,11 +64,7 @@
 }
 
 body {
-  @apply bg-bg text-foreground font-body;
-
-  transition:
-    background-color 0.3s,
-    color 0.3s;
+  @apply bg-bg text-foreground font-body transition-colors duration-300;
 }
 
 h1,
@@ -73,4 +74,32 @@ h4,
 h5,
 h6 {
   @apply font-heading;
+}
+
+::-webkit-scrollbar {
+  @apply h-3.5 w-3.5;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-scrollbar-thumb rounded-3xl border-3 border-transparent bg-clip-content;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-scrollbar-thumb-hover;
+}
+
+::-webkit-scrollbar-thumb:active {
+  @apply bg-scrollbar-thumb-hover;
+}
+
+::-webkit-scrollbar:horizontal {
+  @apply h-3.5;
+}
+
+::-webkit-scrollbar-corner {
+  @apply bg-transparent;
 }

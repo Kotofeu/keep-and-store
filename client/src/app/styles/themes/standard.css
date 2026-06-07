@@ -4,6 +4,11 @@
   --font-body-family: var(--font-open-sans), sans-serif;
   --font-heading-family: var(--font-montserrat), sans-serif;
 
+  /* Scroll */
+  --scrollbar-track: #e4e7eb;
+  --scrollbar-thumb: #b9c1cc;
+  --scrollbar-thumb-hover: #9aa3ae;
+
   /* Buttons */
   --button-primary-bg: #2563eb;
   --button-primary-bg-hover: #1d4ed8;
@@ -51,6 +56,11 @@
   --text: #f9fafb;
   --font-body-family: var(--font-open-sans), sans-serif;
   --font-heading-family: var(--font-montserrat), sans-serif;
+
+  /* Scroll */
+  --scrollbar-track: #1a2536;
+  --scrollbar-thumb: #3f4a5c;
+  --scrollbar-thumb-hover: #5c6a80;
 
   /* Buttons */
   --button-primary-bg: #60a5fa;
