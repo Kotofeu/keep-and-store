@@ -16,9 +16,12 @@ const loadFruitsAsync = async (): Promise<Option[]> => {
   return sampleOptions;
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const SelectWrapper = (props: any) => <Select {...props} />;
+
 const meta = {
   title: 'shared/Select',
-  component: Select,
+  component: SelectWrapper,
   parameters: {
     layout: 'centered',
     docs: {
@@ -99,7 +102,7 @@ export const Multiple: Story = {
 };
 
 export const ClearableFalse: Story = {
-  args: { clearable: false },
+  args: { clearable: false, value: sampleOptions[0] },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const trigger = canvas.getByText('Apple');
@@ -176,6 +179,7 @@ export const Controlled: Story = {
             setValue(newValue as Option | null);
             args.onChange?.(newValue);
           }}
+          clearable
         />
         <div style={{ display: 'flex', gap: '0.5rem' }}>
           <button onClick={() => setValue(sampleOptions[0])}>Set Apple</button>

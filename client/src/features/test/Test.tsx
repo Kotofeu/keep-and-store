@@ -64,6 +64,7 @@ export const Test = () => {
             options={users}
             value={singleValue}
             onChange={setSingleValue}
+            clearable={true}
             placeholder="Choose a user"
             searchPlaceholder="Search users..."
           />
@@ -92,6 +93,7 @@ export const Test = () => {
             loadOptions={loadFruitsAsync}
             value={fruitsValue}
             onChange={setFruitsValue}
+            clearable={true}
             placeholder="Load fruits..."
             searchPlaceholder="Search fruit"
           />
@@ -131,7 +133,14 @@ export const Test = () => {
       <section className="space-y-2">
         <h2 className="text-xl font-semibold">6. Multi select – chip removal demo</h2>
         <div className="w-96">
-          <Select multiple options={users} value={multiValue} onChange={setMultiValue} placeholder="Select users" />
+          <Select
+            multiple
+            options={users}
+            value={multiValue}
+            clearable={true}
+            onChange={setMultiValue}
+            placeholder="Select users"
+          />
         </div>
         <p className="text-sm text-gray-500">(Click × on any chip to remove)</p>
       </section>
@@ -144,7 +153,13 @@ export const Test = () => {
       <section className="space-y-2">
         <h2 className="text-xl font-semibold">8. Options with icons</h2>
         <div className="w-80">
-          <Select options={users} value={singleValue} onChange={setSingleValue} placeholder="Choose a user" />
+          <Select
+            options={users}
+            value={singleValue}
+            clearable={true}
+            onChange={setSingleValue}
+            placeholder="Choose a user"
+          />
         </div>
       </section>
       <section className="space-y-2">
@@ -153,6 +168,7 @@ export const Test = () => {
           <Select
             options={fruits}
             value={fruitsValue}
+            clearable={true}
             onChange={setFruitsValue}
             placeholder="Pick a fruit"
             searchPlaceholder="Search fruit..."

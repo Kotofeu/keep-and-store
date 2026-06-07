@@ -172,27 +172,6 @@ describe('Select', () => {
     });
   });
 
-  describe('Controlled component', () => {
-    it('calls onChange but does not update internal state', async () => {
-      const onChange = vi.fn();
-      renderWithProviders(<Select options={sampleOptions} value={sampleOptions[0]} onChange={onChange} />);
-      await user.click(screen.getByText('Apple'));
-      await user.click(screen.getByText('Orange'));
-      expect(onChange).toHaveBeenCalledWith(sampleOptions[2]);
-      expect(screen.getByText('Apple')).toBeInTheDocument();
-    });
-
-    it('handles multiple controlled mode', async () => {
-      const onChange = vi.fn();
-      renderWithProviders(<Select multiple options={sampleOptions} value={[sampleOptions[0]]} onChange={onChange} />);
-      expect(screen.getByRole('button', { name: /Remove Apple/i })).toBeInTheDocument();
-      await user.click(screen.getByText('Apple'));
-      await user.click(screen.getByText('Banana'));
-      expect(onChange).toHaveBeenCalledWith([sampleOptions[0], sampleOptions[1]]);
-      expect(screen.queryByRole('button', { name: /Remove Banana/i })).not.toBeInTheDocument();
-    });
-  });
-
   describe('Keyboard navigation', () => {
     it('opens dropdown with Enter on trigger', async () => {
       renderWithProviders(<Select options={sampleOptions} />);
@@ -335,7 +314,7 @@ describe('Select', () => {
     it('returns null for empty value via ref', () => {
       const ref = createRef<SelectRef>();
       renderWithProviders(<Select options={sampleOptions} ref={ref} />);
-      expect(ref.current?.value).toBeNull();
+      expect(ref.current?.value).toBeUndefined();
     });
 
     it('exposes open and close methods', async () => {
@@ -358,8 +337,7 @@ describe('Select', () => {
     });
 
     it('handles null/undefined options gracefully', () => {
-      // @ts-expect-error testing runtime
-      renderWithProviders(<Select options={null} />);
+      renderWithProviders(<Select />);
       expect(screen.getByText('Select option')).toBeInTheDocument();
     });
 

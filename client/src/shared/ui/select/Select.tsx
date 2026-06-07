@@ -10,370 +10,348 @@ import {
   useImperativeHandle,
   KeyboardEvent,
   MouseEvent as ReactMouseEvent,
-  ForwardedRef,
-  RefAttributes,
-  ReactElement
+  ForwardedRef
 } from 'react';
 import { useFloating, autoUpdate, offset, flip, shift, size, useMergeRefs } from '@floating-ui/react';
 import { useTranslations } from 'next-intl';
 import { cn } from '@shared/utils/cn';
 import { SelectContent } from './select-content';
 import { SelectTrigger } from './select-trigger';
-import type { Option, SelectValue, SelectRef, SelectProps } from './types';
+import type { Option, SelectRef, SelectProps, SelectValue, SelectComponent } from './types';
 import { Icon } from '../icon';
 
-export const Select = forwardRef(
-  <T, Multiple extends boolean = false, Clearable extends boolean = true>(
-    props: SelectProps<T, Multiple, Clearable>,
-    ref: ForwardedRef<SelectRef<T, Multiple, Clearable>>
-  ) => {
-    const t = useTranslations('shared.select');
+export const Select = forwardRef(<T,>(props: SelectProps<T>, ref: ForwardedRef<SelectRef<T>>) => {
+  const t = useTranslations('shared.select');
 
-    const {
-      className,
-      placeholder = t('placeholder'),
-      searchPlaceholder = t('searchPlaceholder'),
-      loadingText = t('loadingText'),
-      noResultsText = t('noResultsText'),
-      clearAriaLabel = t('clearAriaLabel'),
-      removeAriaLabel = t('removeAriaLabel'),
-      loadErrorMessage = t('loadErrorMessage'),
-      ariaLabel,
-      multiple = false,
-      clearable = true,
-      disabled = false,
-      error: externalError,
-      options = [],
-      loadOptions,
-      onChange
-    } = props;
+  const {
+    className,
+    placeholder = t('placeholder'),
+    searchPlaceholder = t('searchPlaceholder'),
+    loadingText = t('loadingText'),
+    noResultsText = t('noResultsText'),
+    clearAriaLabel = t('clearAriaLabel'),
+    removeAriaLabel = t('removeAriaLabel'),
+    loadErrorMessage = t('loadErrorMessage'),
+    title,
+    ariaLabel,
+    disabled = false,
+    searchable = true,
+    error: externalError,
+    isLoading: externalIsLoading,
+    isInstantLoad,
+    options = [],
+    loadOptions,
+    ...otherProps
+  } = props;
 
-    const isControlled = 'value' in props;
-    const propValue = isControlled ? props.value : undefined;
-    const defaultValueProp = 'defaultValue' in props ? props.defaultValue : undefined;
+  const {
+    multiple: _multiple,
+    clearable: _clearable,
+    value: _value,
+    onChange: _onChange,
+    defaultValue: _defaultValue,
+    ...wrapperProps
+  } = otherProps;
 
-    const listboxId = useId();
+  const getInitialValue = (): SelectValue<T> => {
+    if ('value' in props) {
+      return props.value;
+    }
+    if ('defaultValue' in props) {
+      return props.defaultValue;
+    }
+    return props.multiple ? [] : undefined;
+  };
 
-    const [internalValue, setInternalValue] = useState<SelectValue<T, Multiple, Clearable> | undefined>(
-      defaultValueProp as SelectValue<T, Multiple, Clearable> | undefined
-    );
-    const [isOpen, setIsOpen] = useState(false);
-    const [searchQuery, setSearchQuery] = useState('');
-    const [fetchedOptions, setFetchedOptions] = useState<Option<T>[]>([]);
-    const [isLoading, setIsLoading] = useState(false);
-    const [loadError, setLoadError] = useState<string | null>(null);
+  const [internalValue, setInternalValue] = useState<SelectValue<T>>(getInitialValue);
 
-    const containerRef = useRef<HTMLDivElement>(null);
-    const floatingRef = useRef<HTMLDivElement>(null);
-    const triggerRef = useRef<HTMLDivElement>(null);
-    const hasLoadedRef = useRef(false);
+  const hasValue = useMemo(
+    () => (props.multiple ? !!(Array.isArray(internalValue) && internalValue.length) : !!internalValue),
+    [internalValue, props.multiple]
+  );
 
-    const combinedError = loadError || externalError;
-    const allOptions = useMemo(() => (loadOptions ? fetchedOptions : options), [loadOptions, fetchedOptions, options]);
+  const listboxId = useId();
 
-    const currentValue = useMemo(() => {
-      if (isControlled && propValue !== undefined) {
-        return propValue;
-      }
-      if (internalValue !== undefined) {
-        return internalValue;
-      }
-      if (multiple) {
-        return (clearable ? null : []) as SelectValue<T, true, Clearable>;
-      }
-      if (clearable) {
-        return null as SelectValue<T, false, true>;
-      }
-      return allOptions[0] ?? null;
-    }, [isControlled, propValue, allOptions, internalValue, multiple, clearable]);
+  const [isOpen, setIsOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [fetchedOptions, setFetchedOptions] = useState<Option<T>[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [loadError, setLoadError] = useState<string | null>(null);
 
-    const hasValue = useMemo(() => {
-      if (Array.isArray(currentValue)) {
-        return currentValue.length > 0;
-      }
-      return !!currentValue;
-    }, [currentValue]);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const floatingRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLDivElement>(null);
+  const hasLoadedRef = useRef(false);
 
-    const { refs, floatingStyles } = useFloating({
-      open: isOpen,
-      placement: 'bottom-start',
-      middleware: [
-        offset(4),
-        flip({ fallbackPlacements: ['top-start'] }),
-        shift({ padding: 8 }),
-        size({
-          apply({ rects, elements }) {
-            elements.floating.style.width = `${rects.reference.width}px`;
-          }
-        })
-      ],
-      whileElementsMounted: autoUpdate
-    });
+  const combinedError = loadError || externalError;
+  const combinedIsLoading = isLoading || !!externalIsLoading;
+  const allOptions = useMemo(() => (loadOptions ? fetchedOptions : options), [loadOptions, fetchedOptions, options]);
 
-    const mergedTriggerRef = useMergeRefs([triggerRef, refs.setReference]);
-    const mergedFloatingRef = useMergeRefs([floatingRef, refs.setFloating]);
-
-    const getIsSelected = useCallback(
-      (option: Option<T>) => {
-        if (Array.isArray(currentValue)) {
-          return currentValue.some((item) => item.value === option.value);
+  const { refs, floatingStyles } = useFloating({
+    open: isOpen,
+    placement: 'bottom-start',
+    middleware: [
+      offset(4),
+      flip({ fallbackPlacements: ['top-start'] }),
+      shift({ padding: 8 }),
+      size({
+        apply({ rects, elements }) {
+          elements.floating.style.width = `${rects.reference.width}px`;
         }
-        return !!currentValue && currentValue.value === option.value;
-      },
-      [currentValue]
-    );
+      })
+    ],
+    whileElementsMounted: autoUpdate
+  });
 
-    const updateValue = useCallback(
-      (newValue: SelectValue<T, Multiple, Clearable>) => {
-        if (!isControlled) {
-          setInternalValue(newValue);
-        }
-        onChange?.(newValue);
-      },
-      [isControlled, onChange]
-    );
+  const mergedTriggerRef = useMergeRefs([triggerRef, refs.setReference]);
+  const mergedFloatingRef = useMergeRefs([floatingRef, refs.setFloating]);
 
-    const handleUpdate = useCallback(
-      (newValue: Option<T> | Option<T>[] | null) => {
-        updateValue(newValue as SelectValue<T, Multiple, Clearable>);
-      },
-      [updateValue]
-    );
+  useEffect(() => {
+    if ('value' in props) {
+      setInternalValue(props.value);
+    }
+  }, [props]);
 
-    const handleOpen = useCallback(async () => {
-      if (disabled) {
-        return;
-      }
-
-      setIsOpen(true);
-      setSearchQuery('');
-
-      if (loadOptions && (!hasLoadedRef.current || loadError)) {
+  const handleLoadFullOptions = useCallback(async () => {
+    if (loadOptions) {
+      setIsLoading(true);
+      setLoadError(null);
+      try {
+        const loaded = await loadOptions();
+        setFetchedOptions(loaded);
         hasLoadedRef.current = true;
-        setIsLoading(true);
-        setLoadError(null);
-        try {
-          const loaded = await loadOptions();
-          setFetchedOptions(loaded);
-        } catch (err) {
-          const msg = err instanceof Error ? err.message : loadErrorMessage;
-          setLoadError(msg);
-          setFetchedOptions([]);
-        } finally {
-          setIsLoading(false);
+      } catch (err) {
+        if (loadErrorMessage) {
+          setLoadError(loadErrorMessage);
         }
+        const msg = err instanceof Error ? err.message : `${err}`;
+        setLoadError(msg);
+        setFetchedOptions([]);
+      } finally {
+        setIsLoading(false);
       }
-    }, [disabled, loadError, loadErrorMessage, loadOptions]);
+    }
+  }, [loadErrorMessage, loadOptions]);
 
-    const handleClose = useCallback(() => {
-      setIsOpen(false);
-      setSearchQuery('');
-      triggerRef.current?.focus();
-    }, []);
+  useEffect(() => {
+    if (isInstantLoad && !hasLoadedRef.current) {
+      handleLoadFullOptions();
+    }
+  }, [isInstantLoad, handleLoadFullOptions]);
 
-    const handleOptionSelect = useCallback(
-      (option: Option<T>) => {
-        if (option.disabled || disabled) {
-          return;
-        }
-        if (multiple) {
-          let currentArr: Option<T>[] = [];
-          if (Array.isArray(currentValue)) {
-            currentArr = currentValue;
-          } else if (currentValue === null) {
-            currentArr = [];
-          }
+  const getIsSelected = useCallback(
+    (option: Option<T>) => {
+      if (Array.isArray(internalValue)) {
+        return internalValue.some((item) => item.value === option.value);
+      }
+      return !!internalValue && internalValue.value === option.value;
+    },
+    [internalValue]
+  );
 
-          const exists = currentArr.some((item) => item.value === option.value);
-          const newArr = exists ? currentArr.filter((item) => item.value !== option.value) : [...currentArr, option];
-          const finalValue = clearable && newArr.length === 0 ? null : newArr;
-          handleUpdate(finalValue);
-        } else {
-          handleUpdate(option);
-        }
+  const handleOptionSelect = useCallback(
+    (option: Option<T>, e?: ReactMouseEvent) => {
+      e?.stopPropagation();
 
+      if (disabled || option.disabled) {
+        return;
+      }
+
+      if (!props.multiple) {
+        props.onChange?.(option);
+        setInternalValue(option);
+        setIsOpen(false);
         setSearchQuery('');
-        if (!multiple) {
-          handleClose();
-        }
-      },
-      [disabled, multiple, currentValue, handleUpdate, clearable, handleClose]
-    );
+      } else if (props.multiple) {
+        const innerArray = Array.isArray(internalValue) ? internalValue : [];
+        const isSelected = innerArray.some((v) => v.value === option.value);
+        const newValues = isSelected ? innerArray.filter((v) => v.value !== option.value) : [...innerArray, option];
+        props.onChange?.(newValues);
+        setInternalValue(newValues);
+      }
+    },
+    [disabled, props, internalValue]
+  );
 
-    const handleClear = useCallback(
-      (e: ReactMouseEvent) => {
-        e.stopPropagation();
-        if (disabled) {
-          return;
-        }
+  const handleOpen = useCallback(async () => {
+    if (disabled) {
+      return;
+    }
 
-        if (multiple) {
-          handleUpdate(clearable ? null : []);
-        } else if (clearable) {
-          handleUpdate(null);
-        }
-      },
-      [disabled, multiple, clearable, handleUpdate]
-    );
+    setIsOpen(true);
+    setSearchQuery('');
 
-    const handleChipRemove = useCallback(
-      (optionToRemove: Option<T>, e: ReactMouseEvent) => {
-        e.stopPropagation();
-        if (disabled || !multiple) {
-          return;
-        }
+    if (!hasLoadedRef.current || loadError) {
+      handleLoadFullOptions();
+    }
+  }, [disabled, loadError, handleLoadFullOptions]);
 
-        let currentArr: Option<T>[] = [];
-        if (Array.isArray(currentValue)) {
-          currentArr = currentValue;
-        } else if (currentValue === null) {
-          currentArr = [];
-        }
+  const handleClose = useCallback(() => {
+    setIsOpen(false);
+    setSearchQuery('');
+    triggerRef.current?.focus();
+  }, []);
 
-        const newArr = currentArr.filter((item) => item.value !== optionToRemove.value);
-        const finalValue = clearable && newArr.length === 0 ? null : newArr;
-        handleUpdate(finalValue);
-      },
-      [disabled, multiple, currentValue, clearable, handleUpdate]
-    );
-
-    const handleTriggerClick = useCallback(() => {
+  const handleClear = useCallback(
+    (e: ReactMouseEvent) => {
+      e.stopPropagation();
       if (disabled) {
         return;
       }
-      if (isOpen) {
-        handleClose();
-      } else {
-        handleOpen();
+      if (props.clearable) {
+        props.onChange?.(null);
+        setInternalValue(null);
+      } else if (props.multiple) {
+        props.onChange?.([]);
+        setInternalValue([]);
       }
-    }, [disabled, isOpen, handleClose, handleOpen]);
+      setSearchQuery('');
+    },
+    [disabled, props]
+  );
 
-    const handleTriggerKeyDown = useCallback(
-      (e: KeyboardEvent<HTMLDivElement>) => {
-        if (disabled) {
-          return;
-        }
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          if (isOpen) {
-            handleClose();
-          } else {
-            handleOpen();
-          }
-        }
-        if (e.key === 'ArrowDown' && !isOpen) {
-          e.preventDefault();
+  const handleTriggerKeyDown = useCallback(
+    (e: KeyboardEvent<HTMLDivElement>) => {
+      if (disabled) {
+        return;
+      }
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        if (isOpen) {
+          handleClose();
+        } else {
           handleOpen();
         }
-      },
-      [disabled, isOpen, handleClose, handleOpen]
-    );
-
-    useEffect(() => {
-      const handleOutside = (e: MouseEvent) => {
-        const target = e.target as Node | null;
-        if (
-          target &&
-          !containerRef.current?.contains(target) &&
-          !(floatingRef.current && floatingRef.current.contains(target))
-        ) {
-          handleClose();
-        }
-      };
-      if (isOpen) {
-        document.addEventListener('mousedown', handleOutside);
       }
-      return () => document.removeEventListener('mousedown', handleOutside);
-    }, [isOpen, handleClose]);
-
-    useImperativeHandle(ref, () => ({
-      get value() {
-        return currentValue as SelectValue<T, Multiple, Clearable>;
-      },
-      open: handleOpen,
-      close: handleClose
-    }));
-
-    const renderSelected = useCallback(() => {
-      if (!hasValue) {
-        return <span className="text-input-placeholder">{placeholder}</span>;
+      if (e.key === 'ArrowDown' && !isOpen) {
+        e.preventDefault();
+        handleOpen();
       }
-      if (Array.isArray(currentValue)) {
-        return (
-          <div className="flex flex-wrap gap-1.5">
-            {currentValue.map((option) => (
-              <div
-                key={option.value}
-                className={cn(
-                  'flex items-center gap-2 rounded-md border px-2 py-1 text-sm',
-                  disabled
-                    ? 'border-input-chip-border-disabled bg-input-chip-bg-disabled text-input-chip-text-disabled'
-                    : 'border-input-chip-border bg-input-chip-bg text-input-chip-text'
-                )}
-              >
-                {option.icon && <span>{option.icon}</span>}
-                <span>{option.label}</span>
-                <button
-                  className={cn('flex', !disabled ? 'cursor-pointer' : 'pointer-events-none')}
-                  type="button"
-                  onClick={(e) => handleChipRemove(option, e)}
-                  aria-label={`${removeAriaLabel} ${option.label}`}
-                  disabled={disabled}
-                >
-                  <Icon type="cross" className="h-3 w-3" />
-                </button>
-              </div>
-            ))}
-          </div>
-        );
+    },
+    [disabled, isOpen, handleClose, handleOpen]
+  );
+
+  const handleContainerTabDown = useCallback(
+    (e: KeyboardEvent<HTMLDivElement>) => {
+      if (isOpen && e.key === 'Tab') {
+        handleClose();
       }
+    },
+    [isOpen, handleClose]
+  );
+
+  useEffect(() => {
+    const handleOutside = (e: MouseEvent) => {
+      const target = e.target as Node | null;
+      if (
+        target &&
+        !containerRef.current?.contains(target) &&
+        !(floatingRef.current && floatingRef.current.contains(target))
+      ) {
+        handleClose();
+      }
+    };
+    if (isOpen) {
+      document.addEventListener('mousedown', handleOutside);
+    }
+    return () => document.removeEventListener('mousedown', handleOutside);
+  }, [isOpen, handleClose]);
+
+  useImperativeHandle(ref, () => ({
+    get element() {
+      return containerRef.current;
+    },
+    get value() {
+      return internalValue;
+    },
+    open: handleOpen,
+    close: handleClose
+  }));
+
+  const renderSelected = useCallback(() => {
+    if (!hasValue) {
+      return <span className="text-input-placeholder">{placeholder}</span>;
+    }
+    if (Array.isArray(internalValue)) {
       return (
-        <span className={cn('flex items-center gap-2', disabled && 'text-input-text-disabled')}>
-          {currentValue?.icon && <span>{currentValue.icon}</span>}
-          <span>{currentValue?.label}</span>
-        </span>
+        <div className="flex flex-wrap gap-1.5">
+          {internalValue.map((option) => (
+            <div
+              key={option.value}
+              className={cn(
+                'flex items-center gap-2 rounded-md border px-2 py-1 text-sm',
+                disabled
+                  ? 'border-input-chip-border-disabled bg-input-chip-bg-disabled text-input-chip-text-disabled'
+                  : 'border-input-chip-border bg-input-chip-bg text-input-chip-text'
+              )}
+            >
+              {option.icon && <span>{option.icon}</span>}
+              <span>{option.label}</span>
+              <button
+                className={cn('flex', !disabled ? 'cursor-pointer' : 'pointer-events-none')}
+                type="button"
+                onClick={(e) => handleOptionSelect(option, e)}
+                onKeyDown={(e) => e.stopPropagation()}
+                aria-label={`${removeAriaLabel} ${option.label}`}
+                disabled={disabled}
+              >
+                <Icon type="cross" className="h-3 w-3" />
+              </button>
+            </div>
+          ))}
+        </div>
       );
-    }, [hasValue, currentValue, disabled, placeholder, removeAriaLabel, handleChipRemove]);
-
+    }
     return (
-      <div ref={containerRef} className={cn('relative w-full', className)}>
-        <SelectTrigger
-          ref={mergedTriggerRef}
-          listboxId={listboxId}
-          ariaLabel={ariaLabel || placeholder}
-          clearAriaLabel={clearAriaLabel}
-          isOpen={isOpen}
-          disabled={disabled}
-          hasValue={hasValue}
-          clearable={clearable}
-          multiple={multiple}
-          error={combinedError}
-          displayContent={renderSelected()}
-          onClear={handleClear}
-          onClick={handleTriggerClick}
-          onKeyDown={handleTriggerKeyDown}
-        />
-        <SelectContent
-          ref={mergedFloatingRef}
-          listboxId={listboxId}
-          searchPlaceholder={searchPlaceholder}
-          loadingText={loadingText}
-          noResultsText={noResultsText}
-          searchQuery={searchQuery}
-          multiple={multiple}
-          isOpen={isOpen}
-          error={combinedError}
-          options={allOptions}
-          isLoading={isLoading}
-          floatingStyle={floatingStyles}
-          onClose={handleClose}
-          onSearchChange={setSearchQuery}
-          getIsSelected={getIsSelected}
-          onOptionSelect={handleOptionSelect}
-        />
-      </div>
+      <span className={cn('flex items-center gap-2', disabled && 'text-input-text-disabled')}>
+        {internalValue?.icon && <span>{internalValue.icon}</span>}
+        <span>{internalValue?.label}</span>
+      </span>
     );
-  }
-) as <T, Multiple extends boolean = false, Clearable extends boolean = true>(
-  props: SelectProps<T, Multiple, Clearable> & RefAttributes<SelectRef<T, Multiple, Clearable>>
-) => ReactElement;
+  }, [hasValue, internalValue, disabled, placeholder, removeAriaLabel, handleOptionSelect]);
+
+  return (
+    <div ref={containerRef} className={cn('relative w-full', className)} onKeyDown={handleContainerTabDown}>
+      <SelectTrigger
+        ref={mergedTriggerRef}
+        listboxId={listboxId}
+        ariaLabel={ariaLabel || title || placeholder}
+        title={title}
+        clearAriaLabel={clearAriaLabel}
+        isOpen={isOpen}
+        disabled={disabled}
+        hasValue={hasValue}
+        clearable={props.clearable}
+        multiple={props.multiple}
+        error={combinedError}
+        isLoading={combinedIsLoading}
+        floatingRef={floatingRef}
+        displayContent={renderSelected()}
+        handleClear={handleClear}
+        handleClose={handleClose}
+        handleOpen={handleOpen}
+        handleTriggerKeyDown={handleTriggerKeyDown}
+        {...wrapperProps}
+      />
+      <SelectContent
+        ref={mergedFloatingRef}
+        listboxId={listboxId}
+        searchPlaceholder={searchPlaceholder}
+        loadingText={loadingText}
+        noResultsText={noResultsText}
+        searchQuery={searchQuery}
+        multiple={props.multiple}
+        searchable={searchable}
+        isOpen={isOpen}
+        error={combinedError}
+        options={allOptions}
+        isLoading={combinedIsLoading}
+        floatingStyle={floatingStyles}
+        onClose={handleClose}
+        setSearchQuery={setSearchQuery}
+        getIsSelected={getIsSelected}
+        handleOptionSelect={handleOptionSelect}
+      />
+    </div>
+  );
+}) as SelectComponent;

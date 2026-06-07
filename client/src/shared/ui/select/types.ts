@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ForwardedRef, InputHTMLAttributes, JSX, ReactNode } from 'react';
 
 export type Option<T = undefined> = {
   value: string;
@@ -7,24 +7,19 @@ export type Option<T = undefined> = {
   disabled?: boolean;
 } & (undefined extends T ? { data?: T } : { data: T });
 
-type SingleValue<T, Clearable extends boolean> = Clearable extends true ? Option<T> | null : Option<T>;
-
-type MultiValue<T, Clearable extends boolean> = Clearable extends true ? Option<T>[] | null : Option<T>[];
-
-export type SelectValue<T, Multiple extends boolean, Clearable extends boolean> = Multiple extends true
-  ? MultiValue<T, Clearable>
-  : SingleValue<T, Clearable>;
-
-type ControlledProps<T, Multiple extends boolean, Clearable extends boolean> = {
-  value: SelectValue<T, Multiple, Clearable>;
-};
-
-type UncontrolledProps<T, Multiple extends boolean, Clearable extends boolean> = Clearable extends true
-  ? { defaultValue?: SelectValue<T, Multiple, Clearable> }
-  : { defaultValue: SelectValue<T, Multiple, Clearable> };
-
-export type SelectProps<T, Multiple extends boolean = false, Clearable extends boolean = true> = {
+interface BaseSelectProps<T> extends Omit<
+  InputHTMLAttributes<HTMLDivElement>,
+  'value' | 'onChange' | 'defaultValue' | 'children'
+> {
+  // base
   className?: string;
+  disabled?: boolean;
+  error?: string | boolean;
+  isLoading?: boolean;
+  isInstantLoad?: boolean;
+  searchable?: boolean;
+  options?: Option<T>[];
+  // text
   placeholder?: string;
   searchPlaceholder?: string;
   loadingText?: string;
@@ -33,17 +28,100 @@ export type SelectProps<T, Multiple extends boolean = false, Clearable extends b
   removeAriaLabel?: string;
   loadErrorMessage?: string;
   ariaLabel?: string;
-  multiple?: Multiple;
-  clearable?: Clearable;
-  disabled?: boolean;
-  error?: string | boolean;
-  options?: Option<T>[];
+  // func
   loadOptions?: () => Promise<Option<T>[]>;
-  onChange?: (value: SelectValue<T, Multiple, Clearable>) => void;
-} & (ControlledProps<T, Multiple, Clearable> | UncontrolledProps<T, Multiple, Clearable>);
+}
 
-export interface SelectRef<T = unknown, Multiple extends boolean = false, Clearable extends boolean = true> {
-  readonly value: SelectValue<T, Multiple, Clearable>;
+interface SingleClearableControlled<T> extends BaseSelectProps<T> {
+  multiple?: false;
+  clearable: true;
+  value?: Option<T> | null;
+  defaultValue?: never;
+  onChange?: (value: Option<T> | null) => void;
+}
+
+interface SingleClearableUncontrolled<T> extends BaseSelectProps<T> {
+  multiple?: false;
+  clearable: true;
+  value?: never;
+  defaultValue?: Option<T> | null;
+  onChange?: (value: Option<T> | null) => void;
+}
+
+interface SingleNonClearableControlled<T> extends BaseSelectProps<T> {
+  multiple?: false;
+  clearable?: false;
+  value: Option<T>;
+  defaultValue?: never;
+  onChange?: (value: Option<T>) => void;
+}
+
+interface SingleNonClearableUncontrolled<T> extends BaseSelectProps<T> {
+  multiple?: false;
+  clearable?: false;
+  value?: never;
+  defaultValue?: Option<T>;
+  onChange?: (value: Option<T>) => void;
+}
+
+interface MultiClearableControlled<T> extends BaseSelectProps<T> {
+  multiple: true;
+  clearable: true;
+  value?: Option<T>[] | null;
+  defaultValue?: never;
+  onChange?: (value: Option<T>[] | null) => void;
+}
+
+interface MultiClearableUncontrolled<T> extends BaseSelectProps<T> {
+  multiple: true;
+  clearable: true;
+  value?: never;
+  defaultValue?: Option<T>[] | null;
+  onChange?: (value: Option<T>[] | null) => void;
+}
+
+interface MultiNonClearableControlled<T> extends BaseSelectProps<T> {
+  multiple: true;
+  clearable?: false;
+  value: Option<T>[];
+  defaultValue?: never;
+  onChange?: (value: Option<T>[]) => void;
+}
+
+interface MultiNonClearableUncontrolled<T> extends BaseSelectProps<T> {
+  multiple: true;
+  clearable?: false;
+  value?: never;
+  defaultValue?: Option<T>[];
+  onChange?: (value: Option<T>[]) => void;
+}
+
+export type SingleClearableSelectProps<T> = SingleClearableControlled<T> | SingleClearableUncontrolled<T>;
+
+export type SingleNonClearableSelectProps<T> = SingleNonClearableControlled<T> | SingleNonClearableUncontrolled<T>;
+
+export type MultiClearableSelectProps<T> = MultiClearableControlled<T> | MultiClearableUncontrolled<T>;
+
+export type MultiNonClearableSelectProps<T> = MultiNonClearableControlled<T> | MultiNonClearableUncontrolled<T>;
+
+export type SelectProps<T = undefined> =
+  | SingleClearableSelectProps<T>
+  | SingleNonClearableSelectProps<T>
+  | MultiClearableSelectProps<T>
+  | MultiNonClearableSelectProps<T>;
+
+export type SelectValue<T> = Option<T> | Option<T>[] | null | undefined;
+
+export type SelectRef<T = undefined> = {
+  readonly element: HTMLDivElement | null;
+  readonly value: SelectValue<T>;
   open: () => void;
   close: () => void;
-}
+};
+
+export type SelectComponent = {
+  <T>(props: SingleClearableSelectProps<T> & { ref?: ForwardedRef<SelectRef<T>> }): JSX.Element;
+  <T>(props: SingleNonClearableSelectProps<T> & { ref?: ForwardedRef<SelectRef<T>> }): JSX.Element;
+  <T>(props: MultiClearableSelectProps<T> & { ref?: ForwardedRef<SelectRef<T>> }): JSX.Element;
+  <T>(props: MultiNonClearableSelectProps<T> & { ref?: ForwardedRef<SelectRef<T>> }): JSX.Element;
+};

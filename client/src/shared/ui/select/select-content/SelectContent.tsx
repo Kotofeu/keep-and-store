@@ -8,7 +8,9 @@ import {
   ReactElement,
   CSSProperties,
   ForwardedRef,
-  useMemo
+  useMemo,
+  Dispatch,
+  SetStateAction
 } from 'react';
 import { cva } from 'class-variance-authority';
 import { useKeyboardNavigation } from '@shared/hooks/useKeyboardNavigation';
@@ -53,16 +55,17 @@ interface SelectContentProps<T> {
   loadingText: string;
   noResultsText: string;
   searchQuery: string;
-  multiple: boolean;
+  multiple?: boolean;
   isOpen: boolean;
   error?: string | boolean;
   options: Option<T>[];
   isLoading: boolean;
+  searchable: boolean;
   floatingStyle?: CSSProperties;
   onClose: () => void;
-  onSearchChange: (value: string) => void;
+  setSearchQuery: Dispatch<SetStateAction<string>>;
   getIsSelected: (option: Option<T>) => boolean;
-  onOptionSelect: (option: Option<T>) => void;
+  handleOptionSelect: (option: Option<T>) => void;
 }
 
 export const SelectContent = forwardRef(
@@ -78,11 +81,12 @@ export const SelectContent = forwardRef(
       error,
       options,
       isLoading,
+      searchable,
       floatingStyle,
       onClose,
-      onSearchChange,
+      setSearchQuery,
       getIsSelected,
-      onOptionSelect
+      handleOptionSelect
     }: SelectContentProps<T>,
     ref: ForwardedRef<HTMLDivElement>
   ) => {
@@ -104,7 +108,7 @@ export const SelectContent = forwardRef(
       items: filteredOptions,
       activeIndex,
       isLoop: true,
-      onSelect: onOptionSelect,
+      onSelect: handleOptionSelect,
       onEscape: onClose,
       setActiveIndex,
       isItemDisabled: (option) => !!option.disabled
@@ -141,29 +145,33 @@ export const SelectContent = forwardRef(
         style={floatingStyle}
         className={cn('border-input-border bg-bg z-50 overflow-hidden rounded-md border shadow-lg')}
       >
-        <div className="border-input-border border-b p-2">
-          <input
-            ref={searchRef}
-            type="text"
-            value={searchQuery}
-            onChange={(e) => onSearchChange(e.target.value)}
-            placeholder={searchPlaceholder}
-            aria-label={searchPlaceholder}
-            className={cn(
-              'border-input-border bg-input-bg text-input-text placeholder:text-input-placeholder transition-colors',
-              'hover:border-input-border-hover focus:border-input-border-focus w-full rounded-md border px-3 py-2 focus:outline-none'
-            )}
-            onKeyDown={(e) => {
-              if (e.key === 'Escape') {
-                onClose();
-              }
-              if (e.key === 'ArrowDown' && filteredOptions.length > 0) {
-                e.preventDefault();
-                keyboardNavigation.setActiveIndex(0);
-              }
-            }}
-          />
-        </div>
+        {searchable && (
+          <>
+            <div className="border-input-border border-b p-2">
+              <input
+                ref={searchRef}
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder={searchPlaceholder}
+                aria-label={searchPlaceholder}
+                className={cn(
+                  'border-input-border bg-input-bg text-input-text placeholder:text-input-placeholder transition-colors',
+                  'hover:border-input-border-hover focus:border-input-border-focus w-full rounded-md border px-3 py-2 focus:outline-none'
+                )}
+                onKeyDown={(e) => {
+                  if (e.key === 'Escape') {
+                    onClose();
+                  }
+                  if (e.key === 'ArrowDown' && filteredOptions.length > 0) {
+                    e.preventDefault();
+                    keyboardNavigation.setActiveIndex(0);
+                  }
+                }}
+              />
+            </div>
+          </>
+        )}
 
         <ul
           id={listboxId}

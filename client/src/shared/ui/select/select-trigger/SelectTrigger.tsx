@@ -1,6 +1,6 @@
 'use client';
 
-import { type ReactNode, type KeyboardEvent, MouseEvent, forwardRef } from 'react';
+import { type ReactNode, type KeyboardEvent, MouseEvent, forwardRef, InputHTMLAttributes, RefObject } from 'react';
 import { cva } from 'class-variance-authority';
 import { Icon } from '@shared/ui/icon';
 import { cn } from '@shared/utils/cn';
@@ -35,7 +35,7 @@ const selectTriggerVariants = cva(
   }
 );
 
-interface SelectTriggerProps {
+interface SelectTriggerProps extends Omit<InputHTMLAttributes<HTMLDivElement>, 'children' | 'children'> {
   listboxId: string;
   ariaLabel: string;
   clearAriaLabel: string;
@@ -44,11 +44,14 @@ interface SelectTriggerProps {
   hasValue: boolean;
   clearable?: boolean;
   multiple?: boolean;
+  isLoading: boolean;
   error?: string | boolean;
   displayContent: ReactNode;
-  onClear?: (e: MouseEvent) => void;
-  onClick: () => void;
-  onKeyDown: (e: KeyboardEvent<HTMLDivElement>) => void;
+  floatingRef: RefObject<HTMLDivElement | null>;
+  handleClear?: (e: MouseEvent) => void;
+  handleClose: () => void;
+  handleOpen: () => void;
+  handleTriggerKeyDown: (e: KeyboardEvent<HTMLDivElement>) => void;
 }
 
 export const SelectTrigger = forwardRef<HTMLDivElement, SelectTriggerProps>(
@@ -62,20 +65,38 @@ export const SelectTrigger = forwardRef<HTMLDivElement, SelectTriggerProps>(
       hasValue,
       clearable,
       multiple,
+      // TODO adding loader
+      isLoading: _isLoading,
       error,
       displayContent,
-      onClear,
-      onClick,
-      onKeyDown
+      title,
+      floatingRef,
+      handleClear,
+      handleClose,
+      handleOpen,
+      handleTriggerKeyDown,
+      ...wrapperProps
     },
     ref
   ) => {
-    const showClear = hasValue && (multiple || clearable) && onClear;
+    const showClear = hasValue && (!!multiple || !!clearable) && !!handleClear;
+
+    const handleTriggerClick = () => {
+      if (disabled) {
+        return;
+      }
+      if (isOpen) {
+        handleClose();
+      } else {
+        handleOpen();
+      }
+    };
 
     return (
       <div
+        {...wrapperProps}
         className={cn(selectTriggerVariants({ disabled, error: !!error }))}
-        title={typeof error === 'string' ? error : undefined}
+        title={(typeof error === 'string' ? error : undefined) || title}
         ref={ref}
         role="combobox"
         aria-expanded={isOpen && !disabled}
@@ -85,15 +106,16 @@ export const SelectTrigger = forwardRef<HTMLDivElement, SelectTriggerProps>(
         tabIndex={disabled ? -1 : 0}
         aria-label={ariaLabel}
         aria-invalid={!!error}
-        onClick={onClick}
-        onKeyDown={onKeyDown}
+        onClick={handleTriggerClick}
+        onKeyDown={handleTriggerKeyDown}
       >
         <div className="flex flex-1 flex-wrap items-center gap-2">{displayContent}</div>
         <div className="ml-3 flex items-center gap-3">
           {showClear && (
             <button
               type="button"
-              onClick={onClear}
+              onClick={handleClear}
+              onKeyDown={(e) => e.stopPropagation()}
               className={cn('flex', !disabled ? 'cursor-pointer' : 'pointer-events-none')}
               aria-label={clearAriaLabel}
               disabled={disabled}
