@@ -14,6 +14,7 @@ import {
 } from 'react';
 import { useFloating, autoUpdate, offset, flip, shift, size, useMergeRefs } from '@floating-ui/react';
 import { useTranslations } from 'next-intl';
+import { useClickOutside } from '@shared/hooks/useClickOutside';
 import { cn } from '@shared/utils/cn';
 import { SelectContent } from './select-content';
 import { SelectTrigger } from './select-trigger';
@@ -189,7 +190,9 @@ export const Select = forwardRef(<T,>(props: SelectProps<T>, ref: ForwardedRef<S
   const handleClose = useCallback(() => {
     setIsOpen(false);
     setSearchQuery('');
-    triggerRef.current?.focus();
+    if (triggerRef.current) {
+      triggerRef.current.focus();
+    }
   }, []);
 
   const handleClear = useCallback(
@@ -240,22 +243,7 @@ export const Select = forwardRef(<T,>(props: SelectProps<T>, ref: ForwardedRef<S
     [isOpen, handleClose]
   );
 
-  useEffect(() => {
-    const handleOutside = (e: MouseEvent) => {
-      const target = e.target as Node | null;
-      if (
-        target &&
-        !containerRef.current?.contains(target) &&
-        !(floatingRef.current && floatingRef.current.contains(target))
-      ) {
-        handleClose();
-      }
-    };
-    if (isOpen) {
-      document.addEventListener('mousedown', handleOutside);
-    }
-    return () => document.removeEventListener('mousedown', handleOutside);
-  }, [isOpen, handleClose]);
+  useClickOutside([containerRef, floatingRef], handleClose, isOpen);
 
   useImperativeHandle(ref, () => ({
     get element() {

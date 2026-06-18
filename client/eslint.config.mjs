@@ -122,6 +122,7 @@ export default defineConfig([
     files: ['**/*.{js,jsx,ts,tsx}'],
     rules: {
       'react-hooks/set-state-in-effect': 'off',
+      'react-hooks/refs': 'off',
       'no-console': ['error', { allow: ['warn', 'error'] }],
       'no-var': 'error',
       'prefer-arrow-callback': 'error',
@@ -134,7 +135,18 @@ export default defineConfig([
       'object-shorthand': ['error', 'always']
     }
   },
-
+  {
+    files: ['**/*.{jsx,tsx}'],
+    rules: {
+      'react/self-closing-comp': [
+        'error',
+        {
+          component: true,
+          html: true
+        }
+      ]
+    }
+  },
   globalIgnores([
     '.next/**',
     'node_modules',

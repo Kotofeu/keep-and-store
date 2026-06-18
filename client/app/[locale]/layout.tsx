@@ -5,6 +5,7 @@ import { getMessages, setRequestLocale } from 'next-intl/server';
 import { fontVariables } from '@app/fonts';
 import { RootProvider } from '@app/providers/root-provider';
 import { DEFAULT_LOCALE, routing } from '@shared/i18n/routing';
+import { Header } from '@widgets/header/ui';
 import '@app/styles/index.css';
 
 export const generateStaticParams = (): Array<{ locale: string }> => {
@@ -34,6 +35,7 @@ const Layout = async (props: LayoutProps<'/[locale]'>) => {
     <html lang={locale || DEFAULT_LOCALE} className={fontVariables} suppressHydrationWarning>
       <body className="antialiased">
         <RootProvider locale={locale} messages={messages}>
+          <Header />
           {children}
         </RootProvider>
       </body>

@@ -1,7 +1,10 @@
 {
   "Home": "Главная",
-  "switchLang": "Сменить язык",
   "switchTheme": "Сменить тему",
+  "locale": {
+    "localeList": "Список языков",
+    "currentLocale": "Текущий язык - {locale}"
+  },
   "shared": {
     "select": {
       "placeholder": "Выберите вариант",

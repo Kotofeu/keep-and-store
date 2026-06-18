@@ -1,4 +1,4 @@
-import { ForwardedRef, InputHTMLAttributes, JSX, ReactNode } from 'react';
+import { ForwardedRef, HTMLAttributes, JSX, ReactNode } from 'react';
 
 export type Option<T = undefined> = {
   value: string;
@@ -8,7 +8,7 @@ export type Option<T = undefined> = {
 } & (undefined extends T ? { data?: T } : { data: T });
 
 interface BaseSelectProps<T> extends Omit<
-  InputHTMLAttributes<HTMLDivElement>,
+  HTMLAttributes<HTMLDivElement>,
   'value' | 'onChange' | 'defaultValue' | 'children'
 > {
   // base

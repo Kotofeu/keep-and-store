@@ -103,7 +103,13 @@ export const SelectContent = forwardRef(
       );
     }, [options, searchQuery]);
 
-    const keyboardNavigation = useKeyboardNavigation({
+    const {
+      reset: navigationReset,
+      setFirst: navigationSetFirst,
+      handleKeyDown: navigationHandleKeyDown,
+      activeIndex: navigationActiveIndex,
+      getItemProps: navigationGetItemProps
+    } = useKeyboardNavigation({
       disabled: isLoading,
       items: filteredOptions,
       activeIndex,
@@ -117,8 +123,10 @@ export const SelectContent = forwardRef(
     useEffect(() => {
       if (isOpen) {
         searchRef.current?.focus();
+      } else {
+        navigationReset();
       }
-    }, [isOpen]);
+    }, [isOpen, navigationReset]);
 
     if (!isOpen) {
       return null;
@@ -143,7 +151,7 @@ export const SelectContent = forwardRef(
       <div
         ref={ref}
         style={floatingStyle}
-        className={cn('border-input-border bg-bg z-50 overflow-hidden rounded-md border shadow-lg')}
+        className={cn('border-input-border bg-bg z-dropdown overflow-hidden rounded-md border shadow-lg')}
       >
         {searchable && (
           <>
@@ -165,7 +173,7 @@ export const SelectContent = forwardRef(
                   }
                   if (e.key === 'ArrowDown' && filteredOptions.length > 0) {
                     e.preventDefault();
-                    keyboardNavigation.setActiveIndex(0);
+                    navigationSetFirst();
                   }
                 }}
               />
@@ -179,7 +187,7 @@ export const SelectContent = forwardRef(
           aria-multiselectable={multiple}
           aria-activedescendant={activeOptionId}
           className="max-h-64 overflow-auto py-1 focus:outline-none"
-          onKeyDown={keyboardNavigation.handleKeyDown}
+          onKeyDown={navigationHandleKeyDown}
           tabIndex={-1}
         >
           {message ? (
@@ -187,7 +195,7 @@ export const SelectContent = forwardRef(
           ) : (
             filteredOptions.map((option, index) => {
               const selected = getIsSelected(option);
-              const isActive = keyboardNavigation.activeIndex === index;
+              const isActive = navigationActiveIndex === index;
               const isDisabled = !!option.disabled;
 
               return (
@@ -204,7 +212,7 @@ export const SelectContent = forwardRef(
                       selected
                     })
                   )}
-                  {...keyboardNavigation.getItemProps(index)}
+                  {...navigationGetItemProps(index)}
                 >
                   {option.icon && <span className="text-base">{option.icon}</span>}
                   <span className="flex-1">{option.label}</span>

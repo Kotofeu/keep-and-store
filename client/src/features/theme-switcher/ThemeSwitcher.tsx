@@ -1,14 +1,11 @@
 'use client';
-import { FC, useEffect, useState } from 'react';
+import { FC } from 'react';
 import { useAppTheme } from '@shared/hooks/useAppTheme';
+import { useIsMounted } from '@shared/hooks/useIsMounted';
 
 export const ThemeSwitcher: FC = () => {
-  const [isMounted, setIsMounted] = useState(false);
+  const isMounted = useIsMounted();
   const { baseTheme, setBaseTheme, isDark, toggleDark } = useAppTheme();
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
 
   if (!isMounted) {
     return null;

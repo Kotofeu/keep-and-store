@@ -5,14 +5,29 @@
 @custom-variant dark (&:where([data-theme$="-dark"] *));
 
 @theme {
-  --color-white: #fff;
-  --color-bg: var(--bg);
-  --color-foreground: var(--text);
+  /* Z-index */
+  --z-index-header: 10;
+  --z-index-dropdown: 11;
+  --z-index-modal: 12;
+  --z-index-toast: 13;
+  --z-index-popover: 14;
+
+  /* Fonts */
   --font-body: var(--font-body-family);
   --font-heading: var(--font-heading-family);
 
+  /* Base colors */
+  --color-white: #fff;
+  --color-bg: var(--bg);
+  --color-foreground: var(--text);
+
+  /* Header */
+  --color-header-bg: var(--header-bg);
+  --color-header-border: var(--header-border);
+
   /* Scroll */
-  --color-scrollbar-track: var(--scrollbar-track);
+
+  /* --color-scrollbar-track: var(--scrollbar-track); */
   --color-scrollbar-thumb: var(--scrollbar-thumb);
   --color-scrollbar-thumb-hover: var(--scrollbar-thumb-hover);
 
@@ -61,6 +76,12 @@
 
   /* Icons */
   --color-icon-primary: var(--icon-primary);
+
+  /* Tooltip */
+  --color-tooltip: var(--tooltip-bg);
+  --color-tooltip-text: var(--tooltip-text);
+  --color-tooltip-border: var(--tooltip-border);
+  --color-tooltip-shadow: var(--tooltip-shadow);
 }
 
 body {
@@ -102,4 +123,14 @@ h6 {
 
 ::-webkit-scrollbar-corner {
   @apply bg-transparent;
+}
+
+@utility container-fluid {
+  max-width: 2560px;
+  margin-inline: auto;
+  padding-inline: 20px;
+}
+
+@utility drop-shadow-tooltip {
+  filter: var(--tooltip-shadow);
 }

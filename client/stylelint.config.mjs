@@ -6,7 +6,7 @@ const config = {
     'at-rule-no-unknown': [
       true,
       {
-        ignoreAtRules: ['tailwind', 'apply', 'layer', 'config', 'screen', 'theme', 'custom-variant']
+        ignoreAtRules: ['tailwind', 'apply', 'layer', 'config', 'screen', 'theme', 'custom-variant', 'utility']
       }
     ],
     'function-no-unknown': [

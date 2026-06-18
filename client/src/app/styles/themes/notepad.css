@@ -4,8 +4,13 @@
   --font-body-family: var(--font-eb-garamond), sans-serif;
   --font-heading-family: var(--font-literata), sans-serif;
 
+  /* Header */
+  --header-bg: #f0e6d2;
+  --header-border: #c8ad8a;
+
   /* Scroll */
-  --scrollbar-track: #e2d4c0;
+
+  /* --scrollbar-track: #e2d4c0; */
   --scrollbar-thumb: #c8ad8a;
   --scrollbar-thumb-hover: #b08f6a;
 
@@ -49,6 +54,11 @@
 
   /* Icons */
   --icon-primary: #5a4030;
+
+  /* Tooltip */
+  --tooltip-bg: #5c4e3f;
+  --tooltip-text: #f8f4e8;
+  --tooltip-shadow: drop-shadow(0 0 2px #000b);
 }
 
 [data-theme='notepad-dark'] {
@@ -57,8 +67,13 @@
   --font-body-family: var(--font-eb-garamond), sans-serif;
   --font-heading-family: var(--font-literata), sans-serif;
 
+  /* Header */
+  --header-bg: #3b3228;
+  --header-border: #7a6048;
+
   /* Scroll */
-  --scrollbar-track: #2c2c2c;
+
+  /* --scrollbar-track: #2c2c2c; */
   --scrollbar-thumb: #5a4a3a;
   --scrollbar-thumb-hover: #7a6048;
 
@@ -102,4 +117,9 @@
 
   /* Icons */
   --icon-primary: #d0c0b0;
+
+  /* Tooltip */
+  --tooltip-bg: #3b3b3b;
+  --tooltip-text: #e0d9c5;
+  --tooltip-shadow: drop-shadow(0 0 2px #0006);
 }

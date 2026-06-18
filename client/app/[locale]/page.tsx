@@ -1,9 +1,7 @@
 import { use } from 'react';
 import { useTranslations } from 'next-intl';
 import { setRequestLocale } from 'next-intl/server';
-import { LanguageSwitcher } from '@features/language-switcher';
 import { Test } from '@features/test';
-import { ThemeSwitcher } from '@features/theme-switcher';
 import { Locale } from '@shared/i18n/routing';
 
 const Home = (props: PageProps<'/[locale]'>) => {
@@ -16,11 +14,6 @@ const Home = (props: PageProps<'/[locale]'>) => {
   return (
     <main className="p-8">
       <h1 className="text-4xl">{t('Home')}</h1>
-      <div className="mt-10 flex gap-6">
-        <LanguageSwitcher />
-        <ThemeSwitcher />
-      </div>
-
       <Test />
     </main>
   );

@@ -143,10 +143,20 @@ export const useKeyboardNavigation = <T>({
     [activeIndex, items, onSelect]
   );
 
+  const setFirst = useCallback(() => {
+    setActiveIndex(getNextEnabledIndex(-1, 1));
+  }, [getNextEnabledIndex, setActiveIndex]);
+
+  const reset = useCallback(() => {
+    setActiveIndex(-1);
+  }, [setActiveIndex]);
+
   return {
     activeIndex,
     setActiveIndex,
     handleKeyDown,
-    getItemProps
+    getItemProps,
+    setFirst,
+    reset
   };
 };

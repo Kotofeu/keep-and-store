@@ -4,8 +4,13 @@
   --font-body-family: var(--font-open-sans), sans-serif;
   --font-heading-family: var(--font-montserrat), sans-serif;
 
+  /* Header */
+  --header-bg: #f3f4f6;
+  --header-border: #d1d5db;
+
   /* Scroll */
-  --scrollbar-track: #e4e7eb;
+
+  /* --scrollbar-track: #e4e7eb; */
   --scrollbar-thumb: #b9c1cc;
   --scrollbar-thumb-hover: #9aa3ae;
 
@@ -49,6 +54,11 @@
 
   /* Icons */
   --icon-primary: #4b5563;
+
+  /* Tooltip */
+  --tooltip-bg: #464f5f;
+  --tooltip-text: #f9fafb;
+  --tooltip-shadow: drop-shadow(0 0 2px #000b);
 }
 
 [data-theme='standard-dark'] {
@@ -57,8 +67,13 @@
   --font-body-family: var(--font-open-sans), sans-serif;
   --font-heading-family: var(--font-montserrat), sans-serif;
 
+  /* Header */
+  --header-bg: #1f2937;
+  --header-border: #374151;
+
   /* Scroll */
-  --scrollbar-track: #1a2536;
+
+  /* --scrollbar-track: #1a2536; */
   --scrollbar-thumb: #3f4a5c;
   --scrollbar-thumb-hover: #5c6a80;
 
@@ -102,4 +117,9 @@
 
   /* Icons */
   --icon-primary: #9ca3af;
+
+  /* Tooltip */
+  --tooltip-bg: #1e293b;
+  --tooltip-text: #e2e8f0;
+  --tooltip-shadow: drop-shadow(0 0 2px #0008);
 }

@@ -1,7 +1,10 @@
 {
   "Home": "Home",
-  "switchLang": "Change language",
   "switchTheme": "Change theme",
+  "locale": {
+    "localeList": "List of languages",
+    "currentLocale": "Current language - {locale}"
+  },
   "shared": {
     "select": {
       "placeholder": "Select option",

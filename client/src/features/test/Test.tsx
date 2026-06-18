@@ -2,6 +2,7 @@
 
 import { useRef, useState } from 'react';
 import { Option, Select } from '@shared/ui/select';
+import { Tooltip } from '@shared/ui/tooltip';
 
 interface User {
   id: number;
@@ -9,7 +10,7 @@ interface User {
 }
 
 const users: Option<User>[] = [
-  { value: '1', label: 'Alice Johnson', data: { id: 1, role: 'admin' } },
+  { value: '1', label: 'Alice Johnson', data: { id: 1, role: 'admin' }, disabled: true },
   { value: '2', label: 'Bob Smith', data: { id: 2, role: 'user' } },
   { value: '3', label: 'Charlie Brown', data: { id: 3, role: 'moderator' } },
   { value: '4', label: 'Diana Prince', data: { id: 4, role: 'admin' } }
@@ -34,7 +35,7 @@ const generateRandomOptions = (count: number) => {
 const fruits: Option[] = generateRandomOptions(1500);
 
 export const Test = () => {
-  const [singleValue, setSingleValue] = useState<Option<User> | null>(users[0]);
+  const [singleValue, setSingleValue] = useState<Option<User> | null>(users[1]);
 
   const [singleClearableFalse, setSingleClearableFalse] = useState<Option<User>>(users[1]);
 
@@ -100,7 +101,21 @@ export const Test = () => {
         </div>
         <p className="text-sm text-gray-500">Selected: {fruitsValue?.label ?? 'none'}</p>
       </section>
-
+      <Tooltip
+        content={
+          <div>
+            h2 h2
+            <span>
+              <Tooltip content="hover3">
+                <span>h3</span>
+              </Tooltip>
+            </span>
+            h2 h2
+          </div>
+        }
+      >
+        <a tabIndex={0}>enter</a>
+      </Tooltip>
       <section className="space-y-2">
         <h2 className="text-xl font-semibold">4. Multi select (clearable = true, default)</h2>
         <div className="w-96">

@@ -1,6 +1,6 @@
 'use client';
 
-import { type ReactNode, type KeyboardEvent, MouseEvent, forwardRef, InputHTMLAttributes, RefObject } from 'react';
+import { type ReactNode, type KeyboardEvent, MouseEvent, forwardRef, RefObject, HTMLAttributes } from 'react';
 import { cva } from 'class-variance-authority';
 import { Icon } from '@shared/ui/icon';
 import { cn } from '@shared/utils/cn';
@@ -35,7 +35,7 @@ const selectTriggerVariants = cva(
   }
 );
 
-interface SelectTriggerProps extends Omit<InputHTMLAttributes<HTMLDivElement>, 'children' | 'children'> {
+interface SelectTriggerProps extends Omit<HTMLAttributes<HTMLDivElement>, 'children' | 'children'> {
   listboxId: string;
   ariaLabel: string;
   clearAriaLabel: string;
