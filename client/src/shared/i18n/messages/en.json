@@ -1,7 +1,16 @@
 {
   "Home": "Home",
-  "switchTheme": "Change theme",
+  "theme": {
+    "switchStyle": "Change theme style",
+    "switchMode": "Change theme mode",
+    "styleList": "List of styles",
+    "dark": "Dark mode",
+    "light": "Light mode",
+    "notepad": "Notepad",
+    "standard": "Standard"
+  },
   "locale": {
+    "switchLocale": "Change language",
     "localeList": "List of languages",
     "currentLocale": "Current language - {locale}"
   },

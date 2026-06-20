@@ -1,2 +1,2 @@
 #!/usr/bin/env sh
-cd client && pnpm exec lint-staged
+cd client && pnpm exec lint-staged && pnpm run ts

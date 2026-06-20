@@ -14,10 +14,11 @@ import {
 } from 'react';
 import { cva } from 'class-variance-authority';
 import { useKeyboardNavigation } from '@shared/hooks/useKeyboardNavigation';
+import { Icon } from '@shared/ui/icon';
 import { cn } from '@shared/utils/cn';
 import { Option } from '../types';
 
-const optionVariants = cva('flex items-center gap-3 px-4 py-3 transition-colors focus:outline-none', {
+const optionVariants = cva('flex items-center gap-2 px-4 py-3 transition-colors focus:outline-none', {
   variants: {
     disabled: {
       true: 'text-input-text-disabled',
@@ -214,7 +215,7 @@ export const SelectContent = forwardRef(
                   )}
                   {...navigationGetItemProps(index)}
                 >
-                  {option.icon && <span className="text-base">{option.icon}</span>}
+                  {option.icon && <Icon type={option.icon} />}
                   <span className="flex-1">{option.label}</span>
                 </li>
               );

@@ -8,12 +8,12 @@ import {
   useId,
   ReactElement,
   ReactNode,
-  FC,
   Ref,
   MouseEventHandler,
   ButtonHTMLAttributes,
   useEffect,
-  MouseEvent
+  MouseEvent,
+  forwardRef
 } from 'react';
 import { useMergeRefs, type Placement } from '@floating-ui/react';
 import { Icon, IconType } from '@shared/ui/icon';
@@ -42,7 +42,7 @@ interface ButtonPopoverProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement
   onOpen?: () => void;
 }
 
-export const PopoverButton: FC<ButtonPopoverProps> = (props) => {
+export const PopoverButton = forwardRef<HTMLElement, ButtonPopoverProps>((props, ref) => {
   const {
     className,
     activeClassName,
@@ -68,7 +68,7 @@ export const PopoverButton: FC<ButtonPopoverProps> = (props) => {
 
   const triggerRef = useRef<HTMLElement>(null);
   const customRef = customButton?.props?.ref as Ref<HTMLElement> | undefined;
-  const mergedRef = useMergeRefs([triggerRef, customRef]);
+  const mergedRef = useMergeRefs([triggerRef, customRef, ref]);
 
   const openPopover = useCallback(() => {
     if (!disabled) {
@@ -133,7 +133,7 @@ export const PopoverButton: FC<ButtonPopoverProps> = (props) => {
     <>
       {trigger}
       <Popover
-        className={cn('bg-bg border-input-border fill-input-border rounded-lg border p-2 shadow-lg', popoverClassName)}
+        className={cn('bg-bg border-input-border fill-input-border rounded-lg border p-1 shadow-lg', popoverClassName)}
         id={`popover-content-${id}`}
         isOpen={isOpen}
         anchor={triggerRef}
@@ -146,4 +146,4 @@ export const PopoverButton: FC<ButtonPopoverProps> = (props) => {
       />
     </>
   );
-};
+});

@@ -273,7 +273,7 @@ export const Select = forwardRef(<T,>(props: SelectProps<T>, ref: ForwardedRef<S
                   : 'border-input-chip-border bg-input-chip-bg text-input-chip-text'
               )}
             >
-              {option.icon && <span>{option.icon}</span>}
+              {option.icon && <Icon type={option.icon} />}
               <span>{option.label}</span>
               <button
                 className={cn('flex', !disabled ? 'cursor-pointer' : 'pointer-events-none')}
@@ -292,7 +292,7 @@ export const Select = forwardRef(<T,>(props: SelectProps<T>, ref: ForwardedRef<S
     }
     return (
       <span className={cn('flex items-center gap-2', disabled && 'text-input-text-disabled')}>
-        {internalValue?.icon && <span>{internalValue.icon}</span>}
+        {internalValue?.icon && <Icon type={internalValue.icon} />}
         <span>{internalValue?.label}</span>
       </span>
     );

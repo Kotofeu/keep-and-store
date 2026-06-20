@@ -5,13 +5,13 @@ import {
   useRef,
   ReactNode,
   useCallback,
-  FC,
   ReactElement,
   cloneElement,
   useId,
   Ref,
   useMemo,
-  useEffect
+  useEffect,
+  forwardRef
 } from 'react';
 import { useMergeRefs, type Placement } from '@floating-ui/react';
 import { Popover } from '@shared/ui/popover';
@@ -29,7 +29,7 @@ interface TooltipProps {
   disabled?: boolean;
 }
 
-export const Tooltip: FC<TooltipProps> = (props) => {
+export const Tooltip = forwardRef<HTMLElement, TooltipProps>((props, ref) => {
   const {
     content,
     children,
@@ -57,6 +57,13 @@ export const Tooltip: FC<TooltipProps> = (props) => {
 
   useEffect(() => () => clearTimeouts(), [clearTimeouts]);
 
+  useEffect(() => {
+    if (disabled && isOpen) {
+      clearTimeouts();
+      setIsOpen(false);
+    }
+  }, [disabled, isOpen, clearTimeouts]);
+
   const openTooltip = useCallback(() => {
     clearTimeouts();
     if (disabled) {
@@ -77,7 +84,7 @@ export const Tooltip: FC<TooltipProps> = (props) => {
   const handleMouseEnter = useCallback(() => openTooltip(), [openTooltip]);
   const handleMouseLeave = useCallback(() => closeTooltip(), [closeTooltip]);
 
-  const mergedRef = useMergeRefs([triggerRef, (children as ReactElement & { ref?: Ref<HTMLElement> })?.ref]);
+  const mergedRef = useMergeRefs([triggerRef, (children as ReactElement & { ref?: Ref<HTMLElement> })?.ref, ref]);
 
   const triggerProps = useMemo(
     () => ({
@@ -96,7 +103,7 @@ export const Tooltip: FC<TooltipProps> = (props) => {
       {trigger}
       <Popover
         className={cn(
-          'bg-tooltip text-tooltip-text fill-tooltip drop-shadow-tooltip max-w-80 rounded-lg px-2.5 py-1 break-all',
+          'bg-tooltip text-tooltip-text fill-tooltip drop-shadow-tooltip z-tooltip max-w-80 rounded-lg px-2.5 py-1 break-all',
           className
         )}
         id={`tooltip-content-${id}`}
@@ -118,4 +125,4 @@ export const Tooltip: FC<TooltipProps> = (props) => {
       />
     </>
   );
-};
+});

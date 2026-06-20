@@ -5,7 +5,7 @@ import { useAppTheme } from '@shared/hooks/useAppTheme';
 import enMessages from '@shared/i18n/messages/en.json';
 import ruMessages from '@shared/i18n/messages/ru.json';
 import { DEFAULT_LOCALE, LOCALES, LOCALE_NAMES, MessageTree, type Locale } from '@shared/i18n/routing';
-import { ThemeVariant } from '@shared/types/theme';
+import { ThemeVariantEnum } from '@shared/types/theme';
 import '../src/app/styles/index.css';
 
 const messagesMap: Record<Locale, MessageTree> = {
@@ -14,13 +14,13 @@ const messagesMap: Record<Locale, MessageTree> = {
 };
 
 const themeItems = [
-  { value: ThemeVariant.STANDARD_LIGHT, title: 'Standard - Light' },
-  { value: ThemeVariant.STANDARD_DARK, title: 'Standard - Dark' },
-  { value: ThemeVariant.NOTEPAD_LIGHT, title: 'Notepad - Light' },
-  { value: ThemeVariant.NOTEPAD_DARK, title: 'Notepad - Dark' }
+  { value: ThemeVariantEnum.STANDARD_LIGHT, title: 'Standard - Light' },
+  { value: ThemeVariantEnum.STANDARD_DARK, title: 'Standard - Dark' },
+  { value: ThemeVariantEnum.NOTEPAD_LIGHT, title: 'Notepad - Light' },
+  { value: ThemeVariantEnum.NOTEPAD_DARK, title: 'Notepad - Dark' }
 ];
 
-const ThemeSync = ({ selectedTheme }: { selectedTheme: ThemeVariant }) => {
+const ThemeSync = ({ selectedTheme }: { selectedTheme: ThemeVariantEnum }) => {
   const { theme, setTheme } = useAppTheme();
   useEffect(() => {
     if (selectedTheme && theme !== selectedTheme) {
@@ -51,7 +51,7 @@ const preview: Preview = {
     theme: {
       name: 'Theme',
       description: 'Theme switcher',
-      defaultValue: ThemeVariant.STANDARD_LIGHT,
+      defaultValue: ThemeVariantEnum.STANDARD_LIGHT,
       toolbar: {
         items: themeItems,
         dynamicTitle: true
@@ -73,7 +73,7 @@ const preview: Preview = {
   },
   decorators: [
     (Story, context) => {
-      const selectedTheme = (context.globals.theme as ThemeVariant) || ThemeVariant.STANDARD_LIGHT;
+      const selectedTheme = (context.globals.theme as ThemeVariantEnum) || ThemeVariantEnum.STANDARD_LIGHT;
       const selectedLocale = (context.globals.locale as Locale) || DEFAULT_LOCALE;
       const currentMessages = messagesMap[selectedLocale];
 

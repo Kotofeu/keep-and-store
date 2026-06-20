@@ -7,10 +7,10 @@ import { Select } from './Select';
 import type { Option, SelectRef } from './types';
 
 const sampleOptions: Option[] = [
-  { value: 'apple', label: 'Apple', icon: '🍎' },
-  { value: 'banana', label: 'Banana', icon: '🍌' },
-  { value: 'orange', label: 'Orange', icon: '🍊' },
-  { value: 'grape', label: 'Grape', icon: '🍇', disabled: true }
+  { value: 'apple', label: 'Apple', icon: 'success' },
+  { value: 'banana', label: 'Banana', icon: 'error' },
+  { value: 'orange', label: 'Orange', icon: 'warning' },
+  { value: 'grape', label: 'Grape', icon: 'success', disabled: true }
 ];
 
 describe('Select', () => {
@@ -27,10 +27,9 @@ describe('Select', () => {
       expect(screen.getByText('Choose fruit')).toBeInTheDocument();
     });
 
-    it('renders with icon in selected option', async () => {
+    it('renders with selected option', async () => {
       renderWithProviders(<Select options={sampleOptions} defaultValue={sampleOptions[0]} />);
       expect(screen.getByText('Apple')).toBeInTheDocument();
-      expect(screen.getByText('🍎')).toBeInTheDocument();
     });
 
     it('applies error styles', () => {

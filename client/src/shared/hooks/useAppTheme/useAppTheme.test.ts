@@ -1,7 +1,7 @@
 import { renderHook, act } from '@testing-library/react';
 import { useTheme as useNextTheme } from 'next-themes';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { ThemeVariant } from '@shared/types/theme';
+import { ThemeVariantEnum } from '@shared/types/theme';
 import { useAppTheme } from './useAppTheme';
 
 vi.mock('next-themes', () => ({
@@ -14,7 +14,7 @@ describe('useAppTheme', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     (useNextTheme as ReturnType<typeof vi.fn>).mockReturnValue({
-      theme: ThemeVariant.STANDARD_LIGHT,
+      theme: ThemeVariantEnum.STANDARD_LIGHT,
       setTheme: mockSetTheme
     });
   });
@@ -22,48 +22,48 @@ describe('useAppTheme', () => {
   it('should return correct values for standard-light theme', () => {
     const { result } = renderHook(() => useAppTheme());
 
-    expect(result.current.theme).toBe(ThemeVariant.STANDARD_LIGHT);
-    expect(result.current.baseTheme).toBe('standard');
+    expect(result.current.theme).toBe(ThemeVariantEnum.STANDARD_LIGHT);
+    expect(result.current.styleTheme).toBe('standard');
     expect(result.current.isDark).toBe(false);
     expect(result.current.setTheme).toBe(mockSetTheme);
   });
 
   it('should return correct values for standard-dark theme', () => {
     (useNextTheme as ReturnType<typeof vi.fn>).mockReturnValue({
-      theme: ThemeVariant.STANDARD_DARK,
+      theme: ThemeVariantEnum.STANDARD_DARK,
       setTheme: mockSetTheme
     });
 
     const { result } = renderHook(() => useAppTheme());
 
-    expect(result.current.theme).toBe(ThemeVariant.STANDARD_DARK);
-    expect(result.current.baseTheme).toBe('standard');
+    expect(result.current.theme).toBe(ThemeVariantEnum.STANDARD_DARK);
+    expect(result.current.styleTheme).toBe('standard');
     expect(result.current.isDark).toBe(true);
   });
 
   it('should return correct values for notepad-light theme', () => {
     (useNextTheme as ReturnType<typeof vi.fn>).mockReturnValue({
-      theme: ThemeVariant.NOTEPAD_LIGHT,
+      theme: ThemeVariantEnum.NOTEPAD_LIGHT,
       setTheme: mockSetTheme
     });
 
     const { result } = renderHook(() => useAppTheme());
 
-    expect(result.current.theme).toBe(ThemeVariant.NOTEPAD_LIGHT);
-    expect(result.current.baseTheme).toBe('notepad');
+    expect(result.current.theme).toBe(ThemeVariantEnum.NOTEPAD_LIGHT);
+    expect(result.current.styleTheme).toBe('notepad');
     expect(result.current.isDark).toBe(false);
   });
 
   it('should return correct values for notepad-dark theme', () => {
     (useNextTheme as ReturnType<typeof vi.fn>).mockReturnValue({
-      theme: ThemeVariant.NOTEPAD_DARK,
+      theme: ThemeVariantEnum.NOTEPAD_DARK,
       setTheme: mockSetTheme
     });
 
     const { result } = renderHook(() => useAppTheme());
 
-    expect(result.current.theme).toBe(ThemeVariant.NOTEPAD_DARK);
-    expect(result.current.baseTheme).toBe('notepad');
+    expect(result.current.theme).toBe(ThemeVariantEnum.NOTEPAD_DARK);
+    expect(result.current.styleTheme).toBe('notepad');
     expect(result.current.isDark).toBe(true);
   });
 
@@ -75,8 +75,8 @@ describe('useAppTheme', () => {
 
     const { result } = renderHook(() => useAppTheme());
 
-    expect(result.current.theme).toBe(ThemeVariant.STANDARD_LIGHT);
-    expect(result.current.baseTheme).toBe('standard');
+    expect(result.current.theme).toBe(ThemeVariantEnum.STANDARD_LIGHT);
+    expect(result.current.styleTheme).toBe('standard');
     expect(result.current.isDark).toBe(false);
   });
 
@@ -85,25 +85,25 @@ describe('useAppTheme', () => {
       const { result } = renderHook(() => useAppTheme());
 
       act(() => {
-        result.current.setBaseTheme('notepad');
+        result.current.setStyleTheme('notepad');
       });
 
-      expect(mockSetTheme).toHaveBeenCalledWith(ThemeVariant.NOTEPAD_LIGHT);
+      expect(mockSetTheme).toHaveBeenCalledWith(ThemeVariantEnum.NOTEPAD_LIGHT);
     });
 
     it('should call setTheme with new base and current isDark (dark)', () => {
       (useNextTheme as ReturnType<typeof vi.fn>).mockReturnValue({
-        theme: ThemeVariant.STANDARD_DARK,
+        theme: ThemeVariantEnum.STANDARD_DARK,
         setTheme: mockSetTheme
       });
 
       const { result } = renderHook(() => useAppTheme());
 
       act(() => {
-        result.current.setBaseTheme('notepad');
+        result.current.setStyleTheme('notepad');
       });
 
-      expect(mockSetTheme).toHaveBeenCalledWith(ThemeVariant.NOTEPAD_DARK);
+      expect(mockSetTheme).toHaveBeenCalledWith(ThemeVariantEnum.NOTEPAD_DARK);
     });
   });
 
@@ -115,12 +115,12 @@ describe('useAppTheme', () => {
         result.current.toggleDark();
       });
 
-      expect(mockSetTheme).toHaveBeenCalledWith(ThemeVariant.STANDARD_DARK);
+      expect(mockSetTheme).toHaveBeenCalledWith(ThemeVariantEnum.STANDARD_DARK);
     });
 
     it('should toggle from dark to light', () => {
       (useNextTheme as ReturnType<typeof vi.fn>).mockReturnValue({
-        theme: ThemeVariant.STANDARD_DARK,
+        theme: ThemeVariantEnum.STANDARD_DARK,
         setTheme: mockSetTheme
       });
 
@@ -130,12 +130,12 @@ describe('useAppTheme', () => {
         result.current.toggleDark();
       });
 
-      expect(mockSetTheme).toHaveBeenCalledWith(ThemeVariant.STANDARD_LIGHT);
+      expect(mockSetTheme).toHaveBeenCalledWith(ThemeVariantEnum.STANDARD_LIGHT);
     });
 
     it('should preserve base theme when toggling', () => {
       (useNextTheme as ReturnType<typeof vi.fn>).mockReturnValue({
-        theme: ThemeVariant.NOTEPAD_LIGHT,
+        theme: ThemeVariantEnum.NOTEPAD_LIGHT,
         setTheme: mockSetTheme
       });
 
@@ -145,7 +145,7 @@ describe('useAppTheme', () => {
         result.current.toggleDark();
       });
 
-      expect(mockSetTheme).toHaveBeenCalledWith(ThemeVariant.NOTEPAD_DARK);
+      expect(mockSetTheme).toHaveBeenCalledWith(ThemeVariantEnum.NOTEPAD_DARK);
     });
   });
 });

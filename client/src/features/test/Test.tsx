@@ -105,11 +105,9 @@ export const Test = () => {
         content={
           <div>
             h2 h2
-            <span>
-              <Tooltip content="hover3">
-                <span>h3</span>
-              </Tooltip>
-            </span>
+            <Tooltip content="hover3">
+              <span>h3</span>
+            </Tooltip>
             h2 h2
           </div>
         }

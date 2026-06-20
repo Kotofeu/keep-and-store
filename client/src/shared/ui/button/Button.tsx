@@ -10,7 +10,9 @@ export const buttonVariants = cva(
         primary:
           'bg-button-primary-bg text-button-primary-text hover:bg-button-primary-bg-hover disabled:bg-button-primary-bg-disabled disabled:text-button-primary-text-disabled',
         secondary: `bg-transparent text-button-secondary-text border-button-secondary-border hover:bg-button-secondary-bg-hover hover:border-button-secondary-border-hover 
-          hover:text-button-secondary-text-hover disabled:border-button-secondary-border-disabled disabled:text-button-secondary-text-disabled disabled:bg-button-secondary-bg-disabled`
+          hover:text-button-secondary-text-hover disabled:border-button-secondary-border-disabled disabled:text-button-secondary-text-disabled disabled:bg-button-secondary-bg-disabled`,
+        clear:
+          'appearance-none block p-0 m-0 border-0 rounded-none font-normal text-inherit bg-transparent cursor-pointer disabled:pointer-events-auto transition-none'
       }
     },
     defaultVariants: {

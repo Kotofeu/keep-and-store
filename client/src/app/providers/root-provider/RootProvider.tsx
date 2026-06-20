@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 import { NextIntlClientProvider } from 'next-intl';
 import { ThemeProvider } from 'next-themes';
 import { Locale, MessageTree } from '@shared/i18n/routing';
-import { THEME_ATTRIBUTE, ThemeVariant } from '@shared/types/theme';
+import { THEME_ATTRIBUTE, ThemeVariantEnum } from '@shared/types/theme';
 
 export const RootProvider = ({
   children,
@@ -17,8 +17,8 @@ export const RootProvider = ({
     <NextIntlClientProvider locale={locale} messages={messages}>
       <ThemeProvider
         attribute={THEME_ATTRIBUTE}
-        defaultTheme={ThemeVariant.STANDARD_LIGHT}
-        themes={Object.values(ThemeVariant)}
+        defaultTheme={ThemeVariantEnum.STANDARD_LIGHT}
+        themes={Object.values(ThemeVariantEnum)}
         enableSystem={false}
         disableTransitionOnChange
       >

@@ -1,7 +1,19 @@
 /* eslint-disable react/jsx-key */
 import { FC, HTMLAttributes, JSX } from 'react';
 import { cn } from '@shared/utils/cn';
-import { ArrowDown, Cross, DarkMode, Error, LightMode, RuFlag, Success, UkUsFlag, Warning } from './assets';
+import {
+  ArrowDown,
+  Cross,
+  DarkMode,
+  Error,
+  LightMode,
+  Notepad,
+  RuFlag,
+  Standard,
+  Success,
+  UkUsFlag,
+  Warning
+} from './assets';
 
 export const ICON_TYPES = [
   'none',
@@ -12,6 +24,8 @@ export const ICON_TYPES = [
   'warning',
   'lightMode',
   'darkMode',
+  'notepad',
+  'standard',
   'ru',
   'en'
 ] as const;
@@ -39,8 +53,12 @@ const getIcons = (className?: string) =>
     ['success', <Success className={className} />],
 
     // themes icons
+    // mode
     ['lightMode', <LightMode className={className} />],
     ['darkMode', <DarkMode className={className} />],
+    //style
+    ['notepad', <Notepad className={className} />],
+    ['standard', <Standard className={className} />],
 
     // flag icons
     ['ru', <RuFlag className={className} />],

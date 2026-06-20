@@ -11,6 +11,7 @@
   --z-index-modal: 12;
   --z-index-toast: 13;
   --z-index-popover: 14;
+  --z-index-tooltip: 15;
 
   /* Fonts */
   --font-body: var(--font-body-family);
@@ -82,6 +83,20 @@
   --color-tooltip-text: var(--tooltip-text);
   --color-tooltip-border: var(--tooltip-border);
   --color-tooltip-shadow: var(--tooltip-shadow);
+
+  /* Theme */
+  --color-notepad-light-1: #d4a16f;
+  --color-notepad-light-2: #f0e6d2;
+  --color-notepad-dark-1: #b88c61;
+  --color-notepad-dark-2: #2b2b2b;
+  --color-standard-light-1: #60a5fa;
+  --color-standard-light-2: #f3f4f6;
+  --color-standard-dark-1: #477ab8;
+  --color-standard-dark-2: #111827;
+}
+
+html {
+  font-size: 16px;
 }
 
 body {
@@ -129,6 +144,7 @@ h6 {
   max-width: 2560px;
   margin-inline: auto;
   padding-inline: 20px;
+  width: 100%;
 }
 
 @utility drop-shadow-tooltip {

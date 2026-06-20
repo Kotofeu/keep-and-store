@@ -1,13 +1,13 @@
-import { BaseTheme, ThemeVariant } from '@shared/types/theme';
+import { StyleTheme, ThemeVariantEnum } from '@shared/types/theme';
 
-export const getBaseTheme = (theme: ThemeVariant): BaseTheme => {
-  return theme.split('-')[0] as BaseTheme;
+export const getStyleTheme = (theme: ThemeVariantEnum): StyleTheme => {
+  return theme.split('-')[0] as StyleTheme;
 };
 
-export const isDarkTheme = (theme: ThemeVariant): boolean => {
+export const isDarkTheme = (theme: ThemeVariantEnum): boolean => {
   return theme.endsWith('-dark');
 };
 
-export const combineTheme = (base: BaseTheme, isDark: boolean): ThemeVariant => {
-  return `${base}-${isDark ? 'dark' : 'light'}` as ThemeVariant;
+export const combineTheme = (style: StyleTheme, isDark: boolean): ThemeVariantEnum => {
+  return `${style}-${isDark ? 'dark' : 'light'}` as ThemeVariantEnum;
 };

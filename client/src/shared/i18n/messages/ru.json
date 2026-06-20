@@ -1,7 +1,16 @@
 {
   "Home": "Главная",
-  "switchTheme": "Сменить тему",
+  "theme": {
+    "switchStyle": "Изменить стиль темы",
+    "switchMode": "Изменить режим темы",
+    "styleList": "Список стилей",
+    "dark": "Тёмный режим",
+    "light": "Светлый режим",
+    "notepad": "Блокнот",
+    "standard": "Стандарт"
+  },
   "locale": {
+    "switchLocale": "Change language",
     "localeList": "Список языков",
     "currentLocale": "Текущий язык - {locale}"
   },

@@ -1,4 +1,4 @@
-import { EB_Garamond, Literata, Open_Sans, Montserrat } from 'next/font/google';
+import { Lora, Playfair_Display, Open_Sans, Montserrat } from 'next/font/google';
 import { cn } from '@shared/utils/cn';
 
 const openSans = Open_Sans({
@@ -11,14 +11,14 @@ const montserrat = Montserrat({
   variable: '--font-montserrat'
 });
 
-const ebGaramond = EB_Garamond({
+const lora = Lora({
   subsets: ['cyrillic', 'latin'],
-  variable: '--font-eb-garamond'
+  variable: '--font-lora'
 });
 
-const literata = Literata({
+const playfairDisplay = Playfair_Display({
   subsets: ['cyrillic', 'latin'],
-  variable: '--font-literata'
+  variable: '--font-playfair-display'
 });
 
-export const fontVariables = cn(openSans.variable, montserrat.variable, ebGaramond.variable, literata.variable);
+export const fontVariables = cn(openSans.variable, montserrat.variable, lora.variable, playfairDisplay.variable);

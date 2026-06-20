@@ -1,9 +1,10 @@
-import { ForwardedRef, HTMLAttributes, JSX, ReactNode } from 'react';
+import { ForwardedRef, HTMLAttributes, JSX } from 'react';
+import { IconType } from '@shared/ui/icon';
 
 export type Option<T = undefined> = {
   value: string;
   label: string;
-  icon?: ReactNode;
+  icon?: IconType;
   disabled?: boolean;
 } & (undefined extends T ? { data?: T } : { data: T });
 

@@ -1,1 +1,1 @@
-export { getBaseTheme, isDarkTheme, combineTheme } from './theme-parser';
+export { getStyleTheme, isDarkTheme, combineTheme } from './theme-parser';

@@ -1,12 +1,19 @@
-export type BaseTheme = 'standard' | 'notepad';
+export type StyleTheme = 'standard' | 'notepad';
 
-export const ThemeVariant = {
+export const ThemeVariantEnum = {
   STANDARD_LIGHT: 'standard-light',
   STANDARD_DARK: 'standard-dark',
   NOTEPAD_LIGHT: 'notepad-light',
   NOTEPAD_DARK: 'notepad-dark'
 } as const;
 
-export type ThemeVariant = (typeof ThemeVariant)[keyof typeof ThemeVariant];
+export type ThemeVariantEnum = (typeof ThemeVariantEnum)[keyof typeof ThemeVariantEnum];
+
+export const StyleThemeEnum = {
+  STANDARD: 'standard',
+  NOTEPAD: 'notepad'
+} as const;
+
+export type StyleThemeEnum = (typeof StyleThemeEnum)[keyof typeof StyleThemeEnum];
 
 export const THEME_ATTRIBUTE = 'data-theme';

@@ -42,9 +42,10 @@ export const LanguageSwitcher = () => {
 
   return (
     <PopoverButton
+      title={t('switchLocale')}
       icon={currentLocale}
-      className="bg-bg cursor-pointer rounded-full border border-transparent p-1 transition-colors"
-      activeClassName="border-input-border"
+      className="bg-bg hover:border-input-border-hover h-8.5 w-8.5 cursor-pointer rounded-full border border-transparent p-1 transition-colors"
+      activeClassName="border-input-border hover:border-input-border"
       disabled={isPending}
       onKeyDown={(e) => {
         if (e.key === 'ArrowDown') {
@@ -53,9 +54,8 @@ export const LanguageSwitcher = () => {
         }
       }}
       onClose={reset}
-      aria-label={t('currentLocale', { locale: LOCALE_NAMES[currentLocale] })}
     >
-      <ul role="listbox" aria-label={t('localeList')} onKeyDown={handleKeyDown} className="flex flex-col gap-1.5">
+      <ul role="listbox" aria-label={t('localeList')} onKeyDown={handleKeyDown} className="flex flex-col gap-1">
         {LOCALES.map((locale, index) => {
           const isActive = locale === currentLocale;
           const itemProps = getItemProps(index);
@@ -66,14 +66,15 @@ export const LanguageSwitcher = () => {
               role="option"
               aria-selected={isActive}
               aria-disabled={isPending}
+              aria-label={LOCALE_NAMES[locale]}
               className={`flex items-center gap-2 rounded-lg px-2 py-1.5 font-medium transition-colors ${
                 isActive
-                  ? 'bg-button-primary-bg text-button-primary-text cursor-default'
-                  : 'border-button-secondary-border hover:bg-button-secondary-bg-hover text-button-secondary-text cursor-pointer border'
+                  ? 'bg-input-option-bg-selected text-input-option-text-selected cursor-default'
+                  : 'hover:bg-input-option-bg-hover hover:text-input-option-text-hover cursor-pointer'
               }`}
               {...itemProps}
             >
-              <Icon type={locale} className="bg-bg border-bg rounded-full border-3" />
+              <Icon className="bg-icon-primary rounded-full" type={locale} />
               {LOCALE_NAMES[locale]}
             </li>
           );
