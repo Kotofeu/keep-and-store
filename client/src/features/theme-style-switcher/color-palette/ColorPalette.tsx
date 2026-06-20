@@ -37,7 +37,7 @@ export const ColorPalette: FC<ColorPaletteProps> = ({ className, colorsClass }) 
   const sectorAngle = 360 / total;
 
   return (
-    <div className={cn('relative overflow-hidden rounded-full', className)}>
+    <div className={cn('border-icon-primary relative rotate-45 overflow-hidden rounded-full border', className)}>
       {colorsClass.map((bgClass, index) => {
         const startAngle = index * sectorAngle;
         const endAngle = startAngle + sectorAngle;

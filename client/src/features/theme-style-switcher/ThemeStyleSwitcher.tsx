@@ -82,10 +82,7 @@ export const ThemeStyleSwitcher: FC<ThemeStyleSwitcherProps> = ({ className }) =
       activeClassName="border-input-border hover:border-input-border"
       customButton={
         <button>
-          <ColorPalette
-            className="border-icon-primary bg-icon-primary h-6 w-6 border"
-            colorsClass={[activeColors.color1, activeColors.color2]}
-          />
+          <ColorPalette className="bg-icon-primary h-6 w-6" colorsClass={[activeColors.color1, activeColors.color2]} />
         </button>
       }
       onKeyDown={(e) => {
@@ -115,10 +112,7 @@ export const ThemeStyleSwitcher: FC<ThemeStyleSwitcherProps> = ({ className }) =
               }`}
               {...itemProps}
             >
-              <ColorPalette
-                className="border-icon-primary bg-icon-primary h-6 w-6 border"
-                colorsClass={[colors.color1, colors.color2]}
-              />
+              <ColorPalette className="bg-icon-primary h-6 w-6" colorsClass={[colors.color1, colors.color2]} />
               {styleLabels[style]}
             </li>
           );

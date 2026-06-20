@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import Script from 'next/script';
 import { hasLocale } from 'next-intl';
 import { getMessages, setRequestLocale } from 'next-intl/server';
 import { fontVariables } from '@app/fonts';
@@ -34,6 +35,7 @@ const Layout = async (props: LayoutProps<'/[locale]'>) => {
   return (
     <html lang={locale || DEFAULT_LOCALE} className={fontVariables} suppressHydrationWarning>
       <body className="antialiased">
+        <Script src="/console-greeting.js" strategy="afterInteractive" />
         <RootProvider locale={locale} messages={messages}>
           <Header />
           {children}
