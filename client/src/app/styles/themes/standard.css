@@ -1,4 +1,5 @@
 [data-theme='standard-light'] {
+  /* Base & Typography */
   --bg: #fff;
   --text: #1f2937;
   --font-body-family: var(--font-open-sans), sans-serif;
@@ -8,45 +9,55 @@
   --header-bg: #f3f4f6;
   --header-border: #d1d5db;
 
-  /* Scroll */
+  /* Scrollbar */
+  --scrollbar-track: #d5dbe3;
+  --scrollbar-thumb: #2563eb;
+  --scrollbar-thumb-hover: #1d4ed8;
 
-  /* --scrollbar-track: #e4e7eb; */
-  --scrollbar-thumb: #b9c1cc;
-  --scrollbar-thumb-hover: #9aa3ae;
-
-  /* Buttons */
+  /* Buttons — Primary */
   --button-primary-bg: #2563eb;
   --button-primary-bg-hover: #1d4ed8;
+  --button-primary-bg-active: #1b46bb;
   --button-primary-bg-disabled: #e5e7eb;
   --button-primary-text: #fff;
   --button-primary-text-disabled: #9ca3af;
+
+  /* Buttons — Secondary */
+  --button-secondary-bg: #fff;
   --button-secondary-bg-hover: #eff6ff;
+  --button-secondary-bg-active: #dbeafe;
   --button-secondary-bg-disabled: #f9fafb;
   --button-secondary-text: #2563eb;
   --button-secondary-text-hover: #1e40af;
+  --button-secondary-text-active: #1e40af;
   --button-secondary-text-disabled: #9ca3af;
   --button-secondary-border: #2563eb;
   --button-secondary-border-hover: #1e40af;
+  --button-secondary-border-active: #1e40af;
   --button-secondary-border-disabled: #e5e7eb;
 
-  /* Inputs */
+  /* Inputs — General */
   --input-bg: var(--bg);
   --input-bg-disabled: #f9fafb;
   --input-text: var(--text);
   --input-text-disabled: #6b7280;
   --input-border: #2563eb;
   --input-border-hover: #1e40af;
-  --input-border-focus: #2563eb;
+  --input-border-focus: #1b46bb;
   --input-border-disabled: #e5e7eb;
   --input-border-error: #dc2626;
   --input-border-error-disabled: #fecaca;
   --input-placeholder: #9ca3af;
+
+  /* Inputs — Chips */
   --input-chip-bg: #eff6ff;
   --input-chip-bg-disabled: #f9fafb;
   --input-chip-text: #1f2937;
   --input-chip-text-disabled: #9ca3af;
   --input-chip-border: #2563eb;
   --input-chip-border-disabled: #e5e7eb;
+
+  /* Inputs — Options */
   --input-option-bg-selected: #eff6ff;
   --input-option-text-selected: #1f2937;
   --input-option-bg-hover: #e0e7ff;
@@ -59,57 +70,75 @@
   --tooltip-bg: #464f5f;
   --tooltip-text: #f9fafb;
   --tooltip-shadow: drop-shadow(0 0 2px #000b);
+
+  /* Accent */
+  --accent-1: #93bdf0;
+  --accent-2: #2563eb;
+  --accent-3: #1e3a8a;
+  --accent-4: #af55c5;
+  --accent-5: #7c3aed;
 }
 
 [data-theme='standard-dark'] {
-  --bg: #111827;
+  /* Base & Typography */
+  --bg: #020618;
   --text: #f9fafb;
   --font-body-family: var(--font-open-sans), sans-serif;
   --font-heading-family: var(--font-montserrat), sans-serif;
 
   /* Header */
-  --header-bg: #1f2937;
+  --header-bg: #111827;
   --header-border: #374151;
 
-  /* Scroll */
+  /* Scrollbar */
+  --scrollbar-track: #0a0d14;
+  --scrollbar-thumb: #60a5fa;
+  --scrollbar-thumb-hover: #3b82f6;
 
-  /* --scrollbar-track: #1a2536; */
-  --scrollbar-thumb: #3f4a5c;
-  --scrollbar-thumb-hover: #5c6a80;
-
-  /* Buttons */
+  /* Buttons — Primary */
   --button-primary-bg: #60a5fa;
   --button-primary-bg-hover: #3b82f6;
+  --button-primary-bg-active: #2e72e0;
   --button-primary-bg-disabled: #1e293b;
   --button-primary-text: #111827;
   --button-primary-text-disabled: #64748b;
+
+  /* Buttons — Secondary */
+  --button-secondary-bg: #020618;
   --button-secondary-bg-hover: #1e293b;
+  --button-secondary-bg-active: #1e3a5f;
   --button-secondary-bg-disabled: #0f172a;
   --button-secondary-text: #60a5fa;
   --button-secondary-text-hover: #93c5fd;
+  --button-secondary-text-active: #93c5fd;
   --button-secondary-text-disabled: #475569;
   --button-secondary-border: #60a5fa;
   --button-secondary-border-hover: #93c5fd;
+  --button-secondary-border-active: #93c5fd;
   --button-secondary-border-disabled: #334155;
 
-  /* Inputs */
+  /* Inputs — General */
   --input-bg: var(--bg);
   --input-bg-disabled: #0f172a;
   --input-text: var(--text);
   --input-text-disabled: #94a3b8;
   --input-border: #60a5fa;
   --input-border-hover: #93c5fd;
-  --input-border-focus: #60a5fa;
+  --input-border-focus: #2e72e0;
   --input-border-disabled: #334155;
   --input-border-error: #f87171;
   --input-border-error-disabled: #7f1a1a;
   --input-placeholder: #9ca3af;
+
+  /* Inputs — Chips */
   --input-chip-bg: #1e293b;
   --input-chip-bg-disabled: #0f172a;
   --input-chip-text: #f9fafb;
   --input-chip-text-disabled: #94a3b8;
   --input-chip-border: #60a5fa;
   --input-chip-border-disabled: #334155;
+
+  /* Inputs — Options */
   --input-option-bg-selected: #1e293b;
   --input-option-text-selected: #f9fafb;
   --input-option-bg-hover: #2d3a4e;
@@ -122,4 +151,11 @@
   --tooltip-bg: #1e293b;
   --tooltip-text: #e2e8f0;
   --tooltip-shadow: drop-shadow(0 0 2px #0008);
+
+  /* Accent */
+  --accent-1: #2a3a5c;
+  --accent-2: #60a5fa;
+  --accent-3: #b0d4f1;
+  --accent-4: #0f4c5c;
+  --accent-5: #67e8f9;
 }

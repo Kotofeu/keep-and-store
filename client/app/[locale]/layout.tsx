@@ -38,7 +38,7 @@ const Layout = async (props: LayoutProps<'/[locale]'>) => {
         <Script src="/console-greeting.js" strategy="afterInteractive" />
         <RootProvider locale={locale} messages={messages}>
           <Header />
-          {children}
+          <main className={'container-fluid relative min-h-screen pt-15'}>{children}</main>
         </RootProvider>
       </body>
     </html>

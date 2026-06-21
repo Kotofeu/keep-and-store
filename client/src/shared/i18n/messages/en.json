@@ -1,5 +1,10 @@
 {
   "Home": "Home",
+  "not-found": {
+    "title": "Page lost in space",
+    "description": "Maybe it slipped into another dimension, or maybe it was never here at all.",
+    "goHome": "Back to Home"
+  },
   "theme": {
     "switchStyle": "Change theme style",
     "switchMode": "Change theme mode",

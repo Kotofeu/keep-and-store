@@ -6,6 +6,7 @@
 
 @theme {
   /* Z-index */
+  --z-index-bg: -1;
   --z-index-header: 10;
   --z-index-dropdown: 11;
   --z-index-modal: 12;
@@ -13,46 +14,52 @@
   --z-index-popover: 14;
   --z-index-tooltip: 15;
 
-  /* Fonts */
+  /* Typography */
   --font-body: var(--font-body-family);
   --font-heading: var(--font-heading-family);
 
-  /* Base colors */
+  /* Base */
   --color-white: #fff;
   --color-bg: var(--bg);
   --color-foreground: var(--text);
-
-  /* Header */
-  --color-header-bg: var(--header-bg);
-  --color-header-border: var(--header-border);
-
-  /* Scroll */
-
-  /* --color-scrollbar-track: var(--scrollbar-track); */
-  --color-scrollbar-thumb: var(--scrollbar-thumb);
-  --color-scrollbar-thumb-hover: var(--scrollbar-thumb-hover);
 
   /* Statuses */
   --color-status-error: #ef4444;
   --color-status-success: #10b981;
   --color-status-warning: #f59e0b;
 
-  /* Buttons */
+  /* Header */
+  --color-header-bg: var(--header-bg);
+  --color-header-border: var(--header-border);
+
+  /* Scrollbar */
+  --color-scrollbar-track: var(--scrollbar-track);
+  --color-scrollbar-thumb: var(--scrollbar-thumb);
+  --color-scrollbar-thumb-hover: var(--scrollbar-thumb-hover);
+
+  /* Buttons — Primary */
   --color-button-primary-bg: var(--button-primary-bg);
   --color-button-primary-bg-hover: var(--button-primary-bg-hover);
+  --color-button-primary-bg-active: var(--button-primary-bg-active);
   --color-button-primary-bg-disabled: var(--button-primary-bg-disabled);
   --color-button-primary-text: var(--button-primary-text);
   --color-button-primary-text-disabled: var(--button-primary-text-disabled);
+
+  /* Buttons — Secondary */
+  --color-button-secondary-bg: var(--button-secondary-bg);
   --color-button-secondary-bg-hover: var(--button-secondary-bg-hover);
+  --color-button-secondary-bg-active: var(--button-secondary-bg-active);
   --color-button-secondary-bg-disabled: var(--button-secondary-bg-disabled);
   --color-button-secondary-text: var(--button-secondary-text);
   --color-button-secondary-text-hover: var(--button-secondary-text-hover);
+  --color-button-secondary-text-active: var(--button-secondary-text-active);
   --color-button-secondary-text-disabled: var(--button-secondary-text-disabled);
   --color-button-secondary-border: var(--button-secondary-border);
   --color-button-secondary-border-hover: var(--button-secondary-border-hover);
+  --color-button-secondary-border-active: var(--button-secondary-border-active);
   --color-button-secondary-border-disabled: var(--button-secondary-border-disabled);
 
-  /* Inputs */
+  /* Inputs — General */
   --color-input-bg: var(--input-bg);
   --color-input-bg-disabled: var(--input-bg-disabled);
   --color-input-text: var(--input-text);
@@ -64,12 +71,16 @@
   --color-input-border-error: var(--input-border-error);
   --color-input-border-error-disabled: var(--input-border-error-disabled);
   --color-input-placeholder: var(--input-placeholder);
+
+  /* Inputs — Chips */
   --color-input-chip-bg: var(--input-chip-bg);
   --color-input-chip-bg-disabled: var(--input-chip-bg-disabled);
   --color-input-chip-text: var(--input-chip-text);
   --color-input-chip-text-disabled: var(--input-chip-text-disabled);
   --color-input-chip-border: var(--input-chip-border);
   --color-input-chip-border-disabled: var(--input-chip-border-disabled);
+
+  /* Inputs — Options */
   --color-input-option-bg-selected: var(--input-option-bg-selected);
   --color-input-option-text-selected: var(--input-option-text-selected);
   --color-input-option-bg-hover: var(--input-option-bg-hover);
@@ -84,19 +95,33 @@
   --color-tooltip-border: var(--tooltip-border);
   --color-tooltip-shadow: var(--tooltip-shadow);
 
-  /* Theme */
+  /* Accent */
+  --color-accent-1: var(--accent-1);
+  --color-accent-2: var(--accent-2);
+  --color-accent-3: var(--accent-3);
+  --color-accent-4: var(--accent-4);
+  --color-accent-5: var(--accent-5);
+
+  /* Theme-specific — Notepad Light */
   --color-notepad-light-1: #d4a16f;
   --color-notepad-light-2: #f0e6d2;
+
+  /* Theme-specific — Notepad Dark */
   --color-notepad-dark-1: #b88c61;
   --color-notepad-dark-2: #2b2b2b;
+
+  /* Theme-specific — Standard Light */
   --color-standard-light-1: #60a5fa;
   --color-standard-light-2: #f3f4f6;
+
+  /* Theme-specific — Standard Dark */
   --color-standard-dark-1: #477ab8;
   --color-standard-dark-2: #111827;
 }
 
 html {
   font-size: 16px;
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
 }
 
 body {
@@ -110,34 +135,6 @@ h4,
 h5,
 h6 {
   @apply font-heading;
-}
-
-::-webkit-scrollbar {
-  @apply h-3.5 w-3.5;
-}
-
-::-webkit-scrollbar-track {
-  @apply bg-transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  @apply bg-scrollbar-thumb rounded-3xl border-3 border-transparent bg-clip-content;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  @apply bg-scrollbar-thumb-hover;
-}
-
-::-webkit-scrollbar-thumb:active {
-  @apply bg-scrollbar-thumb-hover;
-}
-
-::-webkit-scrollbar:horizontal {
-  @apply h-3.5;
-}
-
-::-webkit-scrollbar-corner {
-  @apply bg-transparent;
 }
 
 @utility container-fluid {

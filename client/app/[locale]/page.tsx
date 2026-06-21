@@ -10,12 +10,11 @@ const Home = (props: PageProps<'/[locale]'>) => {
   setRequestLocale(locale as Locale);
 
   const t = useTranslations();
-
   return (
-    <main className="p-8">
+    <div>
       <h1 className="text-4xl">{t('Home')}</h1>
       <Test />
-    </main>
+    </div>
   );
 };
 

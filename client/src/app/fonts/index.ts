@@ -1,4 +1,4 @@
-import { Lora, Playfair_Display, Open_Sans, Montserrat } from 'next/font/google';
+import { Lora, Source_Serif_4, Open_Sans, Montserrat } from 'next/font/google';
 import { cn } from '@shared/utils/cn';
 
 const openSans = Open_Sans({
@@ -16,9 +16,9 @@ const lora = Lora({
   variable: '--font-lora'
 });
 
-const playfairDisplay = Playfair_Display({
+const sourceSerif4 = Source_Serif_4({
   subsets: ['cyrillic', 'latin'],
-  variable: '--font-playfair-display'
+  variable: '--font-source-serif-4'
 });
 
-export const fontVariables = cn(openSans.variable, montserrat.variable, lora.variable, playfairDisplay.variable);
+export const fontVariables = cn(openSans.variable, montserrat.variable, lora.variable, sourceSerif4.variable);

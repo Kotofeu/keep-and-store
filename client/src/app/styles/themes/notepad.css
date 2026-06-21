@@ -1,52 +1,63 @@
 [data-theme='notepad-light'] {
+  /* Base & Typography */
   --bg: #f8f4e8;
   --text: #3b3b3b;
   --font-body-family: var(--font-lora), sans-serif;
-  --font-heading-family: var(--font-playfair-display), sans-serif;
+  --font-heading-family: var(--font-source-serif-4), sans-serif;
 
   /* Header */
   --header-bg: #f0e6d2;
   --header-border: #c8ad8a;
 
-  /* Scroll */
+  /* Scrollbar */
+  --scrollbar-track: #dbcebc;
+  --scrollbar-thumb: #8b5a2b;
+  --scrollbar-thumb-hover: #6b4226;
 
-  /* --scrollbar-track: #e2d4c0; */
-  --scrollbar-thumb: #c8ad8a;
-  --scrollbar-thumb-hover: #b08f6a;
-
-  /* Buttons */
+  /* Buttons — Primary */
   --button-primary-bg: #8b5a2b;
   --button-primary-bg-hover: #6b4226;
+  --button-primary-bg-active: #5a3821;
   --button-primary-bg-disabled: #e0d4c4;
   --button-primary-text: #f8f4e8;
   --button-primary-text-disabled: #9b8b78;
+
+  /* Buttons — Secondary */
+  --button-secondary-bg: #f8f4e8;
   --button-secondary-bg-hover: #f0e7db;
+  --button-secondary-bg-active: #e5d9cb;
   --button-secondary-bg-disabled: #fdfaf5;
   --button-secondary-text: #8b5a2b;
   --button-secondary-text-hover: #5a3a1f;
+  --button-secondary-text-active: #5a3821;
   --button-secondary-text-disabled: #b5a68e;
   --button-secondary-border: #8b5a2b;
   --button-secondary-border-hover: #5a3a1f;
+  --button-secondary-border-active: #5a3821;
   --button-secondary-border-disabled: #d9cbb8;
 
-  /* Inputs */
+  /* Inputs — General */
   --input-bg: var(--bg);
   --input-bg-disabled: #fdfaf5;
   --input-text: var(--text);
   --input-text-disabled: #7e6e5c;
   --input-border: #8b5a2b;
   --input-border-hover: #6b4226;
-  --input-border-focus: #8b5a2b;
+  --input-border-focus: #5a3821;
   --input-border-disabled: #e0d4c4;
   --input-border-error: #b91c1c;
   --input-border-error-disabled: #f3cfcf;
   --input-placeholder: #b5a68e;
+
+  /* Inputs — Chips */
   --input-chip-bg: #f0e7db;
   --input-chip-bg-disabled: #fdfaf5;
   --input-chip-text: #3b3b3b;
   --input-chip-text-disabled: #9b8b78;
   --input-chip-border: #8b5a2b;
   --input-chip-border-disabled: #e0d4c4;
+
+  /* Inputs — Options */
   --input-option-bg-selected: #f0e7db;
   --input-option-text-selected: #3b3b3b;
   --input-option-bg-hover: #e5d9cb;
@@ -59,57 +70,75 @@
   --tooltip-bg: #5c4e3f;
   --tooltip-text: #f8f4e8;
   --tooltip-shadow: drop-shadow(0 0 2px #000b);
+
+  /* Accent */
+  --accent-1: #d9c0a8;
+  --accent-2: #c2855c;
+  --accent-3: #5a3821;
+  --accent-4: #82ada7;
+  --accent-5: #5a7d5a;
 }
 
 [data-theme='notepad-dark'] {
+  /* Base & Typography */
   --bg: #2b2b2b;
   --text: #e0e0e0;
   --font-body-family: var(--font-lora), sans-serif;
-  --font-heading-family: var(--font-playfair-display), sans-serif;
+  --font-heading-family: var(--font-source-serif-4), sans-serif;
 
   /* Header */
   --header-bg: #3b3228;
   --header-border: #7a6048;
 
-  /* Scroll */
+  /* Scrollbar */
+  --scrollbar-track: #1e1b18;
+  --scrollbar-thumb: #d4a16f;
+  --scrollbar-thumb-hover: #c18f5b;
 
-  /* --scrollbar-track: #2c2c2c; */
-  --scrollbar-thumb: #5a4a3a;
-  --scrollbar-thumb-hover: #7a6048;
-
-  /* Buttons */
+  /* Buttons — Primary */
   --button-primary-bg: #d4a16f;
   --button-primary-bg-hover: #c18f5b;
+  --button-primary-bg-active: #b18658;
   --button-primary-bg-disabled: #3f3a35;
   --button-primary-text: #2b2b2b;
   --button-primary-text-disabled: #7a6e62;
+
+  /* Buttons — Secondary */
+  --button-secondary-bg: #3b3228;
   --button-secondary-bg-hover: #3f3a35;
+  --button-secondary-bg-active: #4f4841;
   --button-secondary-bg-disabled: #2f2c28;
   --button-secondary-text: #d4a16f;
   --button-secondary-text-hover: #e2b889;
+  --button-secondary-text-active: #e2b889;
   --button-secondary-text-disabled: #6f655b;
   --button-secondary-border: #d4a16f;
   --button-secondary-border-hover: #e2b889;
+  --button-secondary-border-active: #e2b889;
   --button-secondary-border-disabled: #4d453e;
 
-  /* Inputs */
+  /* Inputs — General */
   --input-bg: var(--bg);
   --input-bg-disabled: #2f2c28;
   --input-text: var(--text);
   --input-text-disabled: #9a8f84;
   --input-border: #d4a16f;
   --input-border-hover: #e2b889;
-  --input-border-focus: #d4a16f;
+  --input-border-focus: #b18658;
   --input-border-disabled: #4d453e;
   --input-border-error: #f87171;
   --input-border-error-disabled: #7f1a1a;
   --input-placeholder: #a69b8f;
+
+  /* Inputs — Chips */
   --input-chip-bg: #3f3a35;
   --input-chip-bg-disabled: #2f2c28;
   --input-chip-text: #e0e0e0;
   --input-chip-text-disabled: #9a8f84;
   --input-chip-border: #d4a16f;
   --input-chip-border-disabled: #4d453e;
+
+  /* Inputs — Options */
   --input-option-bg-selected: #3f3a35;
   --input-option-text-selected: #e0e0e0;
   --input-option-bg-hover: #4f4841;
@@ -122,4 +151,11 @@
   --tooltip-bg: #3b3b3b;
   --tooltip-text: #e0d9c5;
   --tooltip-shadow: drop-shadow(0 0 2px #0006);
+
+  /* Accent */
+  --accent-1: #4a3f35;
+  --accent-2: #e2b889;
+  --accent-3: #f0d9b5;
+  --accent-4: #4a6b6b;
+  --accent-5: #c0ddd5;
 }
