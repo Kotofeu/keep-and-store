@@ -2,6 +2,7 @@ import { FC } from 'react';
 import { LanguageSwitcher } from '@features/language-switcher';
 import { ThemeModeSwitcher } from '@features/theme-mode-switcher';
 import { ThemeStyleSwitcher } from '@features/theme-style-switcher';
+import { Link } from '@shared/i18n/routing';
 import { cn } from '@shared/utils/cn';
 
 interface HeaderProps {
@@ -13,30 +14,26 @@ export const Header: FC<HeaderProps> = ({ className }) => {
     <header
       className={cn(
         className,
-        'z-header bg-header-bg border-header-border text-foreground fixed top-0 right-0 left-0 flex h-15 items-center border-b'
+        'bg-header-bg border-header-border text-foreground h-header flex w-full items-center border-b px-3.5'
       )}
     >
-      <div className="container-fluid">
-        <div className="flex items-center gap-8">
-          <div className="flex-1">
-            <a href="#" className="">
-              Logo
-            </a>
+      <div className="flex w-full items-center gap-8">
+        <div className="flex-1">
+          <Link href={'/'}>Logo</Link>
+        </div>
+        <nav className="flex-none text-sm font-medium">
+          <div className="flex flex-wrap items-center gap-6">
+            <Link href={'/'}>Главная</Link>
+            <Link href={'/test/icons'}>Иконки</Link>
+            <Link href={'/'}>Услуги</Link>
+            <Link href={'/'}>Контакты</Link>
           </div>
-          <nav className="flex-none text-sm font-medium">
-            <div className="flex items-center gap-6">
-              <a href="#">Главная</a>
-              <a href="#">О нас</a>
-              <a href="#">Услуги</a>
-              <a href="#">Контакты</a>
-            </div>
-          </nav>
+        </nav>
 
-          <div className="flex flex-6 items-center justify-end gap-2">
-            <ThemeStyleSwitcher />
-            <ThemeModeSwitcher />
-            <LanguageSwitcher />
-          </div>
+        <div className="flex flex-6 items-center justify-end gap-2">
+          <ThemeStyleSwitcher />
+          <ThemeModeSwitcher />
+          <LanguageSwitcher />
         </div>
       </div>
     </header>

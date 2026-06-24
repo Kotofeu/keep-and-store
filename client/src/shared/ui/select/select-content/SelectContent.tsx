@@ -50,6 +50,8 @@ const optionVariants = cva('flex items-center gap-2 px-4 py-3 transition-colors 
   }
 });
 
+type SelectContentComponent = <T>(props: SelectContentProps<T> & RefAttributes<HTMLDivElement>) => ReactElement;
+
 interface SelectContentProps<T> {
   listboxId: string;
   searchPlaceholder: string;
@@ -225,4 +227,6 @@ export const SelectContent = forwardRef(
       </div>
     );
   }
-) as <T>(props: SelectContentProps<T> & RefAttributes<HTMLDivElement>) => ReactElement;
+) as SelectContentComponent & { displayName?: string };
+
+SelectContent.displayName = 'SelectContent';

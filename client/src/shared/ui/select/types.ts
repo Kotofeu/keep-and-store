@@ -125,4 +125,5 @@ export type SelectComponent = {
   <T>(props: SingleNonClearableSelectProps<T> & { ref?: ForwardedRef<SelectRef<T>> }): JSX.Element;
   <T>(props: MultiClearableSelectProps<T> & { ref?: ForwardedRef<SelectRef<T>> }): JSX.Element;
   <T>(props: MultiNonClearableSelectProps<T> & { ref?: ForwardedRef<SelectRef<T>> }): JSX.Element;
+  displayName?: string;
 };

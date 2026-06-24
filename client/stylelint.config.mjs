@@ -26,7 +26,13 @@ const config = {
     'selector-max-id': 0,
     'color-named': null,
     'selector-no-qualifying-type': null,
-    'no-descending-specificity': null
+    'no-descending-specificity': null,
+    'no-invalid-position-declaration': [
+      true,
+      {
+        ignoreAtRules: ['utility', 'media', 'layer', 'tailwind']
+      }
+    ]
   }
 };
 

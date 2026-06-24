@@ -181,3 +181,5 @@ export const Popover = forwardRef<PopoverRef, PopoverProps>((props, ref) => {
     document.body
   );
 });
+
+Popover.displayName = 'Popover';

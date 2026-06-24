@@ -1,5 +1,12 @@
 {
   "Home": "Home",
+  "error": {
+    "code": "500",
+    "title": "Something went wrong",
+    "description": "An unexpected error occurred. Please try again later.",
+    "tryAgain": "Try again",
+    "goHome": "Go home"
+  },
   "not-found": {
     "title": "Page lost in space",
     "description": "Maybe it slipped into another dimension, or maybe it was never here at all.",

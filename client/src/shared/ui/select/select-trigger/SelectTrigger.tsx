@@ -132,3 +132,5 @@ export const SelectTrigger = forwardRef<HTMLDivElement, SelectTriggerProps>(
     );
   }
 );
+
+SelectTrigger.displayName = 'SelectTrigger';

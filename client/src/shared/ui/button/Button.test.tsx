@@ -20,7 +20,7 @@ describe('Button', () => {
   it('applies secondary variant classes', () => {
     renderWithProviders(<Button variant="secondary">Secondary</Button>);
     const button = screen.getByRole('button');
-    expect(button.className).toContain('bg-transparent');
+    expect(button.className).toContain('bg-button-secondary-bg');
     expect(button.className).toContain('text-button-secondary-text');
   });
 

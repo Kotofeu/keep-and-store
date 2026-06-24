@@ -1,5 +1,6 @@
 import { ButtonHTMLAttributes, forwardRef } from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
+import { motion, type HTMLMotionProps } from 'framer-motion';
 import { cn } from '@shared/utils/cn';
 
 export const buttonVariants = cva(
@@ -23,10 +24,14 @@ export const buttonVariants = cva(
   }
 );
 
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof buttonVariants> {}
+type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> &
+  VariantProps<typeof buttonVariants> &
+  HTMLMotionProps<'button'>;
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(({ variant, className, children, ...props }, ref) => (
-  <button ref={ref} className={cn(buttonVariants({ variant }), className)} {...props}>
+  <motion.button ref={ref} className={cn(buttonVariants({ variant }), className)} {...props}>
     {children}
-  </button>
+  </motion.button>
 ));
+
+Button.displayName = 'Button';

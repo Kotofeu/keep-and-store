@@ -21,7 +21,8 @@ export const routing = defineRouting({
   localeDetection: false,
   localePrefix: 'as-needed',
   pathnames: {
-    '/': '/'
+    '/': '/',
+    '/test/icons': '/test/icons'
   }
 });
 

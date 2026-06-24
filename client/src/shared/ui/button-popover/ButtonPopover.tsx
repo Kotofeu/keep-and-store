@@ -147,3 +147,5 @@ export const PopoverButton = forwardRef<HTMLElement, ButtonPopoverProps>((props,
     </>
   );
 });
+
+PopoverButton.displayName = 'PopoverButton';

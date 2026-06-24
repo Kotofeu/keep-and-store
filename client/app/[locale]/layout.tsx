@@ -1,4 +1,4 @@
-import { Metadata } from 'next';
+import { Metadata, Viewport } from 'next';
 import { notFound } from 'next/navigation';
 import Script from 'next/script';
 import { hasLocale } from 'next-intl';
@@ -6,13 +6,19 @@ import { getMessages, setRequestLocale } from 'next-intl/server';
 import { fontVariables } from '@app/fonts';
 import { RootProvider } from '@app/providers/root-provider';
 import { DEFAULT_LOCALE, routing } from '@shared/i18n/routing';
-import { Header } from '@widgets/header/ui';
+import { cn } from '@shared/utils/cn';
+import { Header } from '@widgets/header';
 import '@app/styles/index.css';
 
 export const generateStaticParams = (): Array<{ locale: string }> => {
   return routing.locales.map((locale) => {
     return { locale };
   });
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1
 };
 
 export const metadata: Metadata = {
@@ -33,12 +39,18 @@ const Layout = async (props: LayoutProps<'/[locale]'>) => {
   const messages = await getMessages({ locale });
 
   return (
-    <html lang={locale || DEFAULT_LOCALE} className={fontVariables} suppressHydrationWarning>
-      <body className="antialiased">
+    <html lang={locale || DEFAULT_LOCALE} className={cn('overflow-hidden', fontVariables)} suppressHydrationWarning>
+      <body className="h-screen overflow-hidden antialiased">
         <Script src="/console-greeting.js" strategy="afterInteractive" />
+
         <RootProvider locale={locale} messages={messages}>
-          <Header />
-          <main className={'container-fluid relative min-h-screen pt-15'}>{children}</main>
+          <div className="bg-background text-foreground grid h-screen w-screen grid-cols-[auto_1fr_auto] grid-rows-[auto_1fr_auto] overflow-hidden">
+            <Header className="col-span-full" />
+            <div id="left-sidebar" className="h-full overflow-y-auto" />
+            <main className="h-full min-w-0 overflow-x-hidden overflow-y-auto">{children}</main>
+            <div id="right-sidebar" className="h-full overflow-y-auto" />
+            <div id="bottom-sidebar" className="col-span-full overflow-y-auto" />
+          </div>
         </RootProvider>
       </body>
     </html>

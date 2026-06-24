@@ -343,3 +343,5 @@ export const Select = forwardRef(<T,>(props: SelectProps<T>, ref: ForwardedRef<S
     </div>
   );
 }) as SelectComponent;
+
+Select.displayName = 'Select';

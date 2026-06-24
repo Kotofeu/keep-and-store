@@ -63,3 +63,5 @@ export const Icon: FC<IconProps> = ({ className, type, iconClassName, ...otherPr
     </div>
   );
 };
+
+Icon.displayName = 'Icon';
